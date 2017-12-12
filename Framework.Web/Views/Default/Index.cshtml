@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "后台管理系统";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/test.css" rel="stylesheet" />
+<style>
+    .panel-header {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+</style>
+<div id="layout" class="easyui-layout" data-options="fit:true">
+    <!--header-->
+    <div data-options="region:'north',border:false" style="height:70px;background-color:#438eb9">
+
+    </div>
+    <!--Menu-->
+    <div data-options="region:'west',title:'菜单栏目',split:true" style="width:240px;">
+        <ul id="tree" class="easyui-tree" data-options="animate:true,lines:false"style="width:140px;margin:0 auto;margin-top:15px"></ul>
+    </div>
+    <!--Center-->
+    <div data-options="region:'center',border:false">
+        <div id="tabs" class="easyui-tabs" data-options="fit:true,tabHeight:31">
+            <div title="首页" style="padding:10px;" data-options="iconCls:'icon-home'">
+              
+                <div class="divHeight">
+                    <div id="p" class="easyui-panel" title="系统通知"
+                         style="width:500px;background:#fafafa;"data-options="iconCls:'icon-notice',fit:true">
+                        <ul class="myli">
+                            <li>A</li>
+                            <li>A</li>
+                            <li>A</li>
+                            <li>A</li>
+                            <li>A</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="divHeight">
+                    <div id="p" class="easyui-panel" title="My Panel"
+                         style="width:500px;background:#fafafa;" data-options="iconCls:'icon-save',fit:true">
+                        <ul class="myli">
+                            <li>A</li>
+                            <li>A</li>
+                            <li>A</li>
+                            <li>A</li>
+                            <li>A</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--footer-->
+    <div data-options="region:'south'" style="height:30px;">
+        <div style="text-align:center;height:28px;line-height:28px;font-size:13px">
+           
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#tree').tree({
+            url: '@Url.Action("Index")',
+            onClick: function (node) {
+                if (node.attributes) {
+                    var title = node.text;
+                    var url = node.attributes;
+                    window.createTab(title, url);
+                }
+            }
+        });
+    });
+
+    //创建tabs
+    window.createTab= function (title, url) {
+        if ($('#tabs').tabs("getTab", title)) {
+            $('#tabs').tabs("select", title);
+        }
+        else {
+            $('#tabs').tabs('add', {
+                title: title,
+                content: '<iframe scrolling="auto" frameborder="0"  src="' + url + '" width="100%" height="100%" style="display:-webkit-box"></iframe>',
+                closable: true,
+                tools: [{
+                    iconCls: 'icon-mini-refresh',
+                    handler: function () {
+                        //刷新
+                        $('#tabs').tabs('getSelected').panel();
+                    }
+                }]
+            });
+        }
+    }
+</script>

@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "编辑角色";
+}
+@model Framework.Entity.ES_Role
+<form id="dataForm">
+    <input type="hidden" name="ID" value="@Model.ID" />
+    <table class="gridtable">
+        <tr>
+            <td>角色名称</td>
+            <td>
+                <input class="easyui-textbox" name="sRoleName" data-options="required:true" value="@Model.sRoleName">
+            </td>
+        </tr>
+    </table>
+</form>

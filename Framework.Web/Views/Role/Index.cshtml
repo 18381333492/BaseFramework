@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "角色数据列表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<table id="role"></table>
+<div id="role_toolbar" style="padding:5px;">
+    <form id="searchForm">
+        <div style="margin-bottom:5px;">
+            <span class="label">角色名称</span>
+            <input class="easyui-textbox" name="keyword" data-options="iconCls:'icon-search'">
+            <a class="easyui-linkbutton" data-mark="search" data-options="width:60">查 询</a>
+        </div>
+    </form>
+    <a class="easyui-linkbutton" data-mark="add" data-url="/Role/Add" data-options="iconCls:'icon-add',plain:true">新增角色</a>
+    <a class="easyui-linkbutton" data-mark="edit" data-url="/Role/Edit" data-options="iconCls:'icon-edit',plain:true">编辑角色</a>
+    <a class="easyui-linkbutton" data-mark="cancel" data-url="/Role/Cancel" data-options="iconCls:'icon-clear',plain:true">删除角色</a>
+    <a class="easyui-linkbutton" data-mark="powerset" data-url="/Role/PowerSet" data-options="iconCls:'icon-remove',plain:true">权限分配</a>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var grid = $('#role');
+        var toolbar = '#role_toolbar';
+
+        //所有按钮事件的绑定
+        $(toolbar).on("click", 'a', function () {
+            eui.dialogArgs.title = $(this).text();
+            eui.dialogArgs.url = $(this).attr("data-url");
+            eui.dialogArgs.width = 400;
+            eui.dialogArgs.height = 180;
+            switch ($(this).attr("data-mark")) {
+                case 'search':
+                    var params = eui.serializeJson(eui.searchForm);
+                    grid.datagrid({ queryParams: params });
+                    break;
+                case 'add':
+                    eui.dialogArgs.callback = operate;
+                    eui.dialog(eui.dialogArgs);
+                    break;
+                case 'edit':
+                    var selected = grid.treegrid('getSelections');
+                    if (selected.length == 1) {
+                        eui.dialogArgs.url += "?ID=" + selected[0].ID;
+                        eui.dialogArgs.callback = operate;
+                        eui.dialog(eui.dialogArgs);
+                    }
+                    else
+                        eui.alert("请选择一条数据操作");
+                    break;
+                case 'cancel':
+                    cancel();
+                    break;
+                case 'powerset':
+                    powerset();
+                    break;
+            }
+        });
+
+        //新增编辑操作
+        function operate() {
+            if ($(eui.form).form("validate")) {
+                eui.button.disable();
+                eui.commitArgs.url = eui.dialogArgs.url;
+                eui.commitArgs.data = $(eui.form).serialize();
+                eui.commitArgs.success = function (r) {
+                    eui.alert(r.info);
+                    grid.datagrid('reload');
+                }
+                eui.commit(eui.commitArgs);
+            }
+        }
+
+        //删除操作
+        function cancel() {
+            var selected = grid.datagrid('getSelections');
+            if (selected.length > 0) {
+                eui.confirm("确认要删除所选择的数据", function () {
+                    var Ids = [];
+                    $(selected).each(function () { Ids.push(this.ID) });
+                    eui.commitArgs.url = eui.dialogArgs.url;
+                    eui.commitArgs.data = { RoleIds: Ids.join() };
+                    eui.commitArgs.success = function (r) {
+                        grid.datagrid('reload');
+                        grid.datagrid("clearSelections");
+                        eui.alert(r.info);
+                    }
+                    eui.commit(eui.commitArgs);
+                });
+            }
+            else
+                eui.alert("请选择一条数据操作");
+        }
+
+        //权限设置
+        function powerset() {
+            var selected = grid.datagrid('getSelections');
+            if (selected.length == 1) {
+                window.parent.createTab("权限分配-" + selected[0].sRoleName, eui.dialogArgs.url);
+            }
+            else
+                eui.alert("请选择一条数据操作");
+        }
+
+        //列表数据的绑定
+        grid.datagrid({
+            url:'@Url.Action("Index")',
+            toolbar: toolbar,
+            sortOrder: 'desc',
+            sortName: 'dInsertTime',
+            singleSelect: true,
+            fitColumns: false,
+            columns: [[
+                { field: 'sRoleName', title: '角色名称', align: 'center', width: 250 },
+                { field: 'dInsertTime', title: '添加时间', align: 'center', width: 300 },
+            ]],
+            onDblClickRow: function (index, row) {
+                eui.dialogArgs.width = 400;
+                eui.dialogArgs.height = 180;
+                eui.dialogArgs.title ="编辑角色";
+                eui.dialogArgs.url = '@Url.Action("Edit")';
+                eui.dialogArgs.url += "?ID=" + row.ID;
+                eui.dialogArgs.callback = operate;
+                eui.dialog(eui.dialogArgs);
+            }
+        });
+    });
+</script>

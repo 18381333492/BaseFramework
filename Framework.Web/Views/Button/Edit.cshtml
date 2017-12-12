@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "编辑按钮";
+}
+@model Framework.Entity.ES_Button
+<form id="dataForm">
+    <input type="hidden" name="ID" value="@Model.ID" />
+    <table class="gridtable">
+        <tr>
+            <td>所属菜单</td>
+            <td>
+                <input class="easyui-combobox" name="sMenuId" value="@Model.sMenuId"
+                       data-options="valueField:'ID',textField:'sMenuName',url:'@Url.Action("GetChildComboboxMenuList")',required:true" />
+            </td>
+        </tr>
+        <tr>
+            <td>按钮名称</td>
+            <td>
+                <input class="easyui-textbox" name="sButtonName" data-options="required:true" value="@Model.sButtonName">
+            </td>
+        </tr>
+        <tr>
+            <td>按钮链接</td>
+            <td>
+                <input class="easyui-textbox" name="sOperateUrl" data-options="required:true" value="@Model.sOperateUrl">
+            </td>
+        </tr>
+        <tr>
+            <td>按钮标识</td>
+            <td>
+                <input class="easyui-textbox" name="sButtonSign" data-options="required:true" value="@Model.sButtonSign">
+            </td>
+        </tr>
+        <tr>
+            <td>按钮排序</td>
+            <td>
+                <input class="easyui-numberspinner" name="iOrder" data-options="required:true,min:0" value="@Model.iOrder">
+            </td>
+        </tr>
+        <tr>
+            <td>按钮图标</td>
+            <td>
+                <input id="sButtonIcon" name="sButtonIcon" value="@Model.sButtonIcon">
+            </td>
+        </tr>
+    </table>
+</form>
+<script type="text/javascript">
+    $(function () {
+        var data = [];
+        $(array).each(function () {
+            data.push({id:this,text:this});
+        });
+        $('#sButtonIcon').combobox({
+            valueField: 'id',
+            textField: 'text',
+            data: data,
+            required: true,
+            formatter: function (row) {
+                return "<i class='" + row.id + "' style='height:16px;width:16px;display:block'></i>";
+            }
+        });
+    });
+</script>
+

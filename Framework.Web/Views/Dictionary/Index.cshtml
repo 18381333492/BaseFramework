@@ -1,0 +1,117 @@
+﻿@{
+    ViewBag.Title = "数据字典列表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<table id="dictionary"></table>
+<div id="dictionary_toolbar" style="padding:5px;">
+    <form id="searchForm">
+        <div style="margin-bottom:5px;">
+            <span class="label">字典名称</span>
+            <input class="easyui-textbox" name="keyword" data-options="iconCls:'icon-search'">
+            <a class="easyui-linkbutton" data-mark="search" data-options="width:60">查 询</a>
+        </div>
+    </form>
+    <a class="easyui-linkbutton" data-mark="add" data-url="/Dictionary/Add" data-options="iconCls:'icon-add',plain:true">新增字典</a>
+    <a class="easyui-linkbutton" data-mark="edit" data-url="/Dictionary/Edit" data-options="iconCls:'icon-edit',plain:true">编辑字典</a>
+    <a class="easyui-linkbutton" data-mark="cancel" data-url="/Dictionary/Cancel" data-options="iconCls:'icon-clear',plain:true">删除字典</a>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var grid = $('#dictionary');
+        var toolbar = '#dictionary_toolbar';
+
+        //所有按钮事件的绑定
+        $(toolbar).on("click", 'a', function () {
+            eui.dialogArgs.title = $(this).text();
+            eui.dialogArgs.url = $(this).attr("data-url");
+            eui.dialogArgs.width = 400;
+            eui.dialogArgs.height = 250;
+            switch ($(this).attr("data-mark")) {
+                case 'search':
+                    var params = eui.serializeJson(eui.searchForm);
+                    grid.datagrid({ queryParams: params });
+                    break;
+                case 'add':
+                    eui.dialogArgs.callback = operate;
+                    eui.dialog(eui.dialogArgs);
+                    break;
+                case 'edit':
+                    var selected = grid.treegrid('getSelections');
+                    if (selected.length == 1) {
+                        eui.dialogArgs.url += "?ID=" + selected[0].ID;
+                        eui.dialogArgs.callback = operate;
+                        eui.dialog(eui.dialogArgs);
+                    }
+                    else
+                        eui.alert("请选择一条数据操作");
+                    break;
+                case 'cancel':
+                    cancel();
+                    break;
+            }
+        });
+
+        //新增编辑操作
+        function operate() {
+            if ($(eui.form).form("validate")) {
+                var parmas = eui.serializeJson(eui.form);
+                if (parmas.iValue == 0) return eui.alert("字典值不能设置为0");
+                eui.button.disable();
+                eui.commitArgs.url = eui.dialogArgs.url;
+                eui.commitArgs.data = parmas;
+                eui.commitArgs.success = function (r) {
+                    eui.alert(r.info);
+                    grid.datagrid('reload');
+                }
+                eui.commit(eui.commitArgs);
+            }
+        }
+
+        //删除操作
+        function cancel() {
+            var selected = grid.datagrid('getSelections');
+            if (selected.length > 0) {
+                eui.confirm("确认要删除所选择的数据", function () {
+                    var Ids = [];
+                    $(selected).each(function () { Ids.push(this.ID) });
+                    eui.commitArgs.url = eui.dialogArgs.url;
+                    eui.commitArgs.data = { DictionaryIds: Ids.join() };
+                    eui.commitArgs.success = function (r) {
+                        grid.datagrid('reload');
+                        grid.datagrid("clearSelections");
+                        eui.alert(r.info);
+                    }
+                    eui.commit(eui.commitArgs);
+                });
+            }
+            else
+                eui.alert("请选择一条数据操作");
+        }
+
+
+        //列表数据的绑定
+        grid.datagrid({
+            url:'@Url.Action("Index")',
+            toolbar: toolbar,
+            sortOrder: 'asc',
+            sortName: 'sValueType',
+            singleSelect: true,
+            fitColumns: false,
+            columns: [[
+                { field: 'sText', title: '字典名称', align: 'center', width: 200 },
+                { field: 'iValue', title: '字典值', align: 'center', width: 150 },
+                { field: 'sValueType', title: '字典类型', align: 'center', width: 200 },
+                { field: 'iOrder', title: '排序', align: 'center', width: 100 },
+            ]],
+            onDblClickRow: function (index, row) {
+                eui.dialogArgs.width = 400;
+                eui.dialogArgs.height = 250;
+                eui.dialogArgs.title = "编辑字典";
+                eui.dialogArgs.url = '@Url.Action("Edit")';
+                eui.dialogArgs.url += "?ID=" + row.ID;
+                eui.dialogArgs.callback = operate;
+                eui.dialog(eui.dialogArgs);
+            }
+        });
+    });
+</script>

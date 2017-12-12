@@ -1,0 +1,912 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BaseFrameworkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ES_Button">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sButtonName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sButtonIcon" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sMenuId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="iOrder" Type="int" Nullable="false" />
+          <Property Name="sButtonSign" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sOperateUrl" Type="nvarchar" MaxLength="100" />
+          <Property Name="bIsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sOpenId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="sNickName" Type="varchar" MaxLength="50" />
+          <Property Name="sHeadPicture" Type="varchar(max)" />
+          <Property Name="iIntegral" Type="int" Nullable="false" />
+          <Property Name="iState" Type="int" Nullable="false" />
+          <Property Name="iIsSubscribe" Type="int" Nullable="false" />
+          <Property Name="dSubscribeTime" Type="datetime" Nullable="false" />
+          <Property Name="dUnSubscribeTime" Type="datetime" />
+          <Property Name="iSex" Type="int" />
+          <Property Name="sProvince" Type="varchar" MaxLength="50" />
+          <Property Name="sCountry" Type="varchar" MaxLength="50" />
+          <Property Name="sCity" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ES_Dictionary">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sText" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="iValue" Type="int" Nullable="false" />
+          <Property Name="sValueType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="iOrder" Type="int" Nullable="false" />
+          <Property Name="bIsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_Goods">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sGoodsName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="iGoodsType" Type="int" Nullable="false" />
+          <Property Name="sGoodsNo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="sDisPrices" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="sGoodsPrices" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsRateGiving" Type="bit" Nullable="false" />
+          <Property Name="iCount" Type="int" Nullable="false" />
+          <Property Name="bIsShelves" Type="bit" Nullable="false" />
+          <Property Name="sOrderHtmlKey" Type="varchar" MaxLength="50" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+          <Property Name="bIsDeleted" Type="bit" Nullable="false" />
+          <Property Name="iIntegral" Type="int" Nullable="false" />
+          <Property Name="IsRateAdd" Type="bit" Nullable="false" />
+          <Property Name="bIsActivity" Type="bit" Nullable="false" />
+          <Property Name="sGoodsStandardId" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ES_GoodsComment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sGoodsNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sOpenId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sComment" Type="varchar(max)" />
+          <Property Name="sPictureUrl" Type="varchar(max)" />
+          <Property Name="iScore" Type="int" Nullable="false" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_GoodsStandard">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sGoodsId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sStandardName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="dPrices" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_IntegralRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sOpenId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="iType" Type="int" Nullable="false" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_Menu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sMenuName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sParentMenuId" Type="varchar" MaxLength="50" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+          <Property Name="sMenuUrl" Type="nvarchar" MaxLength="255" />
+          <Property Name="iOrder" Type="int" Nullable="false" />
+          <Property Name="bIsDeleted" Type="bit" Nullable="false" />
+          <Property Name="sMenuIcon" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ES_Orders">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sOpenId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="sOrderNo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="iOrderType" Type="int" />
+          <Property Name="sGoodsNo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="sGoodsName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="dGoodsPrices" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="dPrices" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="dAllPrices" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="dDiscountPrices" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="dBookTime" Type="datetime" Nullable="false" />
+          <Property Name="dPayTime" Type="datetime" />
+          <Property Name="dDoneTime" Type="datetime" />
+          <Property Name="iCount" Type="int" Nullable="false" />
+          <Property Name="sReceiver" Type="varchar" MaxLength="50" />
+          <Property Name="sPhone" Type="varchar" MaxLength="50" />
+          <Property Name="sAddress" Type="varchar(max)" />
+          <Property Name="sContent" Type="varchar(max)" />
+          <Property Name="sActivity" Type="varchar(max)" />
+          <Property Name="sIp" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="iChannel" Type="int" Nullable="false" />
+          <Property Name="iState" Type="int" Nullable="false" />
+          <Property Name="iIntegral" Type="int" Nullable="false" />
+          <Property Name="sGuige" Type="varchar" MaxLength="255" />
+          <Property Name="sLogisticsCompany" Type="varchar" MaxLength="50" />
+          <Property Name="sLogisticsNo" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ES_Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sRoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+          <Property Name="sPowerIds" Type="nvarchar(max)" />
+          <Property Name="bIsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_ShopAddress">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sOpenId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="sReceiver" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="sPhone" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sProvince" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sCity" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sArea" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sAddress" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="bIsDefault" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sLoginAccout" Type="nvarchar" MaxLength="50" />
+          <Property Name="sPassWord" Type="nvarchar" MaxLength="100" />
+          <Property Name="sPhone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sHeadPicture" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="sRoleId" Type="nvarchar" MaxLength="50" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+          <Property Name="dLastLoginTime" Type="datetime" />
+          <Property Name="iState" Type="int" Nullable="false" />
+          <Property Name="bIsDeleted" Type="bit" Nullable="false" />
+          <Property Name="sNick" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sOpenId" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="bIsSuper" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_WebSite">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sWebSiteName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="sWebSiteIcon" Type="nvarchar" MaxLength="255" />
+          <Property Name="sCourtName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sCourtSign" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_WeChat">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sWeChatName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sOriginalId" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="sAppId" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="sAppSecret" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="sToken" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="sServerUrl" Type="nvarchar(max)" />
+          <Property Name="iType" Type="int" Nullable="false" />
+          <Property Name="bIsDeleted" Type="bit" Nullable="false" />
+          <Property Name="dInsertTime" Type="datetime" />
+          <Property Name="dUpdateTime" Type="datetime" />
+          <Property Name="sRemark" Type="nvarchar" MaxLength="255" />
+          <Property Name="bIsDeveloper" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_WeChatConcern">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="bIsConcernOn" Type="bit" Nullable="false" />
+          <Property Name="iConcernType" Type="int" Nullable="false" />
+          <Property Name="sContent" Type="nvarchar(max)" />
+          <Property Name="sWeChatNewsName" Type="nvarchar" MaxLength="255" />
+          <Property Name="sWeChatNewsNameId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="ES_WeChatKeyWord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sKeyWordName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="iRePlyType" Type="int" Nullable="false" />
+          <Property Name="sContent" Type="nvarchar(max)" />
+          <Property Name="bIsOpen" Type="bit" Nullable="false" />
+          <Property Name="sWeChatNewsName" Type="nvarchar" MaxLength="255" />
+          <Property Name="sWeChatNewsNameId" Type="uniqueidentifier" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+          <Property Name="dUpdateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_WeChatMenu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sMenuName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sUrl" Type="nvarchar" MaxLength="255" />
+          <Property Name="sParentMenuId" Type="nvarchar" MaxLength="255" />
+          <Property Name="bIsDeleted" Type="bit" Nullable="false" />
+          <Property Name="iType" Type="int" Nullable="false" />
+          <Property Name="iOrder" Type="int" Nullable="false" />
+          <Property Name="sKey" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="ES_WeChatNews">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sTitle" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="sPictureUrl" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="sDataUrl" Type="nvarchar(max)" />
+          <Property Name="sContent" Type="nvarchar(max)" />
+          <Property Name="sDescribe" Type="nvarchar(max)" />
+          <Property Name="iOrder" Type="int" Nullable="false" />
+          <Property Name="sToId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_WeChatNewsName">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sWeChatNewsName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+          <Property Name="bIsDeleted" Type="bit" Nullable="false" />
+          <Property Name="dUpdateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="BaseFrameworkModelStoreContainer">
+          <EntitySet Name="ES_Button" EntityType="Self.ES_Button" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_Client" EntityType="Self.ES_Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_Dictionary" EntityType="Self.ES_Dictionary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_Goods" EntityType="Self.ES_Goods" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_GoodsComment" EntityType="Self.ES_GoodsComment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_GoodsStandard" EntityType="Self.ES_GoodsStandard" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_IntegralRecord" EntityType="Self.ES_IntegralRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_Menu" EntityType="Self.ES_Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_Orders" EntityType="Self.ES_Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_Role" EntityType="Self.ES_Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_ShopAddress" EntityType="Self.ES_ShopAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_User" EntityType="Self.ES_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_WebSite" EntityType="Self.ES_WebSite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_WeChat" EntityType="Self.ES_WeChat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_WeChatConcern" EntityType="Self.ES_WeChatConcern" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_WeChatKeyWord" EntityType="Self.ES_WeChatKeyWord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_WeChatMenu" EntityType="Self.ES_WeChatMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_WeChatNews" EntityType="Self.ES_WeChatNews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_WeChatNewsName" EntityType="Self.ES_WeChatNewsName" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BaseFrameworkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ES_Button">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sButtonName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sButtonIcon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sMenuId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="iOrder" Type="Int32" Nullable="false" />
+          <Property Name="sButtonSign" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="sOperateUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ES_Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sOpenId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sNickName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sHeadPicture" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="iIntegral" Type="Int32" Nullable="false" />
+          <Property Name="iState" Type="Int32" Nullable="false" />
+          <Property Name="iIsSubscribe" Type="Int32" Nullable="false" />
+          <Property Name="dSubscribeTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="dUnSubscribeTime" Type="DateTime" Precision="3" />
+          <Property Name="iSex" Type="Int32" />
+          <Property Name="sProvince" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sCountry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ES_Goods">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sGoodsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="iGoodsType" Type="Int32" Nullable="false" />
+          <Property Name="sGoodsNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sDisPrices" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="sGoodsPrices" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsRateGiving" Type="Boolean" Nullable="false" />
+          <Property Name="iCount" Type="Int32" Nullable="false" />
+          <Property Name="bIsShelves" Type="Boolean" Nullable="false" />
+          <Property Name="sOrderHtmlKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="iIntegral" Type="Int32" Nullable="false" />
+          <Property Name="IsRateAdd" Type="Boolean" Nullable="false" />
+          <Property Name="bIsActivity" Type="Boolean" Nullable="false" />
+          <Property Name="sGoodsStandardId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ES_GoodsComment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sGoodsNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sOpenId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="sPictureUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="iScore" Type="Int32" Nullable="false" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ES_GoodsStandard">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sGoodsId" Type="Guid" Nullable="false" />
+          <Property Name="sStandardName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dPrices" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ES_IntegralRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sOpenId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="iType" Type="Int32" Nullable="false" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ES_Menu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sMenuName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sParentMenuId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="sMenuUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="iOrder" Type="Int32" Nullable="false" />
+          <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="sMenuIcon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ES_Orders">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sOpenId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sOrderNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="iOrderType" Type="Int32" />
+          <Property Name="sGoodsNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sGoodsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dGoodsPrices" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="dPrices" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="dAllPrices" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="dDiscountPrices" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="dBookTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="dPayTime" Type="DateTime" Precision="3" />
+          <Property Name="dDoneTime" Type="DateTime" Precision="3" />
+          <Property Name="iCount" Type="Int32" Nullable="false" />
+          <Property Name="sReceiver" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="sContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="sActivity" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="sIp" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="iChannel" Type="Int32" Nullable="false" />
+          <Property Name="iState" Type="Int32" Nullable="false" />
+          <Property Name="iIntegral" Type="Int32" Nullable="false" />
+          <Property Name="sGuige" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="sLogisticsCompany" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sLogisticsNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ES_ShopAddress">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sOpenId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sReceiver" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sProvince" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sArea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="bIsDefault" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_WebSite">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sWebSiteName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sWebSiteIcon" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sCourtName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sCourtSign" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_WeChat">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sWeChatName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sOriginalId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sAppId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sAppSecret" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sToken" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sServerUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="iType" Type="Int32" Nullable="false" />
+          <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="dInsertTime" Type="DateTime" Precision="3" />
+          <Property Name="dUpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="sRemark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="bIsDeveloper" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_WeChatConcern">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="bIsConcernOn" Type="Boolean" Nullable="false" />
+          <Property Name="iConcernType" Type="Int32" Nullable="false" />
+          <Property Name="sContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sWeChatNewsName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sWeChatNewsNameId" Type="Guid" />
+        </EntityType>
+        <EntityType Name="ES_WeChatKeyWord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sKeyWordName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="iRePlyType" Type="Int32" Nullable="false" />
+          <Property Name="sContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="bIsOpen" Type="Boolean" Nullable="false" />
+          <Property Name="sWeChatNewsName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sWeChatNewsNameId" Type="Guid" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="dUpdateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ES_WeChatMenu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sMenuName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sParentMenuId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="iType" Type="Int32" Nullable="false" />
+          <Property Name="iOrder" Type="Int32" Nullable="false" />
+          <Property Name="sKey" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ES_WeChatNews">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sPictureUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sDataUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sDescribe" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="iOrder" Type="Int32" Nullable="false" />
+          <Property Name="sToId" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_WeChatNewsName">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sWeChatNewsName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="dUpdateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ES_Button" EntityType="Self.ES_Button" />
+          <EntitySet Name="ES_Client" EntityType="Self.ES_Client" />
+          <EntitySet Name="ES_Goods" EntityType="Self.ES_Goods" />
+          <EntitySet Name="ES_GoodsComment" EntityType="Self.ES_GoodsComment" />
+          <EntitySet Name="ES_GoodsStandard" EntityType="Self.ES_GoodsStandard" />
+          <EntitySet Name="ES_IntegralRecord" EntityType="Self.ES_IntegralRecord" />
+          <EntitySet Name="ES_Menu" EntityType="Self.ES_Menu" />
+          <EntitySet Name="ES_Orders" EntityType="Self.ES_Orders" />
+          <EntitySet Name="ES_ShopAddress" EntityType="Self.ES_ShopAddress" />
+          <EntitySet Name="ES_WebSite" EntityType="Self.ES_WebSite" />
+          <EntitySet Name="ES_WeChat" EntityType="Self.ES_WeChat" />
+          <EntitySet Name="ES_WeChatConcern" EntityType="Self.ES_WeChatConcern" />
+          <EntitySet Name="ES_WeChatKeyWord" EntityType="Self.ES_WeChatKeyWord" />
+          <EntitySet Name="ES_WeChatMenu" EntityType="Self.ES_WeChatMenu" />
+          <EntitySet Name="ES_WeChatNews" EntityType="Self.ES_WeChatNews" />
+          <EntitySet Name="ES_WeChatNewsName" EntityType="Self.ES_WeChatNewsName" />
+          <EntitySet Name="ES_Role" EntityType="BaseFrameworkModel.ES_Role" />
+          <EntitySet Name="ES_User" EntityType="BaseFrameworkModel.ES_User" />
+          <EntitySet Name="ES_Dictionary" EntityType="BaseFrameworkModel.ES_Dictionary" />
+        </EntityContainer>
+        <EntityType Name="ES_Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sRoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="sPowerIds" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sLoginAccout" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sPassWord" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="sPhone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sHeadPicture" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sRoleId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="dLastLoginTime" Type="DateTime" Precision="3" />
+          <Property Name="iState" Type="Int32" Nullable="false" />
+          <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="sNick" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sOpenId" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="bIsSuper" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_Dictionary">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sText" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="iValue" Type="Int32" Nullable="false" />
+          <Property Name="sValueType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="iOrder" Type="Int32" Nullable="false" />
+          <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BaseFrameworkModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="ES_Button">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_Button">
+              <MappingFragment StoreEntitySet="ES_Button">
+                <ScalarProperty Name="sOperateUrl" ColumnName="sOperateUrl" />
+                <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sButtonName" ColumnName="sButtonName" />
+                <ScalarProperty Name="sButtonIcon" ColumnName="sButtonIcon" />
+                <ScalarProperty Name="sMenuId" ColumnName="sMenuId" />
+                <ScalarProperty Name="iOrder" ColumnName="iOrder" />
+                <ScalarProperty Name="sButtonSign" ColumnName="sButtonSign" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_Client">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_Client">
+              <MappingFragment StoreEntitySet="ES_Client">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sOpenId" ColumnName="sOpenId" />
+                <ScalarProperty Name="sNickName" ColumnName="sNickName" />
+                <ScalarProperty Name="sHeadPicture" ColumnName="sHeadPicture" />
+                <ScalarProperty Name="iIntegral" ColumnName="iIntegral" />
+                <ScalarProperty Name="iState" ColumnName="iState" />
+                <ScalarProperty Name="iIsSubscribe" ColumnName="iIsSubscribe" />
+                <ScalarProperty Name="dSubscribeTime" ColumnName="dSubscribeTime" />
+                <ScalarProperty Name="dUnSubscribeTime" ColumnName="dUnSubscribeTime" />
+                <ScalarProperty Name="iSex" ColumnName="iSex" />
+                <ScalarProperty Name="sProvince" ColumnName="sProvince" />
+                <ScalarProperty Name="sCountry" ColumnName="sCountry" />
+                <ScalarProperty Name="sCity" ColumnName="sCity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_Goods">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_Goods">
+              <MappingFragment StoreEntitySet="ES_Goods">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sGoodsName" ColumnName="sGoodsName" />
+                <ScalarProperty Name="iGoodsType" ColumnName="iGoodsType" />
+                <ScalarProperty Name="sGoodsNo" ColumnName="sGoodsNo" />
+                <ScalarProperty Name="sDisPrices" ColumnName="sDisPrices" />
+                <ScalarProperty Name="sGoodsPrices" ColumnName="sGoodsPrices" />
+                <ScalarProperty Name="IsRateGiving" ColumnName="IsRateGiving" />
+                <ScalarProperty Name="iCount" ColumnName="iCount" />
+                <ScalarProperty Name="bIsShelves" ColumnName="bIsShelves" />
+                <ScalarProperty Name="sOrderHtmlKey" ColumnName="sOrderHtmlKey" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+                <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
+                <ScalarProperty Name="iIntegral" ColumnName="iIntegral" />
+                <ScalarProperty Name="IsRateAdd" ColumnName="IsRateAdd" />
+                <ScalarProperty Name="bIsActivity" ColumnName="bIsActivity" />
+                <ScalarProperty Name="sGoodsStandardId" ColumnName="sGoodsStandardId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_GoodsComment">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_GoodsComment">
+              <MappingFragment StoreEntitySet="ES_GoodsComment">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sGoodsNo" ColumnName="sGoodsNo" />
+                <ScalarProperty Name="sOpenId" ColumnName="sOpenId" />
+                <ScalarProperty Name="sComment" ColumnName="sComment" />
+                <ScalarProperty Name="sPictureUrl" ColumnName="sPictureUrl" />
+                <ScalarProperty Name="iScore" ColumnName="iScore" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_GoodsStandard">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_GoodsStandard">
+              <MappingFragment StoreEntitySet="ES_GoodsStandard">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sGoodsId" ColumnName="sGoodsId" />
+                <ScalarProperty Name="sStandardName" ColumnName="sStandardName" />
+                <ScalarProperty Name="dPrices" ColumnName="dPrices" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_IntegralRecord">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_IntegralRecord">
+              <MappingFragment StoreEntitySet="ES_IntegralRecord">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sOpenId" ColumnName="sOpenId" />
+                <ScalarProperty Name="iType" ColumnName="iType" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_Menu">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_Menu">
+              <MappingFragment StoreEntitySet="ES_Menu">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sMenuName" ColumnName="sMenuName" />
+                <ScalarProperty Name="sParentMenuId" ColumnName="sParentMenuId" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+                <ScalarProperty Name="sMenuUrl" ColumnName="sMenuUrl" />
+                <ScalarProperty Name="iOrder" ColumnName="iOrder" />
+                <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
+                <ScalarProperty Name="sMenuIcon" ColumnName="sMenuIcon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_Orders">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_Orders">
+              <MappingFragment StoreEntitySet="ES_Orders">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sOpenId" ColumnName="sOpenId" />
+                <ScalarProperty Name="sOrderNo" ColumnName="sOrderNo" />
+                <ScalarProperty Name="iOrderType" ColumnName="iOrderType" />
+                <ScalarProperty Name="sGoodsNo" ColumnName="sGoodsNo" />
+                <ScalarProperty Name="sGoodsName" ColumnName="sGoodsName" />
+                <ScalarProperty Name="dGoodsPrices" ColumnName="dGoodsPrices" />
+                <ScalarProperty Name="dPrices" ColumnName="dPrices" />
+                <ScalarProperty Name="dAllPrices" ColumnName="dAllPrices" />
+                <ScalarProperty Name="dDiscountPrices" ColumnName="dDiscountPrices" />
+                <ScalarProperty Name="dBookTime" ColumnName="dBookTime" />
+                <ScalarProperty Name="dPayTime" ColumnName="dPayTime" />
+                <ScalarProperty Name="dDoneTime" ColumnName="dDoneTime" />
+                <ScalarProperty Name="iCount" ColumnName="iCount" />
+                <ScalarProperty Name="sReceiver" ColumnName="sReceiver" />
+                <ScalarProperty Name="sPhone" ColumnName="sPhone" />
+                <ScalarProperty Name="sAddress" ColumnName="sAddress" />
+                <ScalarProperty Name="sContent" ColumnName="sContent" />
+                <ScalarProperty Name="sActivity" ColumnName="sActivity" />
+                <ScalarProperty Name="sIp" ColumnName="sIp" />
+                <ScalarProperty Name="iChannel" ColumnName="iChannel" />
+                <ScalarProperty Name="iState" ColumnName="iState" />
+                <ScalarProperty Name="iIntegral" ColumnName="iIntegral" />
+                <ScalarProperty Name="sGuige" ColumnName="sGuige" />
+                <ScalarProperty Name="sLogisticsCompany" ColumnName="sLogisticsCompany" />
+                <ScalarProperty Name="sLogisticsNo" ColumnName="sLogisticsNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_ShopAddress">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_ShopAddress">
+              <MappingFragment StoreEntitySet="ES_ShopAddress">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sOpenId" ColumnName="sOpenId" />
+                <ScalarProperty Name="sReceiver" ColumnName="sReceiver" />
+                <ScalarProperty Name="sPhone" ColumnName="sPhone" />
+                <ScalarProperty Name="sProvince" ColumnName="sProvince" />
+                <ScalarProperty Name="sCity" ColumnName="sCity" />
+                <ScalarProperty Name="sArea" ColumnName="sArea" />
+                <ScalarProperty Name="sAddress" ColumnName="sAddress" />
+                <ScalarProperty Name="bIsDefault" ColumnName="bIsDefault" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_WebSite">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_WebSite">
+              <MappingFragment StoreEntitySet="ES_WebSite">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sWebSiteName" ColumnName="sWebSiteName" />
+                <ScalarProperty Name="sWebSiteIcon" ColumnName="sWebSiteIcon" />
+                <ScalarProperty Name="sCourtName" ColumnName="sCourtName" />
+                <ScalarProperty Name="sCourtSign" ColumnName="sCourtSign" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_WeChat">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_WeChat">
+              <MappingFragment StoreEntitySet="ES_WeChat">
+                <ScalarProperty Name="bIsDeveloper" ColumnName="bIsDeveloper" />
+                <ScalarProperty Name="sRemark" ColumnName="sRemark" />
+                <ScalarProperty Name="dUpdateTime" ColumnName="dUpdateTime" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+                <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
+                <ScalarProperty Name="iType" ColumnName="iType" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sWeChatName" ColumnName="sWeChatName" />
+                <ScalarProperty Name="sOriginalId" ColumnName="sOriginalId" />
+                <ScalarProperty Name="sAppId" ColumnName="sAppId" />
+                <ScalarProperty Name="sAppSecret" ColumnName="sAppSecret" />
+                <ScalarProperty Name="sToken" ColumnName="sToken" />
+                <ScalarProperty Name="sServerUrl" ColumnName="sServerUrl" />
+                </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_WeChatConcern">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_WeChatConcern">
+              <MappingFragment StoreEntitySet="ES_WeChatConcern">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="bIsConcernOn" ColumnName="bIsConcernOn" />
+                <ScalarProperty Name="iConcernType" ColumnName="iConcernType" />
+                <ScalarProperty Name="sContent" ColumnName="sContent" />
+                <ScalarProperty Name="sWeChatNewsName" ColumnName="sWeChatNewsName" />
+                <ScalarProperty Name="sWeChatNewsNameId" ColumnName="sWeChatNewsNameId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_WeChatKeyWord">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_WeChatKeyWord">
+              <MappingFragment StoreEntitySet="ES_WeChatKeyWord">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sKeyWordName" ColumnName="sKeyWordName" />
+                <ScalarProperty Name="iRePlyType" ColumnName="iRePlyType" />
+                <ScalarProperty Name="sContent" ColumnName="sContent" />
+                <ScalarProperty Name="bIsOpen" ColumnName="bIsOpen" />
+                <ScalarProperty Name="sWeChatNewsName" ColumnName="sWeChatNewsName" />
+                <ScalarProperty Name="sWeChatNewsNameId" ColumnName="sWeChatNewsNameId" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+                <ScalarProperty Name="dUpdateTime" ColumnName="dUpdateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_WeChatMenu">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_WeChatMenu">
+              <MappingFragment StoreEntitySet="ES_WeChatMenu">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sMenuName" ColumnName="sMenuName" />
+                <ScalarProperty Name="sUrl" ColumnName="sUrl" />
+                <ScalarProperty Name="sParentMenuId" ColumnName="sParentMenuId" />
+                <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
+                <ScalarProperty Name="iType" ColumnName="iType" />
+                <ScalarProperty Name="iOrder" ColumnName="iOrder" />
+                <ScalarProperty Name="sKey" ColumnName="sKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_WeChatNews">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_WeChatNews">
+              <MappingFragment StoreEntitySet="ES_WeChatNews">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sTitle" ColumnName="sTitle" />
+                <ScalarProperty Name="sPictureUrl" ColumnName="sPictureUrl" />
+                <ScalarProperty Name="sDataUrl" ColumnName="sDataUrl" />
+                <ScalarProperty Name="sContent" ColumnName="sContent" />
+                <ScalarProperty Name="sDescribe" ColumnName="sDescribe" />
+                <ScalarProperty Name="iOrder" ColumnName="iOrder" />
+                <ScalarProperty Name="sToId" ColumnName="sToId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_WeChatNewsName">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_WeChatNewsName">
+              <MappingFragment StoreEntitySet="ES_WeChatNewsName">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sWeChatNewsName" ColumnName="sWeChatNewsName" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+                <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
+                <ScalarProperty Name="dUpdateTime" ColumnName="dUpdateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_Role">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_Role">
+              <MappingFragment StoreEntitySet="ES_Role">
+                <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
+                <ScalarProperty Name="sPowerIds" ColumnName="sPowerIds" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+                <ScalarProperty Name="sRoleName" ColumnName="sRoleName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_User">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_User">
+              <MappingFragment StoreEntitySet="ES_User">
+                <ScalarProperty Name="bIsSuper" ColumnName="bIsSuper" />
+                <ScalarProperty Name="sOpenId" ColumnName="sOpenId" />
+                <ScalarProperty Name="sNick" ColumnName="sNick" />
+                <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
+                <ScalarProperty Name="iState" ColumnName="iState" />
+                <ScalarProperty Name="dLastLoginTime" ColumnName="dLastLoginTime" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+                <ScalarProperty Name="sRoleId" ColumnName="sRoleId" />
+                <ScalarProperty Name="sHeadPicture" ColumnName="sHeadPicture" />
+                <ScalarProperty Name="sName" ColumnName="sName" />
+                <ScalarProperty Name="sPhone" ColumnName="sPhone" />
+                <ScalarProperty Name="sPassWord" ColumnName="sPassWord" />
+                <ScalarProperty Name="sLoginAccout" ColumnName="sLoginAccout" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_Dictionary">
+            <EntityTypeMapping TypeName="BaseFrameworkModel.ES_Dictionary">
+              <MappingFragment StoreEntitySet="ES_Dictionary">
+                <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
+                <ScalarProperty Name="iOrder" ColumnName="iOrder" />
+                <ScalarProperty Name="sValueType" ColumnName="sValueType" />
+                <ScalarProperty Name="iValue" ColumnName="iValue" />
+                <ScalarProperty Name="sText" ColumnName="sText" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

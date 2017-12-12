@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "编辑字典";
+}
+@model Framework.Entity.ES_Dictionary
+<form id="dataForm">
+    <input type="hidden" name="ID" value="@Model.ID" />
+    <table class="gridtable">
+        <tr>
+            <td>字典类型</td>
+            <td>
+                <input class="easyui-textbox" name="sValueType" data-options="required:true" value="@Model.sValueType">
+            </td>
+        </tr>
+        <tr>
+            <td>字典名称</td>
+            <td>
+                <input class="easyui-textbox" name="sText" data-options="required:true" value="@Model.sText">
+            </td>
+        </tr>
+        <tr>
+            <td>字典值</td>
+            <td>
+                <input class="easyui-numberbox" name="iValue" data-options="required:true" value="@Model.iValue">
+            </td>
+        </tr>
+        <tr>
+            <td>字典排序</td>
+            <td>
+                <input class="easyui-numberspinner" name="iOrder" data-options="required:true,min:0" value="@Model.iOrder">
+            </td>
+        </tr>
+    </table>
+</form>

@@ -1,0 +1,101 @@
+﻿@{
+    ViewBag.Title = "菜单数据列表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<table id="menu"></table>
+<div id="menu_toolbar" style="padding:5px;">
+    <a class="easyui-linkbutton" data-mark="add" data-url="/Menu/Add" data-options="iconCls:'icon-add',plain:true">新增菜单</a>
+    <a class="easyui-linkbutton" data-mark="edit"   data-url="/Menu/Edit" data-options="iconCls:'icon-edit',plain:true">编辑菜单</a>
+    <a class="easyui-linkbutton" data-mark="cancel" data-url="/Menu/Cancel" data-options="iconCls:'icon-clear',plain:true">删除菜单</a>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var grid = $('#menu');
+        var toolbar = '#menu_toolbar';
+
+        //所有按钮事件的绑定
+        $(toolbar).on("click", 'a', function () {
+            eui.dialogArgs.title = $(this).text();
+            eui.dialogArgs.url = $(this).attr("data-url");
+            eui.dialogArgs.width = 400;
+            eui.dialogArgs.height = 250;
+            switch ($(this).attr("data-mark")) {
+                case 'add':
+                    eui.dialogArgs.callback = operate;
+                    eui.dialog(eui.dialogArgs);
+                    break;
+                case 'edit':
+                    var selected = grid.treegrid('getSelections');
+                    if (selected.length == 1) {
+                        eui.dialogArgs.url += "?ID=" + selected[0].ID;
+                        eui.dialogArgs.callback = operate;
+                        eui.dialog(eui.dialogArgs);
+                    }
+                    else
+                        eui.alert("请选择一条数据操作");
+                    break;
+                case 'cancel':
+                    cancel();
+                    break;
+            }
+        });
+
+        //新增编辑操作
+        function operate() {
+            if ($(eui.form).form("validate")) {
+                eui.button.disable();
+                eui.commitArgs.url = eui.dialogArgs.url;
+                eui.commitArgs.data = $(eui.form).serialize();
+                eui.commitArgs.success = function (r) {
+                    eui.alert(r.info);
+                    grid.treegrid('reload');
+                }
+                eui.commit(eui.commitArgs);
+            }
+        }
+
+        //删除操作
+         function cancel () {
+            var selected = grid.treegrid('getSelections');
+            if (selected.length > 0) {
+                eui.confirm("确认要删除所选择的数据", function () {
+                    var Ids = [];
+                    $(selected).each(function () { Ids.push(this.ID) });
+                    eui.commitArgs.url = eui.dialogArgs.url;
+                    eui.commitArgs.data = { MenuIds: Ids.join() };
+                    eui.commitArgs.success = function (r) {
+                        grid.treegrid('reload');
+                        grid.treegrid("clearSelections");
+                        eui.alert(r.info);
+                    }
+                    eui.commit(eui.commitArgs);
+                });
+            }
+            else
+                eui.alert("请选择一条数据操作");
+        }
+
+        //数据列表的绑定
+        grid.treegrid({
+            url: '@Url.Action("Index")',
+            toolbar: toolbar,
+            fitColumns: true,
+            idField: 'ID',
+            treeField: 'sMenuName',
+            loadMsg: "正在加载...",
+            striped: true,
+            fit: true,
+            singleSelect: true,
+            border: false,
+            columns: [[
+                { field: 'sMenuName', title: '菜单名称', width: 200, align: 'center' },
+                { field: 'sMenuUrl', title: '菜单链接', width: 150, align: 'center' },
+                { field: 'iOrder', title: '排序', width: 60, align: 'center' },
+                { field: 'dInsertTime', title: '添加时间', width: 150, align: 'center' },
+            ]],
+            onLoadSuccess: function () {
+                grid.treegrid('collapseAll');
+            }
+        });
+    });
+</script>

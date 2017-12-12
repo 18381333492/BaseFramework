@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "权限分配";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<ul id="power_tree" class="easyui-tree" style="width:150px;margin-top:15px;margin-left:15px;"></ul>
+
+<script type="text/javascript">
+    $(function () {
+        $('#power_tree').tree({
+            url: '@Url.Action("PowerSet")',
+            checkbox: true,
+            animate: true,
+            lines: true
+        });
+    });
+</script>

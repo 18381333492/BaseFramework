@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "添加字典";
+}
+<form id="dataForm">
+    <table class="gridtable">
+        <tr>
+            <td>字典类型</td>
+            <td>
+                <input class="easyui-textbox" name="sValueType" data-options="required:true">
+            </td>
+        </tr>
+        <tr>
+            <td>字典名称</td>
+            <td>
+                <input class="easyui-textbox" name="sText" data-options="required:true">
+            </td>
+        </tr>
+        <tr>
+            <td>字典值</td>
+            <td>
+                <input class="easyui-numberbox" name="iValue" data-options="required:true">
+            </td>
+        </tr>
+        <tr>
+            <td>字典排序</td>
+            <td>
+                <input class="easyui-numberspinner" name="iOrder" data-options="required:true,min:0" value="0">
+            </td>
+        </tr>
+    </table>
+</form>

@@ -1,0 +1,147 @@
+﻿@{
+    ViewBag.Title = "微信公众号数据列表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<table id="wechat"></table>
+<div id="wechat_toolbar" style="padding:5px;">
+    <form id="searchForm">
+        <div style="margin-bottom:5px;">
+            <span class="label">公众号类型</span>
+            @Html.Partial("~/Views/Shared/_DictionaryList.cshtml",new Framework.Utility.Models.ItemDictionary() { Name="iType",Type="WeChatType",bSelect=true })
+            <span class="label">公众号名称</span>
+            <input class="easyui-textbox" name="keyword" data-options="iconCls:'icon-search'">
+            <a class="easyui-linkbutton" data-mark="search" data-options="width:60">查 询</a>
+        </div>
+    </form>
+    <a class="easyui-linkbutton" data-mark="add" data-url="/WeChat/Add" data-options="iconCls:'icon-add',plain:true">新增公众号</a>
+    <a class="easyui-linkbutton" data-mark="edit" data-url="/WeChat/Edit" data-options="iconCls:'icon-edit',plain:true">编辑公众号</a>
+    <a class="easyui-linkbutton" data-mark="cancel" data-url="/WeChat/Cancel" data-options="iconCls:'icon-clear',plain:true">删除公众号</a>
+    <a class="easyui-linkbutton" data-mark="menu" data-url="/WeChat/Menu" data-options="iconCls:'icon-remove',plain:true">生成菜单</a>
+    <a class="easyui-linkbutton" data-mark="developer" data-url="/WeChat/Developer" data-options="iconCls:'icon-man',plain:true">成为开发者</a>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var grid = $('#wechat');
+        var toolbar = '#wechat_toolbar';
+
+        //所有按钮事件的绑定
+        $(toolbar).on("click", 'a', function () {
+            eui.dialogArgs.title = $(this).text();
+            eui.dialogArgs.url = $(this).attr("data-url");
+            eui.dialogArgs.width = 530;
+            eui.dialogArgs.height = 380;
+            switch ($(this).attr("data-mark")) {
+                case 'search':
+                    var params = eui.serializeJson(eui.searchForm);
+                    grid.datagrid({ queryParams: params });
+                    break;
+                case 'add':
+                    eui.dialogArgs.callback = operate;
+                    eui.dialog(eui.dialogArgs);
+                    break;
+                case 'edit':
+                    var selected = grid.treegrid('getSelections');
+                    if (selected.length == 1) {
+                        eui.dialogArgs.url += "?ID=" + selected[0].ID;
+                        eui.dialogArgs.callback = operate;
+                        eui.dialog(eui.dialogArgs);
+                    }
+                    else
+                        eui.alert("请选择一条数据操作");
+                    break;
+                case 'cancel':
+                    cancel();
+                    break;
+                case 'developer':
+                    developer();
+                    break;
+            }
+        });
+
+        //新增编辑操作
+        function operate() {
+            if ($(eui.form).form("validate")) {
+                eui.button.disable();
+                eui.commitArgs.url = eui.dialogArgs.url;
+                eui.commitArgs.data = $(eui.form).serialize();
+                eui.commitArgs.success = function (r) {
+                    eui.alert(r.info);
+                    grid.datagrid('reload');
+                }
+                eui.commit(eui.commitArgs);
+            }
+        }
+
+        //成为开发者
+        function developer() {
+            var selected = grid.treegrid('getSelections');
+            if (selected.length == 1) {
+                eui.commitArgs.url = eui.dialogArgs.url;
+                eui.commitArgs.data = { ID: selected[0].ID };
+                eui.commitArgs.success = function (r) {
+                    eui.alert(r.info);
+                    grid.datagrid('reload');
+                }
+                eui.commit(eui.commitArgs);
+            }
+            else
+                eui.alert("请选择一条数据操作");
+        }
+
+        //删除操作
+        function cancel() {
+            var selected = grid.datagrid('getSelections');
+            if (selected.length > 0) {
+                eui.confirm("确认要删除所选择的数据", function () {
+                    var Ids = [];
+                    $(selected).each(function () { Ids.push(this.ID) });
+                    eui.commitArgs.url = eui.dialogArgs.url;
+                    eui.commitArgs.data = { WeChatIds: Ids.join() };
+                    eui.commitArgs.success = function (r) {
+                        grid.datagrid('reload');
+                        grid.datagrid("clearSelections");
+                        eui.alert(r.info);
+                    }
+                    eui.commit(eui.commitArgs);
+                });
+            }
+            else
+                eui.alert("请选择一条数据操作");
+        }
+
+
+        //列表数据的绑定
+        grid.datagrid({
+            url:'@Url.Action("Index")',
+            toolbar: toolbar,
+            sortOrder: 'desc',
+            sortName: 'dInsertTime',
+            singleSelect: true,
+            columns: [[
+                { field: 'sWeChatName', title: '公众号名称', align: 'center', width: 150 },
+                { field: 'sAppId', title: 'AppId', align: 'center', width: 120 },
+                { field: 'sOriginalId', title: '原始ID', align: 'center', width: 120 },
+                { field: 'sText', title: '公众号类型', align: 'center', width: 80 },
+                {
+                    field: 'bIsDeveloper', title: '开发者', align: 'center', width: 80, formatter: function (value) {
+                        var color = value == true ? "green" : "red";
+                        var msg = value == true ? "是" : "否";
+                        return "<span style='color:" + color + "'>" + msg + "</span>";
+                    }
+                },
+                { field: 'dUpdateTime', title: '上一次更新时间', align: 'center', width: 200 },
+                { field: 'dInsertTime', title: '添加时间', align: 'center', width: 200 },
+                { field: 'sRemark',   title: '备注', align: 'center', width: 250 },
+            ]],
+            onDblClickRow: function (index, row) {
+                eui.dialogArgs.width = 530;
+                eui.dialogArgs.height = 380;
+                eui.dialogArgs.title = "编辑公众号";
+                eui.dialogArgs.url = '@Url.Action("Edit")';
+                eui.dialogArgs.url += "?ID=" + row.ID;
+                eui.dialogArgs.callback = operate;
+                eui.dialog(eui.dialogArgs);
+            }
+        });
+    });
+</script>

@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "编辑菜单";
+}
+@model Framework.Entity.ES_Menu
+<form id="dataForm">
+    <input type="hidden" name="ID" value="@Model.ID" />
+    <input type="hidden" name="dInsertTime" value="@Model.dInsertTime" />
+    <table class="gridtable">
+        <tr>
+            <td>父级菜单</td>
+            <td>
+                <input id="sParentMenuId" name="sParentMenuId" value="@Model.sParentMenuId">
+            </td>
+        </tr>
+        <tr>
+            <td>菜单名称</td>
+            <td>
+                <input class="easyui-textbox" name="sMenuName" data-options="required:true" value="@Model.sMenuName">
+            </td>
+        </tr>
+        <tr>
+            <td>菜单链接</td>
+            <td>
+                <input class="easyui-textbox" name="sMenuUrl" value="@Model.sMenuUrl">
+            </td>
+        </tr>
+        <tr>
+            <td>菜单排序</td>
+            <td>
+                <input class="easyui-numberspinner" name="iOrder" data-options="required:true,min:0" value="@Model.iOrder">
+            </td>
+        </tr>
+    </table>
+</form>
+<script type="text/javascript">
+    $(function () {
+        //ComboTree的渲染
+        $('#sParentMenuId').combotree({
+            url:'@Url.Action("GetComboTreeList")',
+            required: true,
+            editable: true,
+        });
+    });
+</script>

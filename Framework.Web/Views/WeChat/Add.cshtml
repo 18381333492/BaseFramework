@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "添加公众号";
+}
+<form id="dataForm">
+    <table class="gridtable">
+        <tr>
+            <td>公众号类型</td>
+            <td>
+               @Html.Partial("~/Views/Shared/_DictionaryList.cshtml", new Framework.Utility.Models.ItemDictionary()
+                                                            { Name = "iType", Type = "WeChatType", Width=320,Required="true" })
+            </td>
+        </tr>
+        <tr>
+            <td>公众号名称</td>
+            <td>
+                <input class="easyui-textbox" name="sWeChatName" data-options="required:true,width:320">
+            </td>
+        </tr>
+        <tr>
+            <td>原始ID</td>
+            <td>
+                <input class="easyui-textbox" name="sOriginalId" data-options="required:true,width:320">
+            </td>
+        </tr>
+        <tr>
+            <td>公众号AppId</td>
+            <td>
+                <input class="easyui-textbox" name="sAppId" data-options="required:true,width:320">
+            </td>
+        </tr>
+        <tr>
+            <td>AppSecret</td>
+            <td>
+                <input class="easyui-textbox" name="sAppSecret" data-options="required:true,width:320">
+            </td>
+        </tr>
+        <tr>
+            <td>公众号Token</td>
+            <td>
+                <input class="easyui-textbox" name="sToken" data-options="required:true,width:320">
+            </td>
+        </tr>
+        <tr>
+            <td>服务器地址</td>
+            <td>
+                <input class="easyui-textbox" name="sServerUrl" data-options="width:320">
+            </td>
+        </tr>
+        <tr>
+            <td>备注</td>
+            <td>
+                <input class="easyui-textbox" name="sRemark" data-options="width:320">
+            </td>
+        </tr>
+    </table>
+</form>

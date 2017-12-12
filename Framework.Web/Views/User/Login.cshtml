@@ -1,0 +1,114 @@
+﻿
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>欢迎登录后台管理系统</title>
+    <link href="~/Content/login/css/style.css" rel="stylesheet" />
+    <script src="/Scripts/jquery-1.12.4.min.js"></script>
+    @*<script src="~/Content/login/js/cloud.js"></script>*@
+</head>
+<body style="background-color:#1c77ac; background-image:url(/Content/login/images/light.png); background-repeat:no-repeat; background-position:center top; overflow:hidden;">
+    <div id="mainBody">
+        <div id="cloud1" class="cloud"></div>
+        <div id="cloud2" class="cloud"></div>
+    </div>
+    <div class="loginbody">
+        <span class="systemlogo"></span>
+        <div class="loginbox" style="text-align:center">
+            <div id="qrcode" style="padding-top:83px;padding-left: 47px"></div>
+            <p class="tip" style="text-align:center;color:red;font-size:12px;width:197px;margin:20px auto;padding-left:47px;"></p> 
+        </div>
+    </div>
+    <div class="loginbm">版权所有  2013  <a href="http://www.uimaker.com">uimaker.com</a>仅供学习交流，勿用于任何商业用途</div>
+</body>
+</html>
+<script src="/Scripts/plug-in/qrcode.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        loginSocket.createSocket("ws://127.0.0.1:55225");
+    });
+
+    //webSocket的登录应用
+    var loginSocket = (function (obj) { return obj; }(new function () {
+
+        var ws;
+      
+        //检查浏览器是否支持webSocket
+        function checkBrowser() {
+            if (window.WebSocket) {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        //创建链接
+        function createSocket(url) {
+            if (checkBrowser()) {
+                //创建连接
+                ws = new WebSocket(url);
+
+                //链接成功时候执行
+                ws.onopen = function () {
+                    console.log("连接成功!");
+                }
+
+                //接受消息时执行
+                ws.onmessage = function (message) {
+                    if (message.data) {
+                        var res = JSON.parse(message.data);
+                        if (res.sSocketId) {
+                            //生成二维码
+                            var url = document.location.origin + "/User/WeChatConfirm?sSocketId=" + res.sSocketId;
+                            $("#qrcode").qrcode({
+                                width: 150, //宽度 
+                                height: 150, //高度 
+                                text: url    //生成二维码的内容
+                            });
+                            $('.tip').text("请使用微信扫一扫登录!");
+                        }
+                        else {
+                            if (res.data) {
+                                //扫码成功
+                                $('.tip').text("扫码成功,正在登录......");
+                            }
+                            else {
+                                //扫码失败
+                                $('.tip').text(res.data.info);
+                            }
+                        }
+                    }
+                };
+
+                //链接关闭时候执行
+                ws.onclose = function () {
+                    console.log("连接关闭!");
+                }
+
+                //连接失败时候执行
+                ws.onerror = function () {
+                    console.log("连接失败!");
+                    $('.tip').text("连接服务器失败!");
+                    $("#qrcode").html('<img style="height:150px;width:150px;" src="/Content/login/images/unlink.png"/>');
+                }
+            }
+            else {
+                $('.tip').text("该浏览器不支持扫码登录,请升级您的浏览器!");
+                $("#qrcode").html('<img style="height:150px;width:150px;" src="/Content/login/images/br.png"/>');
+            }
+        }
+
+        //发送消息
+        function send(data) {
+            model.data = data;
+            var value = model.toJson();
+            ws.send(value);
+        }
+
+        return {
+            createSocket: createSocket,
+            send: send
+        }
+    }));
+</script>
+

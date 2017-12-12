@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "管理员数据列表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<table id="user"></table>
+<div id="user_toolbar" style="padding:5px;">
+    <form id="searchForm">
+        <div style="margin-bottom:5px;">
+            <span class="label">管理员状态</span>
+            @Html.Partial("~/Views/Shared/_DictionaryList.cshtml", new Framework.Utility.Models.ItemDictionary() { Name = "iState", Type = "UserState",bSelect=true })
+            <span class="label">模糊查询</span>
+            <input class="easyui-textbox" name="keyword" data-options="iconCls:'icon-search',prompt:'姓名/昵称/电话/OpenId'">
+            <a class="easyui-linkbutton" data-mark="search" data-options="width:60">查 询</a>
+        </div>
+    </form>
+    <a class="easyui-linkbutton" data-mark="verify" data-url="/User/Verify" data-options="iconCls:'icon-ok',plain:true">通过审核</a>
+    <a class="easyui-linkbutton" data-mark="freeze" data-url="/User/Freeze" data-options="iconCls:'icon-tip',plain:true">冻结/解冻</a>
+    <a class="easyui-linkbutton" data-mark="cancel" data-url="/User/Cancel" data-options="iconCls:'icon-clear',plain:true">删除管理员</a>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var grid = $('#user');
+        var toolbar = '#user_toolbar';
+
+        //所有按钮事件的绑定
+        $(toolbar).on("click", 'a', function () {
+            eui.dialogArgs.title = $(this).text();
+            eui.dialogArgs.url = $(this).attr("data-url");
+            eui.dialogArgs.width = 400;
+            eui.dialogArgs.height = 250;
+            switch ($(this).attr("data-mark")) {
+                case 'search':
+                    var params = eui.serializeJson(eui.searchForm);
+                    grid.datagrid({ queryParams: params });
+                    break;
+                case 'add':
+                    eui.dialogArgs.callback = operate;
+                    eui.dialog(eui.dialogArgs);
+                    break;
+                case 'edit':
+                    var selected = grid.treegrid('getSelections');
+                    if (selected.length == 1) {
+                        eui.dialogArgs.url += "?ID=" + selected[0].ID;
+                        eui.dialogArgs.callback = operate;
+                        eui.dialog(eui.dialogArgs);
+                    }
+                    else
+                        eui.alert("请选择一条数据操作");
+                    break;
+                case 'cancel':
+                    cancel();
+                    break;
+            }
+        });
+
+        //新增编辑操作
+        function operate() {
+            if ($(eui.form).form("validate")) {
+                eui.button.disable();
+                eui.commitArgs.url = eui.dialogArgs.url;
+                eui.commitArgs.data = $(eui.form).serialize();
+                eui.commitArgs.success = function (r) {
+                    eui.alert(r.info);
+                    grid.datagrid('reload');
+                }
+                eui.commit(eui.commitArgs);
+            }
+        }
+
+        //删除操作
+        function cancel() {
+            var selected = grid.datagrid('getSelections');
+            if (selected.length > 0) {
+                eui.confirm("确认要删除所选择的数据", function () {
+                    var Ids = [];
+                    $(selected).each(function () { Ids.push(this.ID) });
+                    eui.commitArgs.url = eui.dialogArgs.url;
+                    eui.commitArgs.data = { DictionaryIds: Ids.join() };
+                    eui.commitArgs.success = function (r) {
+                        grid.datagrid('reload');
+                        grid.datagrid("clearSelections");
+                        eui.alert(r.info);
+                    }
+                    eui.commit(eui.commitArgs);
+                });
+            }
+            else
+                eui.alert("请选择一条数据操作");
+        }
+
+
+        //列表数据的绑定
+        grid.datagrid({
+            url:'@Url.Action("Index")',
+            toolbar: toolbar,
+            sortOrder: 'asc',
+            sortName: 'dInsertTime',
+            singleSelect: true,
+            columns: [[
+                {
+                    field: 'sHeadPicture', title: '微信头像', align: 'center', width: 100, formatter: function (value) {
+                        var html = [];
+                        html.push('<img src="' + value + '" style="height:50px;width:50px;border-radius:25px;display:block;margin:auto;margin-top:2px;margin-bottom:2px"/>');
+                        return html.join("");
+                    }
+                },
+                { field: 'sOpenId', title: 'sOpenId', align: 'center', width: 200 },
+                { field: 'sNick', title: '微信昵称', align: 'center', width: 80 },
+                { field: 'sName', title: '名字', align: 'center', width: 80 },
+                { field: 'sPhone',title: '手机号码', align: 'center', width: 100 },
+                { field: 'sRoleName', title: '角色', align: 'center', width: 100 },
+                {
+                    field: 'sText', title: '状态', align: 'center', width: 80, formatter: function (value, row) {
+                        var color = ""; 
+                        if (row.iState == -2) color = "blue";
+                        if (row.iState == -1) color = "red";
+                        if (row.iState == 1) color = "green";
+                        return "<span style='color:" + color + "'>" + value + "</span>";
+                    }
+                },
+                { field: 'dInsertTime', title: '注册时间', align: 'center', width: 180 },
+                { field: 'dLastLoginTime', title: '最近登录时间', align: 'center', width:180 },
+            ]],
+        });
+    });
+</script>

@@ -1,0 +1,9 @@
+﻿
+<!--数据字典下来列表公共部分html-->
+<input id="tt" class="easyui-combobox" name="@Model.Name" value="@Model.Value"
+       data-options="valueField:'iValue',
+                    textField:'sText',
+                    panelHeight:'auto',
+                    required:@(Model.Required),
+                    width:'@Model.Width',
+                    url:'@Url.Action("GetComboBoxData","Dictionary",new { sValueType=Model.Type,bSelect=Model.bSelect})'" />

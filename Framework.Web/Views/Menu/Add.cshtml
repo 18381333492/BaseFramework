@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "添加菜单";
+}
+<form id="dataForm">
+    <table class="gridtable">
+        <tr>
+            <td>父级菜单</td>
+            <td>
+                <input id="sParentMenuId" name="sParentMenuId">  
+            </td>
+        </tr>
+        <tr>
+            <td>菜单名称</td>
+            <td>
+                <input class="easyui-textbox" name="sMenuName" data-options="required:true">
+            </td>
+        </tr>
+        <tr>
+            <td>菜单链接</td>
+            <td>
+                <input class="easyui-textbox" name="sMenuUrl">
+            </td>
+        </tr>
+        <tr>
+            <td>菜单排序</td>
+            <td>
+                <input class="easyui-numberspinner" name="iOrder" data-options="required:true,min:0" value="0">
+            </td>
+        </tr>
+    </table>
+</form>
+<script type="text/javascript">
+    $(function () {
+        //ComboTree的渲染
+        $('#sParentMenuId').combotree({
+            url:'@Url.Action("GetComboTreeList")',
+            required: true,
+            editable: true,
+        });
+    });
+</script>

@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "编辑公众号";
+}
+@model Framework.Entity.ES_WeChat
+<form id="dataForm">
+    <input type="hidden" name="ID" value="@Model.ID" />
+    <input type="hidden" name="dInsertTime"   value="@Model.dInsertTime" />  
+    <input type="hidden" name="bIsDeveloper" value="@Model.bIsDeveloper" />
+    <table class="gridtable">
+        <tr>
+            <td>公众号类型</td>
+            <td>
+                @Html.Partial("~/Views/Shared/_DictionaryList.cshtml", new Framework.Utility.Models.ItemDictionary()
+                                                             { Name = "iType", Type = "WeChatType", Width = 320, Required = "true",Value=Model.iType })
+            </td>
+        </tr>
+        <tr>
+            <td>公众号名称</td>
+            <td>
+                <input class="easyui-textbox" name="sWeChatName" value="@Model.sWeChatName" data-options="required:true,width:320">
+            </td>
+        </tr>
+        <tr>
+            <td>原始ID</td>
+            <td>
+                <input class="easyui-textbox" name="sOriginalId" value="@Model.sOriginalId" data-options="required:true,width:320">
+            </td>
+        </tr>
+        <tr>
+            <td>公众号AppId</td>
+            <td>
+                <input class="easyui-textbox" name="sAppId" value="@Model.sAppId" data-options="required:true,width:320">
+            </td>
+        </tr>
+        <tr>
+            <td>AppSecret</td>
+            <td>
+                <input class="easyui-textbox" name="sAppSecret" value="@Model.sAppSecret" data-options="required:true,width:320">
+            </td>
+        </tr>
+        <tr>
+            <td>公众号Token</td>
+            <td>
+                <input class="easyui-textbox" name="sToken" value="@Model.sToken" data-options="required:true,width:320">
+            </td>
+        </tr>
+        <tr>
+            <td>服务器地址</td>
+            <td>
+                <input class="easyui-textbox" name="sServerUrl" value="@Model.sServerUrl" data-options="width:320">
+            </td>
+        </tr>
+        <tr>
+            <td>备注</td>
+            <td>
+                <input class="easyui-textbox" name="sRemark" value="@Model.sRemark" data-options="width:320">
+            </td>
+        </tr>
+    </table>
+</form>
