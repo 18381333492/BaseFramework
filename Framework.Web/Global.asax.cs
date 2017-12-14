@@ -56,9 +56,10 @@ namespace Framework.Web
                 socket.OnMessage = message =>
                 {
                     var receive = JsonHelper.Deserialize<dynamic>(message);//获取收到的消息
-                    if (!string.IsNullOrEmpty(receive.sSocketId))
+                    string sSocketId = Convert.ToString(receive.sSocketId);
+                    if (!string.IsNullOrEmpty(sSocketId))
                     {
-                        var sendSocket = allSockets.FirstOrDefault(m =>Convert.ToString(m.ConnectionInfo.Id)== receive.sSocketId);
+                        var sendSocket = allSockets.FirstOrDefault(m =>Convert.ToString(m.ConnectionInfo.Id)== sSocketId);
                         if (sendSocket != null)
                         {
                             sendSocket.Send(JsonHelper.ToJsonString(new

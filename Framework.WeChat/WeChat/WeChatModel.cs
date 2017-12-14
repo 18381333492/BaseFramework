@@ -54,13 +54,13 @@ namespace Framework.WeChat
                     sAppId = Model.sAppId,
                     sAppSecret = Model.sAppSecret,
                     dDate = DateTime.Now.AddSeconds(respone.expires_in-200),
-                    sAccessToken = respone.expires_in
+                    sAccessToken = respone.access_token
                 });
                 return respone.access_token;
             }
             else
             {
-                if (ConvertHelper.ToDateTime(model.dadDate) > DateTime.Now)
+                if (ConvertHelper.ToDateTime(model.dDate) > DateTime.Now)
                     return model.sAccessToken;
                 else
                 {

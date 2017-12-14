@@ -80,6 +80,6 @@ namespace Framework.WeChat
         /// <summary>
         /// 用户被打上的标签ID列表
         /// </summary>
-        public string tagid_list { get; set; }
+        public List<string> tagid_list { get; set; }
     }
 }

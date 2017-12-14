@@ -5,7 +5,7 @@
     <title>欢迎登录后台管理系统</title>
     <link href="~/Content/login/css/style.css" rel="stylesheet" />
     <script src="/Scripts/jquery-1.12.4.min.js"></script>
-    @*<script src="~/Content/login/js/cloud.js"></script>*@
+    <script src="~/Content/login/js/cloud.js"></script>
 </head>
 <body style="background-color:#1c77ac; background-image:url(/Content/login/images/light.png); background-repeat:no-repeat; background-position:center top; overflow:hidden;">
     <div id="mainBody">
@@ -31,6 +31,8 @@
     //webSocket的登录应用
     var loginSocket = (function (obj) { return obj; }(new function () {
 
+        var tip = $('.tip');
+        var qrcode = $('#qrcode');
         var ws;
       
         //检查浏览器是否支持webSocket
@@ -60,21 +62,34 @@
                         if (res.sSocketId) {
                             //生成二维码
                             var url = document.location.origin + "/User/WeChatConfirm?sSocketId=" + res.sSocketId;
-                            $("#qrcode").qrcode({
+                            console.log(url);
+                            qrcode.qrcode({
                                 width: 150, //宽度 
                                 height: 150, //高度 
                                 text: url    //生成二维码的内容
                             });
-                            $('.tip').text("请使用微信扫一扫登录!");
+                            tip.text("请使用微信扫一扫登录!");
                         }
                         else {
                             if (res.data) {
                                 //扫码成功
-                                $('.tip').text("扫码成功,正在登录......");
+                                tip.text("扫码成功,正在登录......");
+                                $.ajax({
+                                    url: '@Url.Action("WeChatConfirm")',
+                                    type: 'POST',
+                                    dataType: 'json',
+                                    data: res.data,
+                                    success: function (r) {
+                                        if (r.success)
+                                            tip.text("登录成功,即将跳转.....");
+                                        else
+                                            tip.text(r.info);
+                                    }
+                                });
                             }
                             else {
                                 //扫码失败
-                                $('.tip').text(res.data.info);
+                                tip.text("扫码失败,请重新扫码");
                             }
                         }
                     }
@@ -88,26 +103,18 @@
                 //连接失败时候执行
                 ws.onerror = function () {
                     console.log("连接失败!");
-                    $('.tip').text("连接服务器失败!");
-                    $("#qrcode").html('<img style="height:150px;width:150px;" src="/Content/login/images/unlink.png"/>');
+                    tip.text("连接服务器失败!");
+                    qrcode.html('<img style="height:150px;width:150px;" src="/Content/login/images/unlink.png"/>');
                 }
             }
             else {
-                $('.tip').text("该浏览器不支持扫码登录,请升级您的浏览器!");
-                $("#qrcode").html('<img style="height:150px;width:150px;" src="/Content/login/images/br.png"/>');
+                tip.text("该浏览器不支持扫码登录,请升级您的浏览器!");
+                qrcode.html('<img style="height:150px;width:150px;" src="/Content/login/images/br.png"/>');
             }
         }
-
-        //发送消息
-        function send(data) {
-            model.data = data;
-            var value = model.toJson();
-            ws.send(value);
-        }
-
+      
         return {
             createSocket: createSocket,
-            send: send
         }
     }));
 </script>

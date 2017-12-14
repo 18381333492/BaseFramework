@@ -1,4 +1,5 @@
-﻿using Framework.Utility.Models;
+﻿using Framework.Entity;
+using Framework.Utility.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,12 @@ namespace Framework.Interfaces
         /// <param name="iState">状态</param>
         /// <returns></returns>
         public abstract string GetList(PageInfo pageInfo, int? iState);
+
+        /// <summary>
+        /// 根据OpenId获取管理员信息
+        /// </summary>
+        /// <param name="sOpenId"></param>
+        /// <returns></returns>
+        public abstract ES_User Get(string sOpenId);
     }
 }

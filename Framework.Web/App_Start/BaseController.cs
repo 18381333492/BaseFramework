@@ -34,7 +34,6 @@ namespace Framework.Web.App_Start
             result = new ResponeResult();
         }
 
-
         /// <summary>
         /// 映射实现接口
         /// </summary>

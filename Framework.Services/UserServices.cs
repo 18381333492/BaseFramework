@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Framework.Utility.Models;
 using Framework.Utility.Tools;
+using Framework.Entity;
 
 namespace Framework.Services
 {
@@ -38,6 +39,17 @@ namespace Framework.Services
             }
             var res = query.PaginationQuery(sSql.ToString(), pageInfo, parameters);
             return JsonHelper.ToJsonString(res);
+        }
+
+        /// <summary>
+        /// 根据OpenId获取管理员信息
+        /// </summary>
+        /// <param name="sOpenId"></param>
+        /// <returns></returns>
+        public override ES_User Get(string sOpenId)
+        {
+            var user = query.SingleQuery<ES_User>(@"select * from ES_User where sOpenId=@sOpenId and bIsDeleted=0",new { sOpenId= sOpenId });
+            return user;
         }
     }
 }

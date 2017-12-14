@@ -111,8 +111,7 @@ namespace Framework.Services
                     pid = m.sMenuId,
                     text = m.sButtonName,
                     iconCls = m.sButtonIcon,
-                    state = "closed"
-                    
+                    state = "closed"       
                 };
             }).ToList()).ToList();
             //组装数据

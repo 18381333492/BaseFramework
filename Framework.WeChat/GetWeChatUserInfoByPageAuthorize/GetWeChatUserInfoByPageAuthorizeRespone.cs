@@ -49,7 +49,7 @@ namespace Framework.WeChat
         /// <summary>
         /// 用户特权信息，json 数组，如微信沃卡用户为（chinaunicom）
         /// </summary>
-        public string privilege { get; set; }
+        public List<string> privilege { get; set; }
 
         /// <summary>
         /// 只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。
