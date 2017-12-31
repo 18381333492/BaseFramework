@@ -12,9 +12,7 @@
             <a class="easyui-linkbutton" data-mark="search" data-options="width:60">查 询</a>
         </div>
     </form>
-    <a class="easyui-linkbutton" data-mark="add" data-url="/Button/Add" data-options="iconCls:'icon-add',plain:true">新增按钮</a>
-    <a class="easyui-linkbutton" data-mark="edit" data-url="/Button/Edit" data-options="iconCls:'icon-edit',plain:true">编辑按钮</a>
-    <a class="easyui-linkbutton" data-mark="cancel" data-url="/Button/Cancel" data-options="iconCls:'icon-clear',plain:true">删除按钮</a>
+    @Html.Partial("~/Views/Shared/_Btn.cshtml")
 </div>
 <script type="text/javascript">
     //按钮图表数据

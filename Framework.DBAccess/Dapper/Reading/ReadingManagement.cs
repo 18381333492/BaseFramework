@@ -14,6 +14,16 @@ namespace Framework.DBAccess.Dapper
     public class ReadingManagement
     {
         /// <summary>
+        /// 判断泛型是否是字典类型
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        private bool DoIsDictionary<T>()
+        {
+            return typeof(T).GetInterface("IDictionary")==null? false:true;      
+        }
+
+        /// <summary>
         /// 根据条件查询是否存在相应的数据
         /// </summary>
         /// <param name="conn">数据库连接字符串对象</param>
@@ -26,7 +36,6 @@ namespace Framework.DBAccess.Dapper
             return ret.Count() > 0 ? true : false;
         }
 
-
         /// <summary>
         /// 查询单条数据
         /// </summary>
@@ -37,7 +46,19 @@ namespace Framework.DBAccess.Dapper
         /// <returns></returns>
         protected T DoSingleQuery<T>(SqlConnection conn, string sqlCommand, Object parameter = null) where T : new()
         {
-            return conn.QueryFirstOrDefault<T>(sqlCommand, parameter, null, null, CommandType.Text);
+            if (DoIsDictionary<T>())
+            {//泛型是字典类型
+                var ret = conn.Query(sqlCommand, parameter, null, true, null, CommandType.Text)
+                       .Select(m => ((IDictionary<string, object>)m)
+                       .ToDictionary(k => k.Key, v => v.Value))
+                       .FirstOrDefault<IDictionary<string, object>>();
+                return (T)ret;
+            }
+            else
+            {
+               var ret=conn.QueryFirstOrDefault<T>(sqlCommand, parameter, null, null, CommandType.Text);
+               return ret;
+            }
         }
 
         /// <summary>
@@ -50,11 +71,20 @@ namespace Framework.DBAccess.Dapper
         /// <returns></returns>
         protected IList<T> DoQueryList<T>(SqlConnection conn, string sqlCommand, Object parameter = null)
         {
-            var ret = conn.Query<T>(sqlCommand, parameter, null, true, null, CommandType.Text);
-            if (ret == null) return default(IList<T>);
-            return ret.ToList();
+            if (DoIsDictionary<T>())
+            {//泛型是字典类型
+                var ret = conn.Query(sqlCommand, parameter, null, true, null, CommandType.Text)
+                       .Select(m => ((IDictionary<string, object>)m)
+                       .ToDictionary(k => k.Key, v => v.Value))
+                       .ToList<IDictionary<string,object>>();
+                return ret.Select(m=>(T)m).ToList();
+            }
+            else
+            {
+                var ret = conn.Query<T>(sqlCommand, parameter, null, true, null, CommandType.Text).ToList();
+                return ret;
+            }
         }
-
 
         /// <summary>
         /// 分页获取数据
@@ -93,6 +123,30 @@ namespace Framework.DBAccess.Dapper
                 result.rows =new List<object>();
             }
             return result;
+        }
+
+        /// <summary>
+        /// 执行存储过程返回结果集
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sProcedureName"></param>
+        /// <param name="Parameters"></param>
+        /// <returns></returns>
+        protected IList<T> DoQueryProcedure<T>(SqlConnection conn, string sProcedureName, DynamicParameters Parameters)
+        {
+            if (DoIsDictionary<T>())
+            {//泛型是字典类型
+                var ret = conn.Query(sProcedureName, Parameters, null, true, null, CommandType.StoredProcedure)
+                          .Select(m => ((IDictionary<string, object>)m)
+                          .ToDictionary(k => k.Key, v => v.Value))
+                          .ToList<IDictionary<string, object>>();
+                return ret.Select(m => (T)m).ToList();
+            }
+            else
+            {
+                var ret = conn.Query<T>(sProcedureName, Parameters, null, true, null, CommandType.StoredProcedure).ToList();
+                return ret;
+            }
         }
 
     }

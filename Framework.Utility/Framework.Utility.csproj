@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\MethodType.cs" />
     <Compile Include="Enums\OrderType.cs" />
     <Compile Include="Enums\SessionType.cs" />
     <Compile Include="Models\ItemDictionary.cs" />

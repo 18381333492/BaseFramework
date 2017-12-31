@@ -52,5 +52,14 @@ namespace Framework.Utility.Models
             get;
             set;
         }
+
+        /// <summary>
+        /// 是否被选中
+        /// </summary>
+        public bool selected
+        {
+            get;
+            set;
+        }
     }
 }

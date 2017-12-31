@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BaseController.cs" />
+    <Compile Include="App_Start\NoLogin.cs" />
     <Compile Include="Controllers\ButtonController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\DictionaryController.cs" />
@@ -484,11 +485,11 @@
     <Content Include="Content\easyui\themes\metro\validatebox.css" />
     <Content Include="Content\easyui\themes\metro\window.css" />
     <Content Include="Content\easyui\themes\mobile.css" />
+    <Content Include="Content\images\timeout.jpg" />
     <Content Include="Content\login\images\br.png" />
     <Content Include="Content\login\images\buttonbg.png" />
     <Content Include="Content\login\images\light.png" />
     <Content Include="Content\login\images\unlink.png" />
-    <Content Include="Content\test.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\icheck.js" />
     <Content Include="App_Data\Configs\Unity.config">
@@ -695,6 +696,8 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\WeChatConfirm.cshtml" />
+    <Content Include="Views\User\TimeOut.cshtml" />
+    <Content Include="Views\Shared\_Btn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

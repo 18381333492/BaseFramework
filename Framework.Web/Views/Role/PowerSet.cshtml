@@ -2,14 +2,59 @@
     ViewBag.Title = "权限分配";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<ul id="power_tree" class="easyui-tree" style="width:150px;margin-top:15px;margin-left:15px;"></ul>
+<div style="height:30px;line-height:30px;margin-left:15px;margin-top:10px;">
+    <a class="easyui-linkbutton" data-value="0" data-options="iconCls:'icon-more'">展开/折叠</a>
+    <a class="easyui-linkbutton commit" data-options="iconCls:'icon-ok'">保 存</a>
+</div>
+<ul id="power_tree" class="easyui-tree" style="width:150px;margin-top:10px;margin-left:15px;"></ul>
 <script type="text/javascript">
     $(function () {
-        $('#power_tree').tree({
-            url: '@Url.Action("PowerSet")',
+        var tree = $('#power_tree');
+        tree.tree({
+            url: '@Url.Action("PowerSet")?ID=@ViewBag.ID',
             checkbox: true,
             animate: true,
-            lines: true
+            lines: true,
+            cascadeCheck:false,
+            onLoadSuccess: function () {
+                tree.tree("collapseAll");
+            }
+        });
+        
+        //折叠/展开
+        $('a[data-value]').on("click", function () {
+            if ($(this).attr("data-value") == 0) {
+                $(this).attr("data-value", 1);
+                tree.tree("expandAll");
+            }
+            else {
+                $(this).attr("data-value", 0);
+                tree.tree("collapseAll");
+            }
+        });
+
+        //保存提交
+        $('.commit').on("click", function () {
+            //获取所有选中的节点
+            var nodes = tree.tree("getChecked");
+            var menuNodes='';//选择的菜单节点
+            var btnNodes='';//选择按钮节点
+            $(nodes).each(function () {
+                if (this.attributes == 1) {
+                    menuNodes = menuNodes + this.id + ",";
+                }
+                else {
+                    btnNodes = btnNodes + this.id + ",";
+                }
+            });
+            menuNodes=menuNodes.substring(0,menuNodes.length-1);
+            btnNodes=btnNodes.substring(0,btnNodes.length-1);
+            eui.commitArgs.url = "@Url.Action("PowerSave")" + "?ID=@ViewBag.ID";
+            eui.commitArgs.data = { ID:'@ViewBag.ID'  ,sPowerIds:menuNodes+"|"+btnNodes};
+            eui.commitArgs.success = function (r) {
+                eui.alert(r.info);
+            }
+            eui.commit(eui.commitArgs);
         });
     });
 </script>

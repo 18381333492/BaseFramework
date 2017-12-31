@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Framework.Utility.Tools;
+using Framework.Utility.Enums;
 
 namespace Framework.Web.Controllers
 {
@@ -18,7 +19,7 @@ namespace Framework.Web.Controllers
         // GET: /WeChatDeveloper/
         public void Receive()
         {
-            if (Request.HttpMethod.ToUpper() == "GET")
+            if (Request.HttpMethod.ToUpper() == MethodType.GET)
             {
                 string result = string.Empty;
                 var Manager = DI.DIEntity.Instance.GetImpl<IWeChat>();

@@ -13,9 +13,7 @@
             <a class="easyui-linkbutton" data-mark="search" data-options="width:60">查 询</a>
         </div>
     </form>
-    <a class="easyui-linkbutton" data-mark="verify" data-url="/User/Verify" data-options="iconCls:'icon-ok',plain:true">通过审核</a>
-    <a class="easyui-linkbutton" data-mark="freeze" data-url="/User/Freeze" data-options="iconCls:'icon-tip',plain:true">冻结/解冻</a>
-    <a class="easyui-linkbutton" data-mark="cancel" data-url="/User/Cancel" data-options="iconCls:'icon-clear',plain:true">删除管理员</a>
+    @Html.Partial("~/Views/Shared/_Btn.cshtml")
 </div>
 <script type="text/javascript">
     $(function () {

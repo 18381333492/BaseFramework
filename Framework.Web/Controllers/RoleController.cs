@@ -1,5 +1,6 @@
 ﻿using Framework.Entity;
 using Framework.Interfaces;
+using Framework.Utility.Enums;
 using Framework.Utility.Models;
 using Framework.Web.App_Start;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Framework.Utility.Tools;
 
 namespace Framework.Web.Controllers
 {
@@ -24,7 +26,7 @@ namespace Framework.Web.Controllers
         /// <returns></returns>
         public ActionResult Index(PageInfo pageInfo)
         {
-            if (Request.HttpMethod.ToUpper() == "GET")
+            if (Request.HttpMethod.ToUpper() ==MethodType.GET)
             {
                 return View();
             }
@@ -41,7 +43,7 @@ namespace Framework.Web.Controllers
         /// <returns></returns>
         public ActionResult Add(ES_Role Role)
         {
-            if (Request.HttpMethod.ToUpper() == "GET")
+            if (Request.HttpMethod.ToUpper() ==MethodType.GET)
             {
                 return View();
             }
@@ -60,7 +62,7 @@ namespace Framework.Web.Controllers
         /// <returns></returns>
         public ActionResult Edit(ES_Role Role)
         {
-            if (Request.HttpMethod.ToUpper() == "GET")
+            if (Request.HttpMethod.ToUpper() ==MethodType.GET)
             {
                 return View(Manager.Get(Role.ID));
             }
@@ -89,17 +91,74 @@ namespace Framework.Web.Controllers
         /// </summary>
         /// <param name="Role"></param>
         /// <returns></returns>
-        public ActionResult PowerSet(ES_Role Role)
+        public ActionResult PowerSet(Guid ID)
         {
-            if (Request.HttpMethod.ToUpper() == "GET")
+            if (Request.HttpMethod.ToUpper() ==MethodType.GET)
             {
+                ViewBag.ID = ID;
                 return View();
             }
             else
             {
-                var manage = GetImpl<IMenu>();
-                return Content(manage.GetMenuAndBtnByUser());
+                var role = Manager.Get(ID);
+                string sPowerStr = role.sPowerIds;
+                List<string> sMenuIds;
+                List<string> sBtnIds;
+                if (sPowerStr.Contains("|"))
+                {
+                    sMenuIds = sPowerStr.Split('|')[0].Split(',').ToList();
+                    sBtnIds = sPowerStr.Split('|')[1].Split(',').ToList();
+                }
+                else
+                {
+                    sMenuIds = sPowerStr.Split('|')[0].Split(',').ToList();
+                    sBtnIds = new List<string>();
+                }
+                var ListTree = new List<ItemTree>();
+                //组织菜单数据
+                foreach(var item in (IEnumerable<dynamic>)Session[SessionType.MENU])
+                {
+                    var tree = new ItemTree(){
+                        id = item.ID.ToString(),
+                        pid = item.sParentId,
+                        text = item.sName,
+                        iconCls = item.sIcon,
+                        attributes = item.iType, //1表示菜单 2 表示按钮
+                    };
+                    if (sMenuIds.Contains(item.ID.ToString()))
+                        tree.selected = true;
+                    ListTree.Add(tree);
+                }
+                //组织按钮数据
+                foreach (var item in (IEnumerable<dynamic>)Session[SessionType.BTN])
+                {
+                    var tree = new ItemTree()
+                    {
+                        id = item.ID.ToString(),
+                        pid = item.sParentId,
+                        text = item.sName,
+                        iconCls = item.sIcon,
+                        attributes = item.iType, //1表示菜单 2 表示按钮
+                    };
+                    if (sBtnIds.Contains(item.ID.ToString()))
+                        tree.selected = true;
+                    ListTree.Add(tree);
+                }
+                var treeString = JsonHelper.GetTreeData(ListTree);
+               return Content(treeString);
             }
+        }
+
+        /// <summary>
+        /// 保存角色权限
+        /// </summary>
+        /// <param name="Role"></param>
+        /// <returns></returns>
+        public ActionResult PowerSave(ES_Role Role)
+        {
+            if (Manager.PowerSave(Role) > 0)
+                result.success = true;
+            return Json(result);
         }
     }
 }

@@ -76,6 +76,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dapper\DbParameters.cs" />
     <Compile Include="Dapper\Interfaces\IReading.cs" />
     <Compile Include="Dapper\Interfaces\IWriting.cs" />
     <Compile Include="Dapper\Reading\ReadingManagement.cs" />

@@ -11,9 +11,7 @@
             <a class="easyui-linkbutton" data-mark="search" data-options="width:60">查 询</a>
         </div>
     </form>
-    <a class="easyui-linkbutton" data-mark="add" data-url="/Dictionary/Add" data-options="iconCls:'icon-add',plain:true">新增字典</a>
-    <a class="easyui-linkbutton" data-mark="edit" data-url="/Dictionary/Edit" data-options="iconCls:'icon-edit',plain:true">编辑字典</a>
-    <a class="easyui-linkbutton" data-mark="cancel" data-url="/Dictionary/Cancel" data-options="iconCls:'icon-clear',plain:true">删除字典</a>
+    @Html.Partial("~/Views/Shared/_Btn.cshtml")
 </div>
 <script type="text/javascript">
     $(function () {

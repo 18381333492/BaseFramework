@@ -57,10 +57,12 @@ namespace Framework.Interfaces
         public abstract int Cancel(string RoleIds);
 
         /// <summary>
-        /// 权限分配
+        /// 保存权限分配
         /// </summary>
         /// <param name="Role"></param>
         /// <returns></returns>
-        public abstract int PowerSet(ES_Role Role);
+        public abstract int PowerSave(ES_Role Role);
+
+
     }
 }

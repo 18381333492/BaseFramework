@@ -4,9 +4,7 @@
 }
 <table id="menu"></table>
 <div id="menu_toolbar" style="padding:5px;">
-    <a class="easyui-linkbutton" data-mark="add" data-url="/Menu/Add" data-options="iconCls:'icon-add',plain:true">新增菜单</a>
-    <a class="easyui-linkbutton" data-mark="edit"   data-url="/Menu/Edit" data-options="iconCls:'icon-edit',plain:true">编辑菜单</a>
-    <a class="easyui-linkbutton" data-mark="cancel" data-url="/Menu/Cancel" data-options="iconCls:'icon-clear',plain:true">删除菜单</a>
+    @Html.Partial("~/Views/Shared/_Btn.cshtml")
 </div>
 <script type="text/javascript">
     $(function () {

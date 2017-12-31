@@ -27,7 +27,7 @@ namespace Framework.Web.Controllers
         /// <returns></returns>
         public ActionResult Index(PageInfo pageInfo,int? iState)
         {
-            if (Request.HttpMethod.ToUpper() == "GET")
+            if (Request.HttpMethod.ToUpper() == MethodType.GET)
             {
                 return View();
             }
@@ -38,22 +38,26 @@ namespace Framework.Web.Controllers
         }
 
         /// <summary>
+        /// 登录过期页面
+        /// </summary>
+        /// <returns></returns>
+        [NoLogin]
+        public ActionResult TimeOut()
+        {
+            return View();
+        }
+
+        /// <summary>
         /// 后台管理员登录
         /// </summary>
         /// <returns></returns>
+        [NoLogin]
         public ActionResult Login()
         {
-            if (Request.HttpMethod.ToUpper() == "GET")
+            if (Request.HttpMethod.ToUpper() == MethodType.GET)
             {
-                var manageWeChat = GetImpl<IWeChat>();
-                var weChat = manageWeChat.GetDeveloper();//获取开发者微信公众号
-                IWeChatRequest request = new GetWeChatUserInfoRequest();
-                GetWeChatUserInfoModel model = new GetWeChatUserInfoModel();
-                model.sAppId = weChat.sAppId;
-                model.sAppSecret = weChat.sAppSecret;
-                model.sOpenId = "omHVhuM92qR97IBMffkx6smEoZjc";
-                var respone=request.Execute<GetWeChatUserInfoRespone>(model);
-
+                var user = Manager.Get("omHVhuM92qR97IBMffkx6smEoZjc");
+                CacheUserInfo(user);
                 return View();
             }
             else
@@ -66,9 +70,10 @@ namespace Framework.Web.Controllers
         /// 微信确认登录
         /// </summary>
         /// <returns></returns>
+        [NoLogin]
         public ActionResult WeChatConfirm()
         {
-            if (Request.HttpMethod.ToUpper() == "GET")
+            if (Request.HttpMethod.ToUpper() == MethodType.GET)
             {
                 string sSocketId = Request.QueryString["sSocketId"];
                 string code = Request.QueryString["code"];
@@ -120,7 +125,7 @@ namespace Framework.Web.Controllers
                     result.success = false;
                     result.info = "该账户不存在,请联系管理员";
                 }
-                return Json(null);
+                return Json(result);
             }
         }
 
@@ -128,19 +133,22 @@ namespace Framework.Web.Controllers
         /// 缓存用户相关的信息
         /// </summary>
         /// <param name="user"></param>
+        [NoLogin]
         private void CacheUserInfo(ES_User user)
         {
+            //缓存管理员信息
             Session[SessionType.USER] = new LoginCacheInfo()
             {
                 ID = user.ID,
                 sName = user.sName,
                 sHeadImg=user.sHeadPicture
             };
-            
-
-
-
-
+            //管理员登录操作
+            var powerList =Manager.LoginOperate(user.ID);
+            var menuList = powerList.Where(m => m.iType == 1);
+            var btnList = powerList.Where(m => m.iType == 2);
+            Session[SessionType.MENU] = menuList;
+            Session[SessionType.BTN] = btnList;
         }
     }
 }

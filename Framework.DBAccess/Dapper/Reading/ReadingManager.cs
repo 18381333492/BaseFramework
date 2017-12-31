@@ -195,5 +195,33 @@ namespace Framework.DBAccess.Dapper
                 CloseConnect(conn);
             }
         }
+
+        /// <summary>
+        /// 执行存储过程返回结果集
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sProcedureName"></param>
+        /// <param name="Parameters"></param>
+        /// <returns></returns>
+        public IList<T> QueryProcedure<T>(string sProcedureName, SqlDbParameters Parameters)
+        {
+            SqlConnection conn = null;
+            try
+            {
+                conn = GetSqlConnection();
+                if (conn == null) throw new ApplicationException("未获取到连接对象。");
+                return DoQueryProcedure<T>(conn, sProcedureName, Parameters.GetParameters());
+            }
+            catch (Exception ex)
+            {
+                logger.Info(ex.Message);
+                logger.Fatal(ex);
+                return default(IList<T>);
+            }
+            finally
+            {
+                CloseConnect(conn);
+            }
+        }
     }
 }

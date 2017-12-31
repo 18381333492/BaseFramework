@@ -56,5 +56,17 @@ namespace Framework.DBAccess.Dapper
         /// <param name="parameter"></param>
         /// <returns></returns>
         PageResult PaginationQuery(string sqlCommand, PageInfo pageInfo, object parameter);
+
+
+        /// <summary>
+        /// 执行存储过程返回查询结果集
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sProcedureName"></param>
+        /// <param name="Parameters"></param>
+        /// <returns></returns>
+        IList<T> QueryProcedure<T>(string sProcedureName, SqlDbParameters Parameters);
+
+
     }
 }

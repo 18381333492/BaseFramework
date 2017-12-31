@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "登录过期";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="height:100%;width:100%;background:url(/Content/images/timeout.jpg) center no-repeat;background-size:100% 100%"></div>
+<p style="position:absolute;top:40%;height:40px;line-height:40px;margin-top:20px;font-size:18px;text-align:center;width:100%;font-weight:600">
+    登录超时,请重新点击
+    <a target="_parent" href="@Url.Action("Login")" style="color:blue;font-size:18px;text-decoration-line:none">登录</a>
+</p>

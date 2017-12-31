@@ -104,7 +104,7 @@ namespace Framework.Services
         /// </summary>
         /// <param name="Role"></param>
         /// <returns></returns>
-        public override int PowerSet(ES_Role Role)
+        public override int PowerSave(ES_Role Role)
         {
             using (var Context = new Entities())
             {

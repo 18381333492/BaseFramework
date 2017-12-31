@@ -27,11 +27,6 @@ namespace Framework.Interfaces
         /// <returns></returns>
         public abstract string GetComboTreeList();
 
-        /// <summary>
-        /// 获取用户的菜单列表
-        /// </summary>
-        /// <returns></returns>
-        public abstract string GetUserMenuList();
 
         /// <summary>
         /// 获取所有的子菜单Combobox数据
@@ -39,12 +34,7 @@ namespace Framework.Interfaces
         /// <returns></returns>
         public abstract string GetChildComboboxList();
 
-        /// <summary>
-        /// 根据用户获取相应的菜单和按钮
-        /// </summary>
-        /// <returns></returns>
-        public abstract string GetMenuAndBtnByUser();
-
+     
         /// <summary>
         /// 根据主键获取菜单对象
         /// </summary>

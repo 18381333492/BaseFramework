@@ -48,31 +48,9 @@ namespace Framework.Services
 
             return result;
         }
-    
-        /// <summary>
-        /// 获取用户的菜单列表
-        /// </summary>
-        /// <returns></returns>
-        public override string GetUserMenuList()
-        {
-            var userMenuList = query.QueryList<ES_Menu>("select * from ES_Menu where bIsDeleted=0 order by iorder");
-            //组装数据
-            var result = JsonHelper.GetTreeData(userMenuList.Select(m =>
-            {
-                return new ItemTree()
-                {
-                    id = m.ID.ToString(),
-                    pid = m.sParentMenuId,
-                    text = m.sMenuName,
-                    attributes = m.sMenuUrl
-                };
-            }).ToList());
-
-            return result;
-        }
 
         /// <summary>
-        /// 获取所有的子菜单ComboTree数据
+        /// 获取所有的子菜单Combobox数据
         /// </summary>
         /// <returns></returns>
         public override string GetChildComboboxList()
@@ -81,41 +59,6 @@ namespace Framework.Services
                                                                            where bIsDeleted=0 and sParentMenuId is not null order by iorder");
             //组装数据
             var result = JsonHelper.ToJsonString(childComboTreeMenuList);
-            return result;
-        }
-
-        /// <summary>
-        /// 根据用户获取相应的菜单和按钮
-        /// </summary>
-        /// <returns></returns>
-        public override string GetMenuAndBtnByUser()
-        {
-            var menuList= query.QueryList<ES_Menu>("select * from ES_Menu where bIsDeleted=0 order by iorder");
-            var btnList= query.QueryList<ES_Button>("select * from ES_Button where bIsDeleted=0 order by iorder");
-            var ItemTreeList = new List<ItemTree>();
-            ItemTreeList = menuList.Select(m =>
-            {
-                  return new ItemTree()
-                  {
-                      id = m.ID.ToString(),
-                      pid = m.sParentMenuId,
-                      text = m.sMenuName,
-                      state = "closed"
-                  };
-            }).ToList();
-            ItemTreeList=ItemTreeList.Concat(btnList.Select(m =>
-            {
-                return new ItemTree()
-                {
-                    id = m.ID.ToString(),
-                    pid = m.sMenuId,
-                    text = m.sButtonName,
-                    iconCls = m.sButtonIcon,
-                    state = "closed"       
-                };
-            }).ToList()).ToList();
-            //组装数据
-            var result =JsonHelper.GetTreeData(ItemTreeList);
             return result;
         }
 
@@ -130,6 +73,7 @@ namespace Framework.Services
             var obj = query.Find<ES_Menu>(MenuId);
             return obj;
         }
+
 
         /// <summary>
         /// 添加菜单

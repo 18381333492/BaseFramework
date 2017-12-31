@@ -27,5 +27,11 @@ namespace Framework.Interfaces
         /// <param name="sOpenId"></param>
         /// <returns></returns>
         public abstract ES_User Get(string sOpenId);
+
+        /// <summary>
+        /// 管理员的登录操作
+        /// </summary>
+        /// <param name="UserId"></param>
+        public abstract List<dynamic> LoginOperate(Guid UserId);
     }
 }

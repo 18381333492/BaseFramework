@@ -75,6 +75,7 @@
             async: parameter.async,
             dataType: 'json',
             success: function (r) {
+                 /*是否需要直接处理返回回调*/
                 if (!parameter.other) {
                     if (r.success) {
                         parameter.success(r);

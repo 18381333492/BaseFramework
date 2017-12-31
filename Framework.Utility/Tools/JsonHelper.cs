@@ -68,7 +68,8 @@ namespace Framework.Utility.Tools
                     main.Add(new JProperty("text", o.text));
                     main.Add(new JProperty("attributes", o.attributes));
                     main.Add(new JProperty("iconCls", o.iconCls));
-                    main.Add(new JProperty("state", o.state));
+                    main.Add(new JProperty("state",o.state));
+                    main.Add(new JProperty("checked", o.selected));
                     main.Add(new JProperty("children", childArray));
                     mainArray.Add(main);
                 }
@@ -99,6 +100,7 @@ namespace Framework.Utility.Tools
                     child.Add(new JProperty("attributes", o.attributes));
                     child.Add(new JProperty("iconCls", o.iconCls));
                     child.Add(new JProperty("state", o.state));
+                    child.Add(new JProperty("checked", o.selected));
                     child.Add(new JProperty("children", temp));
                     childArray.Add(child);
                 }

@@ -1,0 +1,10 @@
+﻿<!--权限按钮分布视图-->
+
+@if (ViewBag.@Btn != null)
+{
+    foreach (var btn in (IEnumerable<dynamic>)ViewBag.@Btn)
+    {
+        <a class="easyui-linkbutton" data-mark="@btn.sSign" data-url="@btn.sUrl" data-options="iconCls:'@btn.sIcon',plain:true">@btn.sName</a>
+    }
+}
+

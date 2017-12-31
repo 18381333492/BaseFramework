@@ -1,5 +1,6 @@
 ﻿using Framework.Entity;
 using Framework.Interfaces;
+using Framework.Utility.Enums;
 using Framework.Web.App_Start;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace Framework.Web.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            if (Request.HttpMethod.ToUpper()=="GET")
+            if (Request.HttpMethod.ToUpper()==MethodType.GET)
             {
                 return View();
             }
@@ -49,7 +50,7 @@ namespace Framework.Web.Controllers
         /// <returns></returns>
         public ActionResult Add(ES_Menu Menu)
         {
-            if (Request.HttpMethod.ToUpper() == "GET")
+            if (Request.HttpMethod.ToUpper() == MethodType.GET)
             {
                 return View();
             }
@@ -68,7 +69,7 @@ namespace Framework.Web.Controllers
         /// <returns></returns>
         public ActionResult Edit(ES_Menu Menu)
         {
-            if (Request.HttpMethod.ToUpper() == "GET")
+            if (Request.HttpMethod.ToUpper() == MethodType.GET)
             {
                 return View(Manager.Get(Menu.ID));
             }

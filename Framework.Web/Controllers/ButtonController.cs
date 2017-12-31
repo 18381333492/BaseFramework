@@ -1,5 +1,6 @@
 ﻿using Framework.Entity;
 using Framework.Interfaces;
+using Framework.Utility.Enums;
 using Framework.Utility.Models;
 using Framework.Web.App_Start;
 using System;
@@ -24,7 +25,7 @@ namespace Framework.Web.Controllers
         /// <returns></returns>
         public ActionResult Index(PageInfo pageInfo)
         {
-            if (Request.HttpMethod.ToUpper() == "GET")
+            if (Request.HttpMethod.ToUpper() == MethodType.GET)
             {
                 return View();
             }
@@ -51,7 +52,7 @@ namespace Framework.Web.Controllers
         /// <returns></returns>
         public ActionResult Add(ES_Button Button)
         {
-            if (Request.HttpMethod.ToUpper() == "GET")
+            if (Request.HttpMethod.ToUpper() == MethodType.GET)
             {
                 return View();
             }
@@ -70,7 +71,7 @@ namespace Framework.Web.Controllers
         /// <returns></returns>
         public ActionResult Edit(ES_Button Button)
         {
-            if (Request.HttpMethod.ToUpper() == "GET")
+            if (Request.HttpMethod.ToUpper() == MethodType.GET)
             {
                 return View(Manager.Get(Button.ID));
             }

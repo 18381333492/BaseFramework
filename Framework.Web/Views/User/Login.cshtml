@@ -61,7 +61,7 @@
                         var res = JSON.parse(message.data);
                         if (res.sSocketId) {
                             //生成二维码
-                            var url = document.location.origin + "/User/WeChatConfirm?sSocketId=" + res.sSocketId;
+                            var url = document.location.origin + "@Url.Action("WeChatConfirm")?sSocketId=" + res.sSocketId;
                             console.log(url);
                             qrcode.qrcode({
                                 width: 150, //宽度 
