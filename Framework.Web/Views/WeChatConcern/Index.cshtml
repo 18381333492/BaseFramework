@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "公众号关注回复页面";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="padding-top:2px;">
+    <table class="gridtable">
+        <tr>
+            <td>选择公众号</td>
+            <td>
+                <input class="easyui-combobox" id="sWeChatId" name="sWeChatId"
+                       data-options="valueField:'ID',textField:'sWeChatName',width:300,panelHeight:'auto',url:'@Url.Action("GetList","WeChat")'" />
+                &nbsp;@Html.Partial("~/Views/Shared/_Btn.cshtml")
+            </td>
+        </tr>
+    </table>
+    <table class="gridtable content" style="margin-top:2px;">
+    </table>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#sWeChatId').combobox({
+            //选择的值发生变化的时候触发
+            onChange: function (newValue, oldValue) {
+                eui.commitArgs.other = true;//手动处理回调
+                eui.commitArgs.type = "GET";
+                eui.commitArgs.dataType = "html";
+                eui.commitArgs.url = "@Url.Action("Save")?sWeChatId=" + newValue;
+                eui.commitArgs.success = function (r) {
+                    $('.content').html('');
+                    $('.content').append(r.trim());
+                }
+                eui.commit(eui.commitArgs);
+               // alert(1);
+                @*var url = '@Url.Action("GetFirstMenuByWeChat")?sWeChatId=' + newValue;
+                $('#sParentMenuId').combobox({
+                    url: url,
+                    valueField: 'ID',
+                    textField: 'sMenuName',
+                    panelHeight: 'auto'
+                });*@
+            }
+        });
+    });
+</script>
+

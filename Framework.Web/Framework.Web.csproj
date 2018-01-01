@@ -117,6 +117,7 @@
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\WeChatConcernController.cs" />
     <Compile Include="Controllers\WeChatController.cs" />
     <Compile Include="Controllers\WeChatDeveloperController.cs" />
     <Compile Include="Controllers\WeChatMenuController.cs" />
@@ -713,6 +714,8 @@
     <Content Include="Views\WeChatMenu\Index.cshtml" />
     <Content Include="Views\WeChatMenu\Add.cshtml" />
     <Content Include="Views\WeChatMenu\Edit.cshtml" />
+    <Content Include="Views\WeChatConcern\Index.cshtml" />
+    <Content Include="Views\WeChatConcern\Save.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

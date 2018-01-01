@@ -22,7 +22,7 @@
         serializeJson:_serializeJson,
         dialogArgs: { url: undefined, title: undefined, width: undefined, height: undefined, callback: undefined, success: undefined, handler: undefined },
         dialog: _dialog,
-        commitArgs: { url: undefined, data: undefined, success: undefined, fail: undefined, type: "POST", async: true, other: false },
+        commitArgs: { url: undefined, data: undefined, success: undefined, fail: undefined, type: "POST", async: true, other: false,dataType:'json' },
         commit: _commit
     }
     
@@ -73,7 +73,7 @@
             data: parameter.data,
             type: parameter.type,
             async: parameter.async,
-            dataType: 'json',
+            dataType: parameter.dataType,
             success: function (r) {
                  /*是否需要直接处理返回回调*/
                 if (!parameter.other) {

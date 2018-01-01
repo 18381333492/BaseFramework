@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "关注回复设置";
+}
+<tr>
+    <td>关注回复开关</td>
+    <td>
+        
+    </td>
+</tr>
+<tr>
+    <td>回复类型</td>
+    <td>
+     @Html.Partial("~/Views/Shared/_DictionaryList.cshtml", new Framework.Utility.Models.ItemDictionary() { Name = "iConcernType", Width=300,Type = "WeChatMsgType" })
+    </td>
+</tr>
+<tr>
+    <td>图文消息</td>
+    <td>
+        <input class="easyui-textbox" name="sToken" data-options="width:300">
+    </td>
+</tr>
+<tr>
+    <td>文本内容</td>
+    <td>
+        <textarea style="height:100px;width:300px;"></textarea>
+    </td>
+</tr>
+<script type="text/javascript">
+    $('input[name=iConcernType]').combobox();
+    $('input[name=sToken]').textbox();
+</script>
+
