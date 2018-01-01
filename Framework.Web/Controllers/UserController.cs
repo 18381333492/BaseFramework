@@ -130,6 +130,64 @@ namespace Framework.Web.Controllers
         }
 
         /// <summary>
+        /// 审核管理员
+        /// </summary>
+        /// <param name="sUserId"></param>
+        /// <returns></returns>
+        public ActionResult Verify(Guid sUserId)
+        {
+            if (Manager.Verify(sUserId) > 0)
+                result.success = true;
+            return Json(result);
+        }
+
+        /// <summary>
+        /// 冻结/解冻管理员
+        /// </summary>
+        /// <param name="sUserId"></param>
+        /// <returns></returns>
+        public ActionResult Freeze(Guid sUserId)
+        {
+            if (Manager.Freeze(sUserId) >0)
+                result.success = true;
+            return Json(result);
+        }
+
+        /// <summary>
+        /// 设置用户角色
+        /// </summary>
+        /// <param name="sUserId"></param>
+        /// <param name="sRoleId"></param>
+        /// <returns></returns>
+        public ActionResult SetRole(Guid sUserId,string sRoleId)
+        {
+            if (Request.HttpMethod.ToUpper() == MethodType.GET)
+            {
+                ViewBag.RoleID = Manager.Get(sUserId).sRoleId;
+                ViewBag.sUserId = sUserId;
+                return View();
+            }
+            else
+            {
+                if (Manager.SetRole(sUserId, sRoleId) >= 0)
+                    result.success = true;
+                return Json(result);
+            }
+        }
+
+        /// <summary>
+        /// 删除管理员
+        /// </summary>
+        /// <param name="sUserIds"></param>
+        /// <returns></returns>
+        public ActionResult Cancel(string sUserIds)
+        {
+            if (Manager.Cancel(sUserIds) > 0)
+                result.success = true;
+            return Json(result);
+        }
+
+        /// <summary>
         /// 缓存用户相关的信息
         /// </summary>
         /// <param name="user"></param>

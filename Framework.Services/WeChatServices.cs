@@ -41,6 +41,16 @@ namespace Framework.Services
         }
 
         /// <summary>
+        /// 获取微信公众号列表
+        /// </summary>
+        /// <returns></returns>
+        public override string GetList()
+        {
+            var weChatList = query.QueryList<ES_WeChat>("select ID,sWeChatName from ES_WeChat where bIsDeleted=0");
+            return JsonHelper.ToJsonString(weChatList);
+        }
+
+        /// <summary>
         /// 获取微信公众号实体对象
         /// </summary>
         /// <param name="ID"></param>

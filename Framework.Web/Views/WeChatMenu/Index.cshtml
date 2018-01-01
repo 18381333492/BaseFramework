@@ -1,36 +1,32 @@
 ﻿@{
-    ViewBag.Title = "按钮数据列表";
+    ViewBag.Title = "微信菜单视图列表";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<table id="button"></table>
-<div id="button_toolbar" style="padding:5px;">
+<table id="wechat_menu"></table>
+<div id="wechat_menu_toolbar" style="padding:5px;">
     <form id="searchForm">
         <div style="margin-bottom:5px;">
-            <span class="label">所属菜单</span>
-            <input class="easyui-combobox" name="keyword" 
-                   data-options="valueField:'ID',textField:'sMenuName',url:'@Url.Action("GetChildComboboxMenuList")',panelHeight:'auto'" />
+            <span class="label">所属公众号</span>
+            <input class="easyui-combobox" name="sWeChatId" 
+                   data-options="valueField:'ID',textField:'sWeChatName',width:170,panelHeight:'auto',url:'@Url.Action("GetList","WeChat")'" />
+            <span class="label">模糊查询</span>
+            <input class="easyui-textbox" name="keyword" data-options="iconCls:'icon-search',prompt:'菜单名称'">
             <a class="easyui-linkbutton" data-mark="search" data-options="width:60">查 询</a>
         </div>
     </form>
     @Html.Partial("~/Views/Shared/_Btn.cshtml")
 </div>
 <script type="text/javascript">
-    //按钮图表数据
-    var array = ["icon-add", "icon-edit", "icon-clear", "icon-remove", "icon-save", "icon-cut", "icon-ok",
-                 "icon-no", "icon-cancel", "icon-reload", "icon-search", "icon-print", "icon-help", "icon-undo",
-                 "icon-redo", "icon-back", "icon-sum", "icon-tip", "icon-filter", "icon-man", "icon-lock", "icon-more",
-                  "icon-home", "icon-notice", "icon-config", "icon-delete", "icon-file", "icon-log", "icon-news", "icon-order",
-                  "icon-refresh", "icon-setting", "icon-users", "icon-vip"];
     $(function () {
-        var grid = $('#button');
-        var toolbar = '#button_toolbar';
+        var grid = $('#wechat_menu');
+        var toolbar = '#wechat_menu_toolbar';
 
         //所有按钮事件的绑定
         $(toolbar).on("click", 'a', function () {
             eui.dialogArgs.title = $(this).text();
             eui.dialogArgs.url = $(this).attr("data-url");
-            eui.dialogArgs.width = 400;
-            eui.dialogArgs.height = 320;
+            eui.dialogArgs.width = 450;
+            eui.dialogArgs.height = 350;
             switch ($(this).attr("data-mark")) {
                 case 'search':
                     var params = eui.serializeJson(eui.searchForm);
@@ -41,9 +37,9 @@
                     eui.dialog(eui.dialogArgs);
                     break;
                 case 'edit':
-                    var selected = grid.treegrid('getSelections');
-                    if (selected.length == 1) {
-                        eui.dialogArgs.url += "?ID=" + selected[0].ID;
+                    var selected = grid.datagrid('getSelections');
+                    if (selected.length ==1) {
+                        eui.dialogArgs.url = eui.dialogArgs.url + "?ID=" + selected[0].ID
                         eui.dialogArgs.callback = operate;
                         eui.dialog(eui.dialogArgs);
                     }
@@ -56,7 +52,7 @@
             }
         });
 
-        //新增编辑操作
+        //微信菜单添加/编辑操作
         function operate() {
             if ($(eui.form).form("validate")) {
                 eui.button.disable();
@@ -70,6 +66,7 @@
             }
         }
 
+
         //删除操作
         function cancel() {
             var selected = grid.datagrid('getSelections');
@@ -78,7 +75,7 @@
                     var Ids = [];
                     $(selected).each(function () { Ids.push(this.ID) });
                     eui.commitArgs.url = eui.dialogArgs.url;
-                    eui.commitArgs.data = { ButtonIds: Ids.join() };
+                    eui.commitArgs.data = { sWeChatMenuIds: Ids.join() };
                     eui.commitArgs.success = function (r) {
                         grid.datagrid('reload');
                         grid.datagrid("clearSelections");
@@ -94,32 +91,20 @@
 
         //列表数据的绑定
         grid.datagrid({
-            url:'@Url.Action("Index")',
+            url: '@Url.Action("Index")',
             toolbar: toolbar,
             sortOrder: 'asc',
-            sortName:'iOrder',
+            sortName: 'iOrder',
             singleSelect: false,
             columns: [[
-                { field: 'sButtonName', title: '按钮名称', align: 'center', width: 150 },
-                {
-                    field: 'sButtonIcon', title: '图标', align: 'center', width: 30, formatter: function (value) {
-                        return "<i class='" + value + "' style='height:16px;width:16px;display:block;margin:0 auto'></i>";
-                    }
-                },
-                { field: 'sButtonSign', title: '标识', align: 'center', width: 90 },
-                { field: 'sOperateUrl', title: '链接', align: 'center', width: 180 },
-                { field: 'iOrder', title: '排序', align: 'center', width: 150 }
+                { field: 'sMenuName', title: '菜单名称', align: 'center', width: 100 },
+                { field: 'sTiggerType', title: '触发类型', align: 'center', width: 80 },
+                { field: 'sUrl', title: '链接地址', align: 'center', width: 200 },
+                { field: 'sKey', title: '事件推送Key', align: 'center', width: 120 },
+                { field: 'sParentName', title: '所属菜单', align: 'center', width: 100 },
+                { field: 'iOrder', title: '排序', align: 'center', width: 60 }
             ]],
-            onDblClickRow: function (index, row) {
-                eui.dialogArgs.width = 400;
-                eui.dialogArgs.height = 320;
-                eui.dialogArgs.title ="编辑菜单";
-                eui.dialogArgs.url = '@Url.Action("Edit")';
-                eui.dialogArgs.url += "?ID=" + row.ID;
-                eui.dialogArgs.callback = operate;
-                eui.dialog(eui.dialogArgs);
-            }
-            
         });
-    });
+
+    })
 </script>

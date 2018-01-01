@@ -119,6 +119,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WeChatController.cs" />
     <Compile Include="Controllers\WeChatDeveloperController.cs" />
+    <Compile Include="Controllers\WeChatMenuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -349,9 +350,12 @@
     <Content Include="Content\easyui\themes\icons\blank.gif" />
     <Content Include="Content\easyui\themes\icons\cancel.png" />
     <Content Include="Content\easyui\themes\icons\clear.png" />
+    <Content Include="Content\easyui\themes\icons\config.png" />
     <Content Include="Content\easyui\themes\icons\cut.png" />
+    <Content Include="Content\easyui\themes\icons\delete.png" />
     <Content Include="Content\easyui\themes\icons\edit_add.png" />
     <Content Include="Content\easyui\themes\icons\edit_remove.png" />
+    <Content Include="Content\easyui\themes\icons\file.png" />
     <Content Include="Content\easyui\themes\icons\filesave.png" />
     <Content Include="Content\easyui\themes\icons\filter.png" />
     <Content Include="Content\easyui\themes\icons\help.png" />
@@ -362,22 +366,29 @@
     <Content Include="Content\easyui\themes\icons\large_shapes.png" />
     <Content Include="Content\easyui\themes\icons\large_smartart.png" />
     <Content Include="Content\easyui\themes\icons\lock.png" />
+    <Content Include="Content\easyui\themes\icons\log.png" />
     <Content Include="Content\easyui\themes\icons\man.png" />
     <Content Include="Content\easyui\themes\icons\mini_add.png" />
     <Content Include="Content\easyui\themes\icons\mini_edit.png" />
     <Content Include="Content\easyui\themes\icons\mini_refresh.png" />
     <Content Include="Content\easyui\themes\icons\more.png" />
+    <Content Include="Content\easyui\themes\icons\news.png" />
     <Content Include="Content\easyui\themes\icons\no.png" />
     <Content Include="Content\easyui\themes\icons\notice.png" />
     <Content Include="Content\easyui\themes\icons\ok.png" />
+    <Content Include="Content\easyui\themes\icons\order.png" />
     <Content Include="Content\easyui\themes\icons\pencil.png" />
     <Content Include="Content\easyui\themes\icons\print.png" />
     <Content Include="Content\easyui\themes\icons\redo.png" />
+    <Content Include="Content\easyui\themes\icons\refresh.png" />
     <Content Include="Content\easyui\themes\icons\reload.png" />
     <Content Include="Content\easyui\themes\icons\search.png" />
+    <Content Include="Content\easyui\themes\icons\setting.png" />
     <Content Include="Content\easyui\themes\icons\sum.png" />
     <Content Include="Content\easyui\themes\icons\tip.png" />
     <Content Include="Content\easyui\themes\icons\undo.png" />
+    <Content Include="Content\easyui\themes\icons\users.png" />
+    <Content Include="Content\easyui\themes\icons\vip.png" />
     <Content Include="Content\easyui\themes\material\accordion.css" />
     <Content Include="Content\easyui\themes\material\calendar.css" />
     <Content Include="Content\easyui\themes\material\combo.css" />
@@ -698,6 +709,10 @@
     <Content Include="Views\User\WeChatConfirm.cshtml" />
     <Content Include="Views\User\TimeOut.cshtml" />
     <Content Include="Views\Shared\_Btn.cshtml" />
+    <Content Include="Views\User\SetRole.cshtml" />
+    <Content Include="Views\WeChatMenu\Index.cshtml" />
+    <Content Include="Views\WeChatMenu\Add.cshtml" />
+    <Content Include="Views\WeChatMenu\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

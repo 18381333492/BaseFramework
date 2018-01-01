@@ -37,6 +37,16 @@ namespace Framework.Web.Controllers
         }
 
         /// <summary>
+        /// 获取角色列表
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetRoleList()
+        {
+            var data = Manager.GetRoleList();
+            return Content(data);
+        }
+
+        /// <summary>
         /// 添加角色
         /// </summary>
         /// <param name="Role"></param>
@@ -102,17 +112,12 @@ namespace Framework.Web.Controllers
             {
                 var role = Manager.Get(ID);
                 string sPowerStr = role.sPowerIds;
-                List<string> sMenuIds;
-                List<string> sBtnIds;
-                if (sPowerStr.Contains("|"))
+                List<string> sMenuIds=new List<string>();
+                List<string> sBtnIds=new List<string>();
+                if (sPowerStr != null && sPowerStr.Contains("|"))
                 {
                     sMenuIds = sPowerStr.Split('|')[0].Split(',').ToList();
                     sBtnIds = sPowerStr.Split('|')[1].Split(',').ToList();
-                }
-                else
-                {
-                    sMenuIds = sPowerStr.Split('|')[0].Split(',').ToList();
-                    sBtnIds = new List<string>();
                 }
                 var ListTree = new List<ItemTree>();
                 //组织菜单数据

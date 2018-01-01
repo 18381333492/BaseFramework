@@ -21,6 +21,12 @@ namespace Framework.Interfaces
         public abstract string GetList(PageInfo pageInfo, int? iType);
 
         /// <summary>
+        /// 获取微信公众号列表
+        /// </summary>
+        /// <returns></returns>
+        public abstract string GetList();
+        
+        /// <summary>
         /// 获取微信公众号实体对象
         /// </summary>
         /// <param name="ID"></param>

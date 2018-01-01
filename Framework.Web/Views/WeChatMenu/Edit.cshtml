@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "编辑公众号菜单";
+}
+@model Framework.Entity.ES_WeChatMenu
+<form id="dataForm">
+    <input type="hidden" name="ID" value="@Model.ID" />
+    <input type="hidden" name="dInsertTime" value="@Model.dInsertTime" />
+    <table class="gridtable">
+        <tr>
+            <td>所属公众号</td>
+            <td>
+                <input name="sWeChatId" style="width:270px;" value="@Model.sWeChatId"
+                       data-options="valueField:'ID',textField:'sWeChatName',panelHeight:'auto',required:true,url:'@Url.Action("GetList","WeChat")'" />
+            </td>
+        </tr>
+        <tr>
+            <td>父级菜单</td>
+            <td>
+                <input id="sParentMenuId" class="easyui-combobox" name="sParentMenuId" data-options="required:true" style="width:270px;" value="@Model.sParentMenuId">
+            </td>
+        </tr>
+        <tr>
+            <td>菜单名称</td>
+            <td>
+                <input class="easyui-textbox" name="sMenuName" data-options="required:true" style="width:270px;" value="@Model.sMenuName">
+            </td>
+        </tr>
+        <tr>
+            <td>触发类型</td>
+            <td>
+                <select id="sTiggerType" class="easyui-combobox" name="sTiggerType" style="width:270px;">
+                    <option value="view">Url跳转</option>
+                    <option value="click">事件触发</option>
+                    <option value="scancode_push">扫码触发</option>
+                    <option value="scancode_waitmsg">扫码等待触发</option>
+                    <option value="pic_sysphoto">系统拍照触发</option>
+                    <option value="pic_photo_or_album">选择图片触发</option>
+                    <option value="pic_weixin">微信相册触发</option>
+                    <option value="location_select">地理位置触发</option>
+                    <option value="media_id">media_id</option>
+                    <option value="view_limited">view_limited</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>菜单链接</td>
+            <td>
+                <input class="easyui-textbox" name="sUrl" style="width:270px;" value="@Model.sUrl">
+            </td>
+        </tr>
+        <tr>
+            <td>事件Key</td>
+            <td>
+                <input class="easyui-textbox" name="sKey" style="width:270px;" value="@Model.sKey">
+            </td>
+        </tr>
+        <tr>
+            <td>菜单排序</td>
+            <td>
+                <input class="easyui-numberspinner" name="iOrder" data-options="required:true,min:0" value="@Model.iOrder" style="width:270px;">
+            </td>
+        </tr>
+    </table>
+</form>
+<script type="text/javascript">
+    $('#sTiggerType').val('@Model.sTiggerType');//触发类型的赋值
+    var $this= $('input[name=sWeChatId]');
+    $this.combobox({
+        onLoadSuccess: function () {
+            var url = '@Url.Action("GetFirstMenuByWeChat")?sWeChatId=' + '@Model.sWeChatId';
+            loadParentMenu(url);
+        },
+        //选择的时候触触发
+        onChange: function (newValue, oldValue) {
+            var url = '@Url.Action("GetFirstMenuByWeChat")?sWeChatId=' + newValue;
+            loadParentMenu(url);
+        }
+    });
+
+    //加载相应公众号父级菜单数据
+    function loadParentMenu(url) {
+        $('#sParentMenuId').combobox({
+            url: url,
+            valueField: 'ID',
+            textField: 'sMenuName',
+            panelHeight: 'auto'
+        });
+    }
+</script>

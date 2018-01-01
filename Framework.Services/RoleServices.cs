@@ -34,14 +34,13 @@ namespace Framework.Services
         }
 
         /// <summary>
-        /// 根据角色ID获取用户的权限列表
+        /// 获取角色列表
         /// </summary>
-        /// <param name="RoleId"></param>
         /// <returns></returns>
-        public override List<dynamic> GetUserPower(object RoleId)
+        public override string GetRoleList()
         {
-            query.QueryList<dynamic>("select * from ES_Role where ID=@RoleId");
-            return null;
+            var roleList = query.QueryList<ES_Role>("select ID,sRoleName from ES_Role where bIsDeleted=0");
+            return JsonHelper.ToJsonString(roleList);
         }
 
         /// <summary>

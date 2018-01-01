@@ -79,7 +79,8 @@
                 if (!parameter.other) {
                     if (r.success) {
                         parameter.success(r);
-                        eui.dialogArgs.handler.dialog('close');//关闭弹出框
+                        if (eui.dialogArgs.handler)
+                            eui.dialogArgs.handler.dialog('close');//关闭弹出框
                     }
                     else {
                         if (parameter.fail) {

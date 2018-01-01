@@ -76,6 +76,36 @@
 .icon-notice{
 	background:url('icons/notice.png') no-repeat center center;
 }
+.icon-config{
+	background:url('icons/config.png') no-repeat center center;
+}
+.icon-delete{
+	background:url('icons/delete.png') no-repeat center center;
+}
+.icon-file{
+	background:url('icons/file.png') no-repeat center center;
+}
+.icon-log{
+	background:url('icons/log.png') no-repeat center center;
+}
+.icon-news{
+	background:url('icons/news.png') no-repeat center center;
+}
+.icon-order{
+	background:url('icons/order.png') no-repeat center center;
+}
+.icon-refresh{
+	background:url('icons/refresh.png') no-repeat center center;
+}
+.icon-setting{
+	background:url('icons/setting.png') no-repeat center center;
+}
+.icon-users{
+	background:url('icons/users.png') no-repeat center center;
+}
+.icon-vip{
+	background:url('icons/vip.png') no-repeat center center;
+}
 
 
 

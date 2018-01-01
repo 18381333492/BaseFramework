@@ -17,6 +17,10 @@ namespace Framework.Web.Controllers
     {
         //
         // GET: /WeChatDeveloper/
+
+        /// <summary>
+        /// 微信公众号成为开发者接口
+        /// </summary>
         public void Receive()
         {
             if (Request.HttpMethod.ToUpper() == MethodType.GET)

@@ -13,11 +13,7 @@
             <a class="easyui-linkbutton" data-mark="search" data-options="width:60">查 询</a>
         </div>
     </form>
-    <a class="easyui-linkbutton" data-mark="add" data-url="/WeChat/Add" data-options="iconCls:'icon-add',plain:true">新增公众号</a>
-    <a class="easyui-linkbutton" data-mark="edit" data-url="/WeChat/Edit" data-options="iconCls:'icon-edit',plain:true">编辑公众号</a>
-    <a class="easyui-linkbutton" data-mark="cancel" data-url="/WeChat/Cancel" data-options="iconCls:'icon-clear',plain:true">删除公众号</a>
-    <a class="easyui-linkbutton" data-mark="menu" data-url="/WeChat/Menu" data-options="iconCls:'icon-remove',plain:true">生成菜单</a>
-    <a class="easyui-linkbutton" data-mark="developer" data-url="/WeChat/Developer" data-options="iconCls:'icon-man',plain:true">成为开发者</a>
+    @Html.Partial("~/Views/Shared/_Btn.cshtml")
 </div>
 <script type="text/javascript">
     $(function () {
@@ -52,6 +48,9 @@
                 case 'cancel':
                     cancel();
                     break;
+                case 'menu':
+                    creatMenu();
+                    break;
                 case 'developer':
                     developer();
                     break;
@@ -70,6 +69,20 @@
                 }
                 eui.commit(eui.commitArgs);
             }
+        }
+
+        //创建菜单
+        function creatMenu() {
+            eui.confirm("确认要创建开发者公众号的微信菜单?", function () {
+                eui.commitArgs.url= eui.dialogArgs.url;
+                eui.commitArgs.success = function (r) {
+                    eui.alert(r.info);
+                }
+                eui.commitArgs.fail = function (r) {
+                    eui.alert(r.info);
+                }
+                eui.commit(eui.commitArgs);
+            });
         }
 
         //成为开发者

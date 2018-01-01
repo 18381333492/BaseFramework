@@ -19,8 +19,10 @@ namespace Framework.Entity
         public string sUrl { get; set; }
         public string sParentMenuId { get; set; }
         public bool bIsDeleted { get; set; }
-        public int iType { get; set; }
         public int iOrder { get; set; }
         public string sKey { get; set; }
+        public string sWeChatId { get; set; }
+        public string sTiggerType { get; set; }
+        public Nullable<System.DateTime> dInsertTime { get; set; }
     }
 }

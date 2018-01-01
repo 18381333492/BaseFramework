@@ -22,11 +22,10 @@ namespace Framework.Interfaces
         public abstract string GetList(PageInfo pageInfo);
 
         /// <summary>
-        /// 根据角色ID获取用户的权限列表
+        /// 获取角色列表
         /// </summary>
-        /// <param name="RoleId"></param>
         /// <returns></returns>
-        public abstract List<dynamic> GetUserPower(object RoleId);
+        public abstract string GetRoleList();
 
         /// <summary>
         /// 根据主键ID获取角色实体

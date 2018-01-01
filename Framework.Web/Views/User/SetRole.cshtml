@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title ="设置角色";
+}
+<form id="dataForm">
+    <input type="hidden" name="sUserId" value="@ViewBag.sUserId" />
+    <table class="gridtable">
+        <tr>
+            <td>选择角色</td>
+            <td>
+                <input class="easyui-combobox" name="sRoleId"  value="@ViewBag.RoleID"
+                       data-options="valueField:'ID',textField:'sRoleName',panelHeight:'auto',required:true,url:'@Url.Action("GetRoleList","Role")'" />
+            </td>
+        </tr>
+    </table>
+</form>

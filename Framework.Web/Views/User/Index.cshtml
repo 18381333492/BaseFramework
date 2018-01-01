@@ -31,19 +31,22 @@
                     var params = eui.serializeJson(eui.searchForm);
                     grid.datagrid({ queryParams: params });
                     break;
-                case 'add':
-                    eui.dialogArgs.callback = operate;
-                    eui.dialog(eui.dialogArgs);
-                    break;
-                case 'edit':
-                    var selected = grid.treegrid('getSelections');
-                    if (selected.length == 1) {
-                        eui.dialogArgs.url += "?ID=" + selected[0].ID;
-                        eui.dialogArgs.callback = operate;
+                case 'role':
+                    var selected = grid.datagrid('getSelections');
+                    if (selected.length > 0) {
+                        eui.dialogArgs.height =150;
+                        eui.dialogArgs.url = eui.dialogArgs.url + "?sUserId="+selected[0].ID
+                        eui.dialogArgs.callback = setRole;
                         eui.dialog(eui.dialogArgs);
                     }
                     else
                         eui.alert("请选择一条数据操作");
+                    break;
+                case 'verify':
+                    verify();
+                    break;
+                case 'freeze':
+                    freeze();
                     break;
                 case 'cancel':
                     cancel();
@@ -51,8 +54,53 @@
             }
         });
 
-        //新增编辑操作
-        function operate() {
+        //管理员审核操作
+        function verify() {
+            var selected = grid.datagrid('getSelections');
+            if (selected.length == 1) {
+                if (selected[0].iState == -2) {
+                    eui.confirm("确认要审核通过选择的管理员?", function () {
+                        eui.commitArgs.url = eui.dialogArgs.url;
+                        eui.commitArgs.data = { sUserId: selected[0].ID };
+                        eui.commitArgs.success = function (r) {
+                            grid.datagrid('reload');
+                            eui.alert(r.info);
+                        }
+                        eui.commit(eui.commitArgs);
+                    });
+                }
+                else
+                  eui.alert("审核通过的数据不能进行此操作!");
+            }
+            else
+                eui.alert("请选择一条数据操作");
+        }
+
+        //管理员冻结操作
+        function freeze() {
+            var selected = grid.datagrid('getSelections');
+            if (selected.length == 1) {
+                if (selected[0].iState != -2) {
+                    var tip = selected[0].iState == 1 ? "冻结" : "解冻";
+                    eui.confirm("确认要" + tip + "选择的管理员?", function () {
+                        eui.commitArgs.url = eui.dialogArgs.url;
+                        eui.commitArgs.data = { sUserId: selected[0].ID };
+                        eui.commitArgs.success = function (r) {
+                            grid.datagrid('reload');
+                            eui.alert(r.info);
+                        }
+                        eui.commit(eui.commitArgs);
+                    });
+                }
+                else
+                  eui.alert("待审核的数据不能进行此操作");
+            }
+            else
+                eui.alert("请选择一条数据操作");
+        }
+
+        //设置管理员角色
+        function setRole() {
             if ($(eui.form).form("validate")) {
                 eui.button.disable();
                 eui.commitArgs.url = eui.dialogArgs.url;
@@ -73,7 +121,7 @@
                     var Ids = [];
                     $(selected).each(function () { Ids.push(this.ID) });
                     eui.commitArgs.url = eui.dialogArgs.url;
-                    eui.commitArgs.data = { DictionaryIds: Ids.join() };
+                    eui.commitArgs.data = { sUserIds: Ids.join() };
                     eui.commitArgs.success = function (r) {
                         grid.datagrid('reload');
                         grid.datagrid("clearSelections");
@@ -85,7 +133,6 @@
             else
                 eui.alert("请选择一条数据操作");
         }
-
 
         //列表数据的绑定
         grid.datagrid({
