@@ -20,5 +20,6 @@ namespace Framework.Entity
         public string sContent { get; set; }
         public string sWeChatNewsName { get; set; }
         public Nullable<System.Guid> sWeChatNewsNameId { get; set; }
+        public string sWeChatId { get; set; }
     }
 }

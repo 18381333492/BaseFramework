@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Framework.Utility.Enums;
 using Framework.Web.App_Start;
 using Framework.Interfaces;
+using Framework.Entity;
 
 namespace Framework.Web.Controllers
 {
@@ -27,17 +28,18 @@ namespace Framework.Web.Controllers
         /// 保存关注回复的操作
         /// </summary>
         /// <returns></returns>
-        public ActionResult Save(string sWeChatId)
+        public ActionResult Save(ES_WeChatConcern WeChatConcern)
         {
             if (Request.HttpMethod.ToUpper() == MethodType.GET)
             {
-                return View();
+                return View(Manager.Get(WeChatConcern.sWeChatId));
             }
             else
             {
-                return Json(null);
+                if (Manager.Save(WeChatConcern) > 0)
+                    result.success = true;
+                return Json(result);
             }
         }
-
     }
 }

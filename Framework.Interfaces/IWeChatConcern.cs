@@ -18,5 +18,14 @@ namespace Framework.Interfaces
         /// <param name="sWeChatId"></param>
         /// <returns></returns>
         public abstract ES_WeChatConcern Get(string sWeChatId);
+
+
+        /// <summary>
+        /// 保存关注回复
+        /// </summary>
+        /// <param name="WeChatConcern"></param>
+        /// <returns></returns>
+        public abstract int Save(ES_WeChatConcern WeChatConcern);
+     
     }
 }

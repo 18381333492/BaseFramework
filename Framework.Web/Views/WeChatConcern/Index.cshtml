@@ -3,18 +3,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div style="padding-top:2px;">
-    <table class="gridtable">
-        <tr>
-            <td>选择公众号</td>
-            <td>
-                <input class="easyui-combobox" id="sWeChatId" name="sWeChatId"
-                       data-options="valueField:'ID',textField:'sWeChatName',width:300,panelHeight:'auto',url:'@Url.Action("GetList","WeChat")'" />
-                &nbsp;@Html.Partial("~/Views/Shared/_Btn.cshtml")
-            </td>
-        </tr>
-    </table>
-    <table class="gridtable content" style="margin-top:2px;">
-    </table>
+    <form id="dataForm">
+        <table class="gridtable">
+            <tr>
+                <td>选择公众号</td>
+                <td>
+                    <input class="easyui-combobox" id="sWeChatId" name="sWeChatId"
+                           data-options="valueField:'ID',textField:'sWeChatName',width:300,panelHeight:'auto',url:'@Url.Action("GetList","WeChat")'" />
+                    &nbsp;@Html.Partial("~/Views/Shared/_Btn.cshtml")
+                </td>
+            </tr>
+        </table>
+        <div class="content"></div>
+   </form>
 </div>
 <script type="text/javascript">
     $(function () {
@@ -30,16 +31,33 @@
                     $('.content').append(r.trim());
                 }
                 eui.commit(eui.commitArgs);
-               // alert(1);
-                @*var url = '@Url.Action("GetFirstMenuByWeChat")?sWeChatId=' + newValue;
-                $('#sParentMenuId').combobox({
-                    url: url,
-                    valueField: 'ID',
-                    textField: 'sMenuName',
-                    panelHeight: 'auto'
-                });*@
             }
         });
+
+        //所有按钮事件的绑定
+        $(eui.form).on("click", 'a', function () {
+            eui.dialogArgs.url = $(this).attr("data-url");
+            switch ($(this).attr("data-mark")) {
+                case 'save':
+                    save();
+                    break;
+            }
+        });
+
+        //保存关注回复
+        function save() {
+            if ($(eui.form).form("validate")) {
+                eui.commitArgs.other = false;
+                eui.commitArgs.dataType = "json";
+                eui.commitArgs.type = "POST";
+                eui.commitArgs.url = eui.dialogArgs.url;
+                eui.commitArgs.data = $(eui.form).serialize();
+                eui.commitArgs.success = function (r) {
+                    eui.alert(r.info);
+                }
+                eui.commit(eui.commitArgs);
+            }
+        }
     });
 </script>
 
