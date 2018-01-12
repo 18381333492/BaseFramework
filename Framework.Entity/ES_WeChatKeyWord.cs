@@ -23,5 +23,6 @@ namespace Framework.Entity
         public Nullable<System.Guid> sWeChatNewsNameId { get; set; }
         public System.DateTime dInsertTime { get; set; }
         public System.DateTime dUpdateTime { get; set; }
+        public string sWeChatId { get; set; }
     }
 }

@@ -27,10 +27,10 @@ namespace Framework.WeChat.Tool
             string sResult = string.Empty;
             try
             {
-                HttpWebRequest webRequest = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(sUrl);
+                HttpWebRequest webRequest =(System.Net.HttpWebRequest)System.Net.WebRequest.Create(sUrl);
                 webRequest.ProtocolVersion = HttpVersion.Version10;
                 webRequest.Timeout = 30000;
-                webRequest.Method = "GET";
+                webRequest.Method = WebRequestMethods.Http.Get;
                 webRequest.Headers.Add("Accept-Encoding", "gzip, deflate");
 
                 HttpWebResponse webResponse = (System.Net.HttpWebResponse)webRequest.GetResponse();

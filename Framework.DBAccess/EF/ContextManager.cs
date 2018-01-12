@@ -147,7 +147,7 @@ namespace Framework.DBAccess.EF
 
 
         /// <summary>
-        /// 无操作日志提交操作
+        /// 提交操作
         /// </summary>
         /// <returns></returns>
         public static int SaveExtendChanges(this Entities Context)

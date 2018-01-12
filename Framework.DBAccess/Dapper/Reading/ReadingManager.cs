@@ -14,49 +14,7 @@ namespace Framework.DBAccess.Dapper
 {
     public class ReadingManager : ReadingManagement, IReading
     {
-        /// <summary>
-        /// 日志记录
-        /// </summary>
-        private static ILogger logger = LoggerManager.Instance.GetSLogger("dapper");
-
-        /// <summary>
-        /// 数据库连接字符串
-        /// </summary>
-        private static string sConnectionString = ConfigurationManager.ConnectionStrings["SqlConnection"].ConnectionString;
-
-        /// <summary>
-        /// 打开数据库连接
-        /// </summary>
-        /// <returns></returns>
-        private SqlConnection GetSqlConnection()
-        {
-            try
-            {
-                SqlConnection conn = new SqlConnection(sConnectionString);
-                conn.Open();
-                return conn;
-            }
-            catch (Exception ex)
-            {
-                logger.Info(ex.Message);
-                logger.Fatal(ex);
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// 关闭数据库连接
-        /// </summary>
-        /// <param name="conn"></param>
-        private void CloseConnect(SqlConnection conn)
-        {
-            if (conn != null && conn.State == ConnectionState.Open)
-            {
-                conn.Close();
-            }
-        }
-
-
+      
         /// <summary>
         /// 根据条件查询是否存在相应的数据
         /// </summary>
@@ -65,7 +23,7 @@ namespace Framework.DBAccess.Dapper
         /// <returns></returns>
         public bool? Any(string sqlCommand, object parameter = null)
         {
-            SqlConnection conn = null;
+            IDbConnection conn = null;
             try
             {
                 conn = GetSqlConnection();
@@ -92,7 +50,7 @@ namespace Framework.DBAccess.Dapper
         /// <returns></returns>
         public T Find<T>(object ID) where T : new()
         {
-            SqlConnection conn = null;
+            IDbConnection conn = null;
             try
             {
                 conn = GetSqlConnection();
@@ -121,7 +79,7 @@ namespace Framework.DBAccess.Dapper
         /// <returns>查询结果</returns>
         public T SingleQuery<T>(string sqlCommand, object parameter) where T : new()
         {
-            SqlConnection conn = null;
+            IDbConnection conn = null;
             try
             {
                 conn = GetSqlConnection();
@@ -149,7 +107,7 @@ namespace Framework.DBAccess.Dapper
         /// <returns>查询结果</returns>
         public IList<T> QueryList<T>(string sqlCommand, object parameter) where T : new()
         {
-            SqlConnection conn = null;
+            IDbConnection conn = null;
             try
             {
                 conn = GetSqlConnection();
@@ -177,7 +135,7 @@ namespace Framework.DBAccess.Dapper
         /// <returns></returns>
         public PageResult PaginationQuery(string sqlCommand, PageInfo pageInfo, object parameter = null)
         {
-            SqlConnection conn = null;
+            IDbConnection conn = null;
             try
             {
                 conn = GetSqlConnection();
@@ -205,7 +163,7 @@ namespace Framework.DBAccess.Dapper
         /// <returns></returns>
         public IList<T> QueryProcedure<T>(string sProcedureName, SqlDbParameters Parameters)
         {
-            SqlConnection conn = null;
+            IDbConnection conn = null;
             try
             {
                 conn = GetSqlConnection();

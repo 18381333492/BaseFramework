@@ -75,6 +75,7 @@
     <Compile Include="RoleServices.cs" />
     <Compile Include="UserServices.cs" />
     <Compile Include="WeChatConcernServices.cs" />
+    <Compile Include="WeChatKeyWordServices.cs" />
     <Compile Include="WeChatMenuServices.cs" />
     <Compile Include="WeChatServices.cs" />
   </ItemGroup>

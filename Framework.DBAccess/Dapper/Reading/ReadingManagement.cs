@@ -11,7 +11,7 @@ using Framework.Utility;
 
 namespace Framework.DBAccess.Dapper
 {
-    public class ReadingManagement
+    public class ReadingManagement: DbBase
     {
         /// <summary>
         /// 判断泛型是否是字典类型
@@ -30,7 +30,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="sqlCommand">sql命令</param>
         /// <param name="parameter">参数</param>
         /// <returns></returns>
-        protected bool DoAny(SqlConnection conn, string sqlCommand, object parameter)
+        protected bool DoAny(IDbConnection conn, string sqlCommand, object parameter)
         {
             var ret = conn.Query(sqlCommand, parameter, null, true, null, CommandType.Text);
             return ret.Count() > 0 ? true : false;
@@ -44,7 +44,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="sqlCommand">Sql语句</param>
         /// <param name="parameter">参数</param>
         /// <returns></returns>
-        protected T DoSingleQuery<T>(SqlConnection conn, string sqlCommand, Object parameter = null) where T : new()
+        protected T DoSingleQuery<T>(IDbConnection conn, string sqlCommand, Object parameter = null) where T : new()
         {
             if (DoIsDictionary<T>())
             {//泛型是字典类型
@@ -69,7 +69,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="sqlCommand">Sql语句</param>
         /// <param name="parameter">参数</param>
         /// <returns></returns>
-        protected IList<T> DoQueryList<T>(SqlConnection conn, string sqlCommand, Object parameter = null)
+        protected IList<T> DoQueryList<T>(IDbConnection conn, string sqlCommand, Object parameter = null)
         {
             if (DoIsDictionary<T>())
             {//泛型是字典类型
@@ -94,7 +94,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="pageInfo"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        protected PageResult DoPaginationQuery(SqlConnection conn, string sqlCommand, PageInfo pageInfo, object parameter = null)
+        protected PageResult DoPaginationQuery(IDbConnection conn, string sqlCommand, PageInfo pageInfo, object parameter = null)
         {
             //声明动态参数
             //DynamicParameters Parameters = new DynamicParameters();
@@ -132,7 +132,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="sProcedureName"></param>
         /// <param name="Parameters"></param>
         /// <returns></returns>
-        protected IList<T> DoQueryProcedure<T>(SqlConnection conn, string sProcedureName, DynamicParameters Parameters)
+        protected IList<T> DoQueryProcedure<T>(IDbConnection conn, string sProcedureName, DynamicParameters Parameters)
         {
             if (DoIsDictionary<T>())
             {//泛型是字典类型

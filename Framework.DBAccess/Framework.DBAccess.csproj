@@ -76,7 +76,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dapper\DbParameters.cs" />
+    <Compile Include="Dapper\DbBase\DbBase.cs" />
+    <Compile Include="Dapper\Parameters\SqlDbParameters.cs" />
     <Compile Include="Dapper\Interfaces\IReading.cs" />
     <Compile Include="Dapper\Interfaces\IWriting.cs" />
     <Compile Include="Dapper\Reading\ReadingManagement.cs" />
@@ -102,6 +103,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

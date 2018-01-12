@@ -67,6 +67,7 @@
     <Compile Include="IUser.cs" />
     <Compile Include="IWeChat.cs" />
     <Compile Include="IWeChatConcern.cs" />
+    <Compile Include="IWeChatKeyWord.cs" />
     <Compile Include="IWeChatMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

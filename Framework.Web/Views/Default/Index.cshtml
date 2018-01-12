@@ -46,6 +46,13 @@
 </div>
 <script type="text/javascript">
     $(function () {
+        audio = document.createElement("audio");
+        audio.src = "music/Start2.mp3";
+        audio.play();
+        audio.loop = true;
+        audio.pause()
+
+
         $('#tree').tree({
             url: '@Url.Action("Index")',
             onClick: function (node) {

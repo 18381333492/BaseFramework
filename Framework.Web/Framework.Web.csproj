@@ -120,6 +120,7 @@
     <Compile Include="Controllers\WeChatConcernController.cs" />
     <Compile Include="Controllers\WeChatController.cs" />
     <Compile Include="Controllers\WeChatDeveloperController.cs" />
+    <Compile Include="Controllers\WeChatKeyWordController.cs" />
     <Compile Include="Controllers\WeChatMenuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -526,8 +527,6 @@
     <Content Include="Scripts\mylib\common.client.js" />
     <Content Include="Scripts\mylib\defaults.js" />
     <Content Include="Scripts\mylib\eui.extend-1.0.0.js" />
-    <Content Include="Scripts\mylib\eui.js" />
-    <Content Include="Scripts\mylib\eui.min.js" />
     <Content Include="Scripts\plug-in\cityselect\city.min.js" />
     <Content Include="Scripts\plug-in\cityselect\demo.html" />
     <Content Include="Scripts\plug-in\cityselect\jquery.cityselect.js" />
@@ -716,6 +715,8 @@
     <Content Include="Views\WeChatMenu\Edit.cshtml" />
     <Content Include="Views\WeChatConcern\Index.cshtml" />
     <Content Include="Views\WeChatConcern\Save.cshtml" />
+    <Content Include="Views\WeChatKeyWord\Index.cshtml" />
+    <Content Include="Views\WeChatKeyWord\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "添加关键字";
+}
+<form id="dataForm">
+    <table class="gridtable">
+        <tr>
+            <td>选择公众号</td>
+            <td>
+               <input class="easyui-combobox" id="sWeChatId" name="sWeChatId"
+                       data-options="valueField:'ID',textField:'sWeChatName',width:240,panelHeight:'auto',url:'@Url.Action("GetList","WeChat")'" />
+            </td>
+        </tr>
+        <tr>
+            <td>回复类型</td>
+            <td>
+               @Html.Partial("~/Views/Shared/_DictionaryList.cshtml", new Framework.Utility.Models.ItemDictionary()
+                        { Name = "iRePlyType", Width = 240, Type = "WeChatMsgType", Required = "true" })
+            </td>
+        </tr>
+        <tr>
+            <td>是否启用</td>
+            <td>
+                <input id="bIsOpen" class="easyui-switchbutton" data-options="onText:'启用',offText:'禁用'">
+                <input type="hidden" name="bIsOpen" />
+            </td>
+        </tr>
+        <tr>
+            <td>关键字名称</td>
+            <td>
+                <input class="easyui-textbox" name="sKeyWordName" data-options="required:true,width:240">
+                <input type="hidden" name="bIsOpen" />
+            </td>
+        </tr>
+        <tr>
+            <td>图文消息</td>
+            <td>
+                <input class="easyui-textbox" name="sWeChatNewsName" data-options="width:240,readonly:true">
+                <a class="easyui-linkbutton" data-options="iconCls:'icon-file'">选择图文</a>
+                <input type="hidden" name="sWeChatNewsNameId" />
+            </td>
+        </tr>
+        <tr>
+            <td>文本消息</td>
+            <td>
+                <textarea name="sContent" style="height:100px;width:240px;"></textarea>
+            </td>
+        </tr>
+    </table>
+</form>
+

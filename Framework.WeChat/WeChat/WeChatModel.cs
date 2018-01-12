@@ -74,8 +74,6 @@ namespace Framework.WeChat
                     return respone.access_token;
                 }
             }
-
         }
-
     }
 }

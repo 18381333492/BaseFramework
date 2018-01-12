@@ -239,6 +239,7 @@
           <Property Name="sWeChatNewsNameId" Type="uniqueidentifier" />
           <Property Name="dInsertTime" Type="datetime" Nullable="false" />
           <Property Name="dUpdateTime" Type="datetime" Nullable="false" />
+          <Property Name="sWeChatId" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ES_WeChatMenu">
           <Key>
@@ -497,6 +498,7 @@
           <Property Name="sWeChatNewsNameId" Type="Guid" />
           <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="dUpdateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="sWeChatId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ES_WeChatMenu">
           <Key>
@@ -799,6 +801,7 @@
           <EntitySetMapping Name="ES_WeChatKeyWord">
             <EntityTypeMapping TypeName="BaseFrameworkModel.ES_WeChatKeyWord">
               <MappingFragment StoreEntitySet="ES_WeChatKeyWord">
+                <ScalarProperty Name="sWeChatId" ColumnName="sWeChatId" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="sKeyWordName" ColumnName="sKeyWordName" />
                 <ScalarProperty Name="iRePlyType" ColumnName="iRePlyType" />
