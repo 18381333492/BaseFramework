@@ -26,6 +26,19 @@ namespace Framework.Services
         }
 
         /// <summary>
+        /// 根据微信公众号的原始ID获取关注回复
+        /// </summary>
+        /// <param name="OriginalId"></param>
+        /// <returns></returns>
+        public override ES_WeChatConcern GetByOriginalId(string OriginalId)
+        {
+            var concern = query.SingleQuery<ES_WeChatConcern>(@"select * from ES_WeChatConcern
+                                                                         where ID in(select ID from ES_WeChat 
+                                                                                              where sOriginalId=@sOriginalId)",new { sOriginalId=OriginalId });
+            return concern;
+        }
+
+        /// <summary>
         /// 保存关注回复
         /// </summary>
         /// <param name="WeChatConcern"></param>

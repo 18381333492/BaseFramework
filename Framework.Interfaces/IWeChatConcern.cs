@@ -19,7 +19,13 @@ namespace Framework.Interfaces
         /// <returns></returns>
         public abstract ES_WeChatConcern Get(string sWeChatId);
 
-
+        /// <summary>
+        /// 根据微信公众号的原始ID获取关注回复
+        /// </summary>
+        /// <param name="OriginalId"></param>
+        /// <returns></returns>
+        public abstract ES_WeChatConcern GetByOriginalId(string OriginalId);
+      
         /// <summary>
         /// 保存关注回复
         /// </summary>

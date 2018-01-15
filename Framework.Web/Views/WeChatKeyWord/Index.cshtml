@@ -7,7 +7,7 @@
     <form id="searchForm">
         <div style="margin-bottom:5px;">
             <span class="label">选择公众号</span>
-            <input class="easyui-combobox" id="sWeChatId" name="sWeChatId"
+            <input class="easyui-combobox" name="sWeChatId"
                    data-options="valueField:'ID',textField:'sWeChatName',width:180,panelHeight:'auto',url:'@Url.Action("GetList","WeChat")'" />
             <span class="label">模糊查询</span>
             <input class="easyui-textbox" name="keyword" data-options="iconCls:'icon-search',prompt:'关键字'">
@@ -30,6 +30,7 @@
             switch ($(this).attr("data-mark")) {
                 case 'search':
                     var params = eui.serializeJson(eui.searchForm);
+                    sessionStorage.setItem("selectWeChatId", params.sWeChatId);
                     grid.datagrid({ queryParams: params });
                     break;
                 case 'add':
@@ -112,7 +113,7 @@
                 { field: 'dInsertTime', title: '添加时间', align: 'center', width: 120 },
             ]],
             onDblClickRow: function (index, row) {
-                eui.dialogArgs.width = 530;
+                eui.dialogArgs.width = 480;
                 eui.dialogArgs.height = 380;
                 eui.dialogArgs.title = "编辑关键字";
                 eui.dialogArgs.url = '@Url.Action("Edit")';

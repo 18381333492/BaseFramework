@@ -109,6 +109,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutoMessageAction.cs" />
     <Compile Include="App_Start\BaseController.cs" />
     <Compile Include="App_Start\NoLogin.cs" />
     <Compile Include="Controllers\ButtonController.cs" />
@@ -717,6 +718,7 @@
     <Content Include="Views\WeChatConcern\Save.cshtml" />
     <Content Include="Views\WeChatKeyWord\Index.cshtml" />
     <Content Include="Views\WeChatKeyWord\Add.cshtml" />
+    <Content Include="Views\WeChatKeyWord\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

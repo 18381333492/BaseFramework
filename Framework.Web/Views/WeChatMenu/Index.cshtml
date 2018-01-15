@@ -30,6 +30,7 @@
             switch ($(this).attr("data-mark")) {
                 case 'search':
                     var params = eui.serializeJson(eui.searchForm);
+                    sessionStorage.setItem("selectWeChatId", params.sWeChatId);
                     grid.datagrid({ queryParams: params });
                     break;
                 case 'add':

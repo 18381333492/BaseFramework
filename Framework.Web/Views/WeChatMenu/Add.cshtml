@@ -61,6 +61,10 @@
 </form>
 <script type="text/javascript">
     $('input[name=sWeChatId]').combobox({
+        onLoadSuccess: function () {
+            var value = sessionStorage.getItem("selectWeChatId");   
+            $(this).combobox("setValue", value);
+        },
         //选择的时候触触发
         onChange: function (newValue, oldValue) {
             var url = '@Url.Action("GetFirstMenuByWeChat")?sWeChatId=' + newValue;
@@ -68,8 +72,8 @@
                 url: url,
                 valueField: 'ID',
                 textField: 'sMenuName',
-                panelHeight:'auto'
+                panelHeight: 'auto'
             });
         }
-    })
+    });
 </script>

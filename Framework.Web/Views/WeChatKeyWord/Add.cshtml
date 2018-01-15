@@ -47,4 +47,24 @@
         </tr>
     </table>
 </form>
+<script type="text/javascript">
+    $(function () {
+        $('#bIsOpen').switchbutton({
+            onChange: function (checked) {
+                if (checked)
+                    $('input[name=bIsOpen]').val(true);
+                else
+                    $('input[name=bIsOpen]').val(false);
+            }
+        });
+        
+        //公众号的赋值
+        $('#sWeChatId').combobox({
+            onLoadSuccess: function () {
+                var value = sessionStorage.getItem("selectWeChatId");   
+                $('#sWeChatId').combobox("setValue", value);
+            }
+        });
+    });
+</script>
 
