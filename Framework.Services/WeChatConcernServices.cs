@@ -33,8 +33,8 @@ namespace Framework.Services
         public override ES_WeChatConcern GetByOriginalId(string OriginalId)
         {
             var concern = query.SingleQuery<ES_WeChatConcern>(@"select * from ES_WeChatConcern
-                                                                         where ID in(select ID from ES_WeChat 
-                                                                                              where sOriginalId=@sOriginalId)",new { sOriginalId=OriginalId });
+                                                                         where sWeChatId in(select ID from ES_WeChat 
+                                                                                              where  bIsDeleted=0 and sOriginalId=@sOriginalId)", new { sOriginalId=OriginalId });
             return concern;
         }
 

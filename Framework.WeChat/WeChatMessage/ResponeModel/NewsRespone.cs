@@ -11,6 +11,29 @@ namespace Framework.WeChat.WeChatMessage
     /// </summary>
     public class NewsRespone:ISMessage
     {
+         /// <summary>
+         /// 无参构造函数
+         /// </summary>
+         public NewsRespone(){}
+
+        /// <summary>
+        /// 构造函数调用父类的
+        /// </summary>
+        public NewsRespone(IRMessage model) : base(model)
+        {
+
+        }
+
+        /// <summary>
+        /// 响应的消息类型
+        /// </summary>
+        [CDATA]
+        public string MsgType
+        {
+            get;
+            set;
+        } = "news";
+
         /// <summary>
         /// 图文消息个数，限制为8条以内
         /// </summary>
@@ -23,46 +46,11 @@ namespace Framework.WeChat.WeChatMessage
         /// <summary>
         /// 多条图文消息信息，默认第一个item为大图,注意，如果图文数超过8，则将会无响应
         /// </summary>
-        public object Articles
+        [CDATA]
+        public List<item> Articles
         {
             get;
             set;
-        }
-
-        /// <summary>
-        /// 图文消息标题
-        /// </summary>
-        public string Title
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 图文消息描述
-        /// </summary>
-        public string Description
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 图片链接，支持JPG、PNG格式，较好的效果为大图360*200，小图200*200
-        /// </summary>
-        public string PicUrl
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 点击图文消息跳转链接
-        /// </summary>
-        public string Url
-        {
-            get;
-            set;
-        }
+        } = new List<item>();
     }
 }

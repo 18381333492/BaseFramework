@@ -39,25 +39,25 @@ namespace Framework.WeChat.WeChatMessage
             switch (type)
             {
                 case MsgType.TEXT:         //文本
-                    sResult = Action.HandleText(XmlHelper.XmlToObject<TextMessage>(xmlcontent));
+                    sResult = Action.HandleText(XmlHelper.Deserialize<TextMessage>(xmlcontent));
                     break;
                 case MsgType.IMAGE:        //图片
-                    sResult = Action.HandleImage(XmlHelper.XmlToObject<ImageMessage>(xmlcontent));
+                    sResult = Action.HandleImage(XmlHelper.Deserialize<ImageMessage>(xmlcontent));
                     break;
                 case MsgType.LINK:         //链接
-                    sResult = Action.HandleLink(XmlHelper.XmlToObject<LinkMessage>(xmlcontent));
+                    sResult = Action.HandleLink(XmlHelper.Deserialize<LinkMessage>(xmlcontent));
                     break;
                 case MsgType.VOICE:        //语音
-                    sResult = Action.HandleVoice(XmlHelper.XmlToObject<VoiceMessage>(xmlcontent));
+                    sResult = Action.HandleVoice(XmlHelper.Deserialize<VoiceMessage>(xmlcontent));
                     break;
                 case MsgType.SHORTVIDEO:   //小视频
-                    sResult = Action.HandleVideo(XmlHelper.XmlToObject<VideoMessage>(xmlcontent));
+                    sResult = Action.HandleVideo(XmlHelper.Deserialize<VideoMessage>(xmlcontent));
                     break;
                 case MsgType.VIDEO:        //视频
-                    sResult = Action.HandleVideo(XmlHelper.XmlToObject<VideoMessage>(xmlcontent));
+                    sResult = Action.HandleVideo(XmlHelper.Deserialize<VideoMessage>(xmlcontent));
                     break;
                 case MsgType.LOCATION:     //位置
-                    sResult = Action.HandleLocation(XmlHelper.XmlToObject<LocationMessage>(xmlcontent));
+                    sResult = Action.HandleLocation(XmlHelper.Deserialize<LocationMessage>(xmlcontent));
                     break;
             }
             return sResult;
@@ -76,10 +76,10 @@ namespace Framework.WeChat.WeChatMessage
             switch (type)
             {
                 case EventType.SUBSCRIBE:   //关注
-                    sResult = Action.HandleSubscribeEvent(XmlHelper.XmlToObject<SubscribeEvent>(xmlcontent));
+                    sResult = Action.HandleSubscribeEvent(XmlHelper.Deserialize<SubscribeEvent>(xmlcontent));
                     break;
                 case EventType.UNSUBSCRIBE: //取消关注                   
-                    sResult = Action.HandleUnSubscribeEvent(XmlHelper.XmlToObject<UnSubscribeEvent>(xmlcontent));
+                    sResult = Action.HandleUnSubscribeEvent(XmlHelper.Deserialize<UnSubscribeEvent>(xmlcontent));
                     break;
                 case EventType.SCAN:        //关注后的扫码推送                
                     sResult = string.Empty;

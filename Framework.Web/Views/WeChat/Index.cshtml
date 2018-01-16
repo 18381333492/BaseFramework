@@ -105,7 +105,7 @@
         function cancel() {
             var selected = grid.datagrid('getSelections');
             if (selected.length > 0) {
-                eui.confirm("确认要删除所选择的数据", function () {
+                eui.confirm("删除公众号会同时删除公众号下面的菜单,关注回复,关键字回复!确定是否要继续操作？", function () {
                     var Ids = [];
                     $(selected).each(function () { Ids.push(this.ID) });
                     eui.commitArgs.url = eui.dialogArgs.url;

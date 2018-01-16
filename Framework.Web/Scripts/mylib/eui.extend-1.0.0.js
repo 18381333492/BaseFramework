@@ -124,7 +124,7 @@
      * @return {dialog}
      */
     function _error(msg) {
-        $.messager.alert('错误', msg, 'error');
+        $.messager.alert('错误', '<span style="color:red">' + msg + '</span>', 'error');
     }
 
     /*
@@ -133,7 +133,7 @@
      * @return {dialog}
      */
     function _confrim(msg,fn) {
-        $.messager.confirm("操作确认", msg, function (r) {
+        $.messager.confirm("操作确认", '<span style="color:red">'+msg+'</span>', function (r) {
             if (r) {
                 fn();
             }

@@ -12,8 +12,26 @@ namespace Framework.WeChat.WeChatMessage
     public class ISMessage
     {
         /// <summary>
+        /// 无参构造函数（xml序列化必须提供无参构造函数）
+        /// </summary>
+        public ISMessage() { }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="request"></param>
+        public ISMessage(IRMessage model)
+        {
+            this.ToUserName = model.FromUserName;
+            this.FromUserName = model.ToUserName;
+            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            this.CreateTime = Convert.ToInt32(ts.TotalSeconds);
+        }
+
+        /// <summary>
         ///接收方帐号（收到的OpenID）
         /// </summary>
+        [CDATA]
         public string ToUserName
         {
             get;
@@ -23,6 +41,7 @@ namespace Framework.WeChat.WeChatMessage
         /// <summary>
         /// 开发者微信号(公众号的原始ID)
         /// </summary>
+        [CDATA]
         public string FromUserName
         {
             get;
@@ -33,15 +52,6 @@ namespace Framework.WeChat.WeChatMessage
         /// 发送时间(时间戳)
         /// </summary>
         public int CreateTime
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 响应的消息类型
-        /// </summary>
-        public string MsgType
         {
             get;
             set;

@@ -108,7 +108,6 @@ namespace Framework.Utility.Tools
             return childArray;
         }
 
-
         /// <summary>
         /// 获取easy ui gridTree的结构数据
         /// </summary>

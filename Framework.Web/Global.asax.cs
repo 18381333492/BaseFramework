@@ -22,7 +22,7 @@ namespace Framework.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            WebSocket();//开启服务
+           // WebSocket();//开启服务
         }
 
 

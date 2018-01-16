@@ -59,6 +59,7 @@ namespace Framework.Web.Controllers
             else
             {//接受微信消息
                 string result = HandleMessage(Request);
+                Response.Write(result);
             }
         }
 

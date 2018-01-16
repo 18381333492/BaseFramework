@@ -19,13 +19,14 @@ namespace Framework.WeChat.Tool
         /// <typeparam name="T"></typeparam>
         /// <param name="sXmlContent"></param>
         /// <returns></returns>
-        public static T XmlToObject<T>(string sXmlContent)
+        public static T Deserialize<T>(string sXmlContent)
         {
             sXmlContent = Regex.Replace(sXmlContent, "xml", typeof(T).Name);
             StringReader stringReader = new StringReader(sXmlContent);
             XmlReader xmlReader = XmlReader.Create(stringReader);
             XmlSerializer serializer = new XmlSerializer(typeof(T));
-            return (T)serializer.Deserialize(xmlReader);
+            var item=serializer.Deserialize(xmlReader);
+            return (T)item;
         }
 
         /// <summary>
@@ -33,7 +34,7 @@ namespace Framework.WeChat.Tool
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public static string ObjectToXml(object model)
+        public static string Serialize(object model)
         {
             XmlSerializerNamespaces xmlSerializerNamespaces = new XmlSerializerNamespaces();
             xmlSerializerNamespaces.Add("", "");
@@ -48,9 +49,10 @@ namespace Framework.WeChat.Tool
             using (XmlWriter xmlWriter = XmlWriter.Create(sw, xmlWriterSettings))
             {
                 xs.Serialize(xmlWriter, model, xmlSerializerNamespaces);
-                string res = sw.ToString();
-                res = Regex.Replace(res, model.GetType().Name, "xml");
-                return HandleSpecialChar(res);//处理特殊字符
+                string result = sw.ToString();
+                result = Regex.Replace(result, model.GetType().Name, "xml");
+                result = HandleSpecialChar(result);//处理特殊字符
+                return result;
             }
         }
 
