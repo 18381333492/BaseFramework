@@ -1,0 +1,82 @@
+﻿
+    .NewContent {margin-top:20px;}
+    .NewItem {
+        width:260px;
+        background-color:white;
+        text-align:center;
+        float:left;
+        margin-right:10px;
+        margin-bottom:10px;
+    }
+    .NewItem:hover{
+        border: 1px solid blue;
+        cursor:pointer;
+    }
+    .NewItem .Header{
+        width:240px;
+        margin:0 auto;
+        position:relative;
+    }
+
+    .NewContent .Header .Title{
+        padding:10px 0;
+        font-size:16px;
+        font-weight:600;
+        text-align:center;
+    }
+    .NewContent .Header img{
+        height:160px;
+        width:100%
+    }
+    .NewContent .Header .Name{
+        color:red;
+        padding:10px 0;
+        font-size:14px;
+        text-align:center;
+        overflow:hidden;
+        white-space:nowrap;
+        text-overflow: ellipsis;
+    }
+    .NewContent  .Header .Title{
+        position:absolute;
+        font-size:13px;
+        bottom:3px;
+        left:0;
+        padding:0 10px;
+        background-color:rgba(0,0,0,0.5);
+        color:white;
+        overflow:hidden;
+        white-space:nowrap;
+        text-overflow: ellipsis;
+        height:30px;
+        width:220px;
+        line-height:30px;
+    }
+
+    .NewItem .Content{
+        margin:0px auto;width:240px;
+    }
+
+    .NewItem .Content .Item{
+        padding-top:10px;
+        border-top:1px solid #cacaca;
+        height:60px;
+        margin-top:10px;
+    }
+
+    .NewItem .Content .Desc{
+        float:left;
+        width:170px;
+        height:40px;
+        padding:10px 5px 20px 5px;
+        overflow:hidden;
+        white-space:nowrap;
+        text-overflow: ellipsis;
+    } 
+
+   .NewItem .Footer{
+       border-top:1px solid #cacaca;
+       margin-top:10px;
+       padding:10px 15px;
+       text-align:left
+   }

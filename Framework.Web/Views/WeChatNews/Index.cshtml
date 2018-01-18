@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "图文素材类表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/css/newItem.css" rel="stylesheet" />
+<div class="easyui-panel" style="padding:10px;background:#eee;" data-options="fit:true,border:false">
+    <div>
+        <input id="search" class="easyui-textbox" data-options="prompt:'标题'" style="width:250px">&nbsp;&nbsp;
+        @{ var btn = ((IEnumerable<dynamic>)ViewBag.Btn).FirstOrDefault(m => m.sSign == "add"); }
+        @if (btn!=null)
+        {
+        <a class="easyui-linkbutton" data-mark="add" data-url="@btn.sSign" data-options="iconCls:'icon-add'">新增图文素材</a>
+        }
+    </div>
+    <!--素材内容-->
+    <div class="NewContent">
+          <div class="NewItem">
+                <div class="Header">
+                    <div class="Name">贷款将返回框架回</div>
+                    <img src="http://pic2.nipic.com/20090424/1242397_110033072_2.jpg"/>
+                    <div class="Title">贷款将返回框架回访的空间和客户端看贷款将返回框架回访的</div>
+                </div>
+                <div class="Content">
+                    <div class="Item">
+                        <div class="Desc">
+                            贷款将返回框架回访的空贷款将返回框架回访的空贷款将返回框架回访的空
+                        </div>
+                        <div style="float:right">
+                        <img src="http://pic2.nipic.com/20090424/1242397_110033072_2.jpg" style="height:60px;width:60px" />
+                        </div>
+                    </div>
+                    <div class="Item">
+                        <div class="Desc">
+                            贷款将返回框架回访的空贷款将返回框架回访的空贷款将返回框架回访的空
+                        </div>
+                        <div style="float:right">
+                            <img src="http://pic2.nipic.com/20090424/1242397_110033072_2.jpg" style="height:60px;width:60px" />
+                        </div>
+                    </div>
+                </div>
+                <div class="Footer">
+                    <div style="float:left;">
+                        更新于 2015年11月12日
+                    </div>
+                    <div style="float:right;margin-top:-4px;height:34px;">
+                        <a class="easyui-linkbutton easyui-tooltip" data-options="iconCls:'icon-log',plain:true,content:'编辑',position:'top'"></a>
+                        <a class="easyui-linkbutton easyui-tooltip" data-options="iconCls:'icon-delete',plain:true,content:'删除',position:'top'"></a>
+                    </div>
+                 </div>
+            </div>
+          <div class="NewItem">
+            <div class="Header">
+                <div class="Name">贷款将返回框架回</div>
+                <img src="http://pic2.nipic.com/20090424/1242397_110033072_2.jpg" />
+                <div class="Title">贷款将返回框架回访的空间和客户端看贷款将返回框架回访的</div>
+            </div>
+            <div class="Footer">
+                <div style="float:left;">
+                    更新于 2015年11月12日
+                </div>
+                <div style="float:right;margin-top:-4px;height:34px;">
+                    <a class="easyui-linkbutton easyui-tooltip" data-options="iconCls:'icon-log',plain:true,content:'编辑',position:'top'"></a>
+                    <a class="easyui-linkbutton easyui-tooltip" data-options="iconCls:'icon-delete',plain:true,content:'删除',position:'top'"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        //按钮事件的绑定
+        $('a[data-mark=add]').on("click", function () {
+            var url = $(this).attr("data-url");
+            //创建tab
+            window.parent.createTab("新增图文素材", url);
+        });
+
+        //搜索事件
+        $('#search').textbox({
+            icons: [{
+                iconCls: 'icon-search',
+                handler: function (e) {
+                    alert(1);
+                }
+            }],
+        });
+    });
+</script>

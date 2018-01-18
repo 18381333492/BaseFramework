@@ -123,6 +123,7 @@
     <Compile Include="Controllers\WeChatDeveloperController.cs" />
     <Compile Include="Controllers\WeChatKeyWordController.cs" />
     <Compile Include="Controllers\WeChatMenuController.cs" />
+    <Compile Include="Controllers\WeChatNewsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -133,6 +134,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\css\gridtable.css" />
+    <Content Include="Content\css\newItem.css" />
     <Content Include="Content\easyui\jquery.easyui.min.js" />
     <Content Include="Content\easyui\jquery.min.js" />
     <Content Include="Content\easyui\themes\black\accordion.css" />
@@ -719,6 +721,7 @@
     <Content Include="Views\WeChatKeyWord\Index.cshtml" />
     <Content Include="Views\WeChatKeyWord\Add.cshtml" />
     <Content Include="Views\WeChatKeyWord\Edit.cshtml" />
+    <Content Include="Views\WeChatNews\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
