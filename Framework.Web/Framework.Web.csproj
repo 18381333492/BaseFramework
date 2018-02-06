@@ -117,6 +117,7 @@
     <Compile Include="Controllers\DictionaryController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WeChatConcernController.cs" />
     <Compile Include="Controllers\WeChatController.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="App_Data\Configs\CacheConfig.xml" />
     <Content Include="Content\css\gridtable.css" />
     <Content Include="Content\css\newItem.css" />
     <Content Include="Content\easyui\jquery.easyui.min.js" />

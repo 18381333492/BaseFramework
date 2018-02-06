@@ -57,6 +57,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -75,6 +76,7 @@
     <Compile Include="Models\PageInfo.cs" />
     <Compile Include="Models\PageResult.cs" />
     <Compile Include="Models\ResponeResult.cs" />
+    <Compile Include="Tools\CacheHelper.cs" />
     <Compile Include="Tools\ConfigHelper.cs" />
     <Compile Include="Tools\ConvertHelper.cs" />
     <Compile Include="Tools\DateHelper.cs" />

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+
+<!--缓存配置文件(设置缓存的过期时间和缓存的过期策略)-->
+   
+<!--CacheName:缓存名称,TimeOut:过期时间(单位秒),OverPolicy:过期策略(1绝对,2相对)-->
+<CacheItems>
+  <Item CacheName="UserInfo" TimeOut="86400"  OverPolicy="1"  />
+  <Item CacheName="UserInfo" TimeOut="86400"  OverPolicy="2"  />
+</CacheItems>
+
+
