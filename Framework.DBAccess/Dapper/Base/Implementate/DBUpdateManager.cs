@@ -10,7 +10,7 @@ using TraceLogs;
 
 namespace Framework.DBAccess.Dapper
 {
-    public class WritingManager: WritingManagement,IWriting
+    public class DbUpdateManager : DbUpdateManagement, IDbUpdate
     {
 
         /// <summary>

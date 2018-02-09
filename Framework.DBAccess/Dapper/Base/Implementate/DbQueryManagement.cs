@@ -11,14 +11,14 @@ using Framework.Utility;
 
 namespace Framework.DBAccess.Dapper
 {
-    public class ReadingManagement: DbBase
+    public class DbQueryManagement : DbBases
     {
         /// <summary>
         /// 判断泛型是否是字典类型
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        private bool DoIsDictionary<T>()
+        protected virtual bool DoIsDictionary<T>()
         {
             return typeof(T).GetInterface("IDictionary")==null? false:true;      
         }
@@ -30,7 +30,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="sqlCommand">sql命令</param>
         /// <param name="parameter">参数</param>
         /// <returns></returns>
-        protected bool DoAny(IDbConnection conn, string sqlCommand, object parameter)
+        protected virtual bool DoAny(IDbConnection conn, string sqlCommand, object parameter)
         {
             var ret = conn.Query(sqlCommand, parameter, null, true, null, CommandType.Text);
             return ret.Count() > 0 ? true : false;
@@ -52,12 +52,13 @@ namespace Framework.DBAccess.Dapper
                        .Select(m => ((IDictionary<string, object>)m)
                        .ToDictionary(k => k.Key, v => v.Value))
                        .FirstOrDefault<IDictionary<string, object>>();
+                //类型转化
                 return (T)ret;
             }
             else
             {
-               var ret=conn.QueryFirstOrDefault<T>(sqlCommand, parameter, null, null, CommandType.Text);
-               return ret;
+                var ret = conn.QueryFirstOrDefault<T>(sqlCommand, parameter, null, null, CommandType.Text);
+                return ret;
             }
         }
 
@@ -69,7 +70,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="sqlCommand">Sql语句</param>
         /// <param name="parameter">参数</param>
         /// <returns></returns>
-        protected IList<T> DoQueryList<T>(IDbConnection conn, string sqlCommand, Object parameter = null)
+        protected virtual IList<T> DoQueryList<T>(IDbConnection conn, string sqlCommand, Object parameter = null)
         {
             if (DoIsDictionary<T>())
             {//泛型是字典类型
@@ -94,7 +95,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="pageInfo"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        protected PageResult DoPaginationQuery(IDbConnection conn, string sqlCommand, PageInfo pageInfo, object parameter = null)
+        protected virtual PageResult DoPaginationQuery(IDbConnection conn, string sqlCommand, PageInfo pageInfo, object parameter = null)
         {
             //声明动态参数
             //DynamicParameters Parameters = new DynamicParameters();
@@ -125,29 +126,29 @@ namespace Framework.DBAccess.Dapper
             return result;
         }
 
-        /// <summary>
-        /// 执行存储过程返回结果集
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="sProcedureName"></param>
-        /// <param name="Parameters"></param>
-        /// <returns></returns>
-        protected IList<T> DoQueryProcedure<T>(IDbConnection conn, string sProcedureName, DynamicParameters Parameters)
-        {
-            if (DoIsDictionary<T>())
-            {//泛型是字典类型
-                var ret = conn.Query(sProcedureName, Parameters, null, true, null, CommandType.StoredProcedure)
-                          .Select(m => ((IDictionary<string, object>)m)
-                          .ToDictionary(k => k.Key, v => v.Value))
-                          .ToList<IDictionary<string, object>>();
-                return ret.Select(m => (T)m).ToList();
-            }
-            else
-            {
-                var ret = conn.Query<T>(sProcedureName, Parameters, null, true, null, CommandType.StoredProcedure).ToList();
-                return ret;
-            }
-        }
+        ///// <summary>
+        ///// 执行存储过程返回结果集
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="sProcedureName"></param>
+        ///// <param name="Parameters"></param>
+        ///// <returns></returns>
+        //protected IList<T> DoQueryProcedure<T>(IDbConnection conn, string sProcedureName, DynamicParameters Parameters)
+        //{
+        //    if (DoIsDictionary<T>())
+        //    {//泛型是字典类型
+        //        var ret = conn.Query(sProcedureName, Parameters, null, true, null, CommandType.StoredProcedure)
+        //                  .Select(m => ((IDictionary<string, object>)m)
+        //                  .ToDictionary(k => k.Key, v => v.Value))
+        //                  .ToList<IDictionary<string, object>>();
+        //        return ret.Select(m => (T)m).ToList();
+        //    }
+        //    else
+        //    {
+        //        var ret = conn.Query<T>(sProcedureName, Parameters, null, true, null, CommandType.StoredProcedure).ToList();
+        //        return ret;
+        //    }
+        //}
 
     }
 }

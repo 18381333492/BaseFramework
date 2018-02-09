@@ -12,43 +12,16 @@ using TraceLogs;
 
 namespace Framework.DBAccess.Dapper
 {
-    public class ReadingManager : ReadingManagement, IReading
+    public partial class SqlServerDbQueryManager : DbQueryManager, ISqlServerDbQuery
     {
       
-        /// <summary>
-        /// 根据条件查询是否存在相应的数据
-        /// </summary>
-        /// <param name="sqlCommand">sql命令</param>
-        /// <param name="parameter">参数</param>
-        /// <returns></returns>
-        public bool? Any(string sqlCommand, object parameter = null)
-        {
-            IDbConnection conn = null;
-            try
-            {
-                conn = GetSqlConnection();
-                if (conn == null) throw new ApplicationException("未获取到连接对象。");
-                return DoAny(conn, sqlCommand, parameter);
-            }
-            catch (Exception ex)
-            {
-                logger.Info(ex.Message);
-                logger.Fatal(ex);
-                return null;
-            }
-            finally
-            {
-                CloseConnect(conn);
-            }
-        }
-
         /// <summary>
         /// 根据主键ID查找实体
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="ID"></param>
         /// <returns></returns>
-        public T Find<T>(object ID) where T : new()
+        public  T Find<T>(object ID) where T : new()
         {
             IDbConnection conn = null;
             try
@@ -71,13 +44,40 @@ namespace Framework.DBAccess.Dapper
         }
 
         /// <summary>
+        /// 根据条件查询是否存在相应的数据
+        /// </summary>
+        /// <param name="sqlCommand">sql命令</param>
+        /// <param name="parameter">参数</param>
+        /// <returns></returns>
+        public virtual bool? Any(string sqlCommand, object parameter = null)
+        {
+            IDbConnection conn = null;
+            try
+            {
+                conn = GetSqlConnection();
+                if (conn == null) throw new ApplicationException("未获取到连接对象。");
+                return DoAny(conn, sqlCommand, parameter);
+            }
+            catch (Exception ex)
+            {
+                logger.Info(ex.Message);
+                logger.Fatal(ex);
+                return null;
+            }
+            finally
+            {
+                CloseConnect(conn);
+            }
+        }
+
+        /// <summary>
         /// 单条查询
         /// </summary>
         /// <typeparam name="T">查询的对象类型</typeparam>
         /// <param name="sqlCommand">sql命令</param>
         /// <param name="parameter">参数</param>
         /// <returns>查询结果</returns>
-        public T SingleQuery<T>(string sqlCommand, object parameter) where T : new()
+        public virtual T SingleQuery<T>(string sqlCommand, object parameter) where T : new()
         {
             IDbConnection conn = null;
             try
@@ -105,7 +105,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="sqlCommand">sql命令</param>
         /// <param name="parameter">参数</param>
         /// <returns>查询结果</returns>
-        public IList<T> QueryList<T>(string sqlCommand, object parameter) where T : new()
+        public virtual IList<T> QueryList<T>(string sqlCommand, object parameter) where T : new()
         {
             IDbConnection conn = null;
             try
@@ -133,7 +133,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="pageInfo"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public PageResult PaginationQuery(string sqlCommand, PageInfo pageInfo, object parameter = null)
+        public virtual PageResult PaginationQuery(string sqlCommand, PageInfo pageInfo, object parameter = null)
         {
             IDbConnection conn = null;
             try
@@ -161,7 +161,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="sProcedureName"></param>
         /// <param name="Parameters"></param>
         /// <returns></returns>
-        public IList<T> QueryProcedure<T>(string sProcedureName, SqlDbParameters Parameters)
+        public IList<T> QueryProcedure<T>(string sProcedureName, SqlServerDbParameters Parameters)
         {
             IDbConnection conn = null;
             try

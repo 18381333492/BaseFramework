@@ -13,7 +13,7 @@ namespace Framework.DBAccess.Dapper
     /// <summary>
     /// 数据库的链接
     /// </summary>
-    public class DbBase
+    public class DbBases
     {
         /// <summary>
         /// 日志记录
@@ -23,26 +23,15 @@ namespace Framework.DBAccess.Dapper
         /// <summary>
         /// 数据库连接字符串
         /// </summary>
-        protected static string sConnectionString = ConfigurationManager.ConnectionStrings["SqlConnection"].ConnectionString;
+        protected static string sConnectionString = ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
 
         /// <summary>
         /// 打开数据库连接
         /// </summary>
         /// <returns></returns>
-        protected IDbConnection GetSqlConnection()
+        protected virtual IDbConnection GetSqlConnection()
         {
-            try
-            {
-                SqlConnection conn = new SqlConnection(sConnectionString);
-                conn.Open();
-                return conn;
-            }
-            catch (Exception ex)
-            {
-                logger.Info(ex.Message);
-                logger.Fatal(ex);
-                return null;
-            }
+            return null;
         }
 
         /// <summary>

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Framework.DBAccess.Dapper
 {
     /// <summary>
-    /// 操作接口
+    /// DB查询更新接口
     /// </summary>
-    public interface IWriting
+    public interface IDbUpdate
     {
         /// <summary>
         /// 执行事务
@@ -18,7 +18,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="parameter"></param>
         /// <returns></returns>
         int ExcuteTransaction(string sqlCommand, object parameter);
-        
+
         /// <summary>
         /// 执行存储过程返回查询结果集
         /// </summary>
@@ -26,6 +26,6 @@ namespace Framework.DBAccess.Dapper
         /// <param name="sProcedureName"></param>
         /// <param name="Parameters"></param>
         /// <returns></returns>
-       int  ExcuteProcedure(string sProcedureName, SqlDbParameters Parameters);
+        int ExcuteProcedure(string sProcedureName, SqlServerDbParameters Parameters);
     }
 }

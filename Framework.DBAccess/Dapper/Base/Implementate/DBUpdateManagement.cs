@@ -8,7 +8,7 @@ using Dapper;
 
 namespace Framework.DBAccess.Dapper
 {
-    public class WritingManagement: DbBase
+    public class DbUpdateManagement : DbBase
     {
 
         /// <summary>

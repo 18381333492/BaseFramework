@@ -9,24 +9,26 @@ using System.Threading.Tasks;
 namespace Framework.DBAccess.Dapper
 {
     /// <summary>
-    /// Sql Server数据库DB参数的封装
+    /// 数据库DB的参数
     /// </summary>
-    public class SqlDbParameters
+    public class DBParameters
     {
-        private DynamicParameters SqlParameters;
-        public SqlDbParameters()
+        private DynamicParameters Parameters;
+
+        public DBParameters()
         {
-            SqlParameters = new DynamicParameters();
+            Parameters = new DynamicParameters();
         }
-     
+
         /// <summary>
-        /// 获取参数
+        /// 获取DB参数
         /// </summary>
         /// <returns></returns>
         public DynamicParameters GetParameters()
         {
-            return SqlParameters;
+            return Parameters;
         }
+
 
         /// <summary>
         /// 添加参数
@@ -36,9 +38,9 @@ namespace Framework.DBAccess.Dapper
         /// <param name="dbType"></param>
         /// <param name="direction"></param>
         /// <param name="size"></param>
-        public void Add(string name, object value, DbType? dbType=null, ParameterDirection? direction=null, int? size=null)
+        public virtual void Add(string name, object value, DbType? dbType = null, ParameterDirection? direction = null, int? size = null)
         {
-            SqlParameters.Add(name, value, dbType, direction, size);
+            Parameters.Add(name, value, dbType, direction, size);
         }
 
         /// <summary>
@@ -47,9 +49,9 @@ namespace Framework.DBAccess.Dapper
         /// <typeparam name="T"></typeparam>
         /// <param name="name"></param>
         /// <returns></returns>
-        public object Get(string name)
+        public virtual object Get(string name)
         {
-            var ret = SqlParameters.Get<object>(name);
+            var ret = Parameters.Get<object>(name);
             return ret;
         }
 
@@ -59,9 +61,9 @@ namespace Framework.DBAccess.Dapper
         /// <typeparam name="T"></typeparam>
         /// <param name="name"></param>
         /// <returns></returns>
-        public T Get<T>(string name)
+        public virtual T Get<T>(string name)
         {
-            var ret = SqlParameters.Get<T>(name);
+            var ret = Parameters.Get<T>(name);
             return ret;
         }
     }

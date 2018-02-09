@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace Framework.DBAccess.Dapper
 {
     /// <summary>
-    /// 查询接口
+    /// DB查询基础接口
     /// </summary>
-    public interface IReading
+    public interface IDbQuery
     {
         /// <summary>
         /// 根据主键ID查询实体
@@ -19,7 +19,7 @@ namespace Framework.DBAccess.Dapper
         /// <typeparam name="T"></typeparam>
         /// <param name="ID"></param>
         /// <returns></returns>
-        T Find<T>(object ID) where T : new();
+       T Find<T>(object ID) where T : new();
 
         /// <summary>
         /// 根据条件查询是否存在相应的数据
@@ -28,7 +28,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="sqlCommand"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        bool? Any(string sqlCommand, object parameter = null);
+        bool ? Any(string sqlCommand, object parameter = null);
 
         /// <summary>
         /// 查询一条数据
@@ -65,7 +65,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="sProcedureName"></param>
         /// <param name="Parameters"></param>
         /// <returns></returns>
-        IList<T> QueryProcedure<T>(string sProcedureName, SqlDbParameters Parameters);
+     //   IList<T> QueryProcedure<T>(string sProcedureName, SqlServerDbParameters Parameters);
 
 
     }
