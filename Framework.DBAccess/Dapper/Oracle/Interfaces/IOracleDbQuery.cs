@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Framework.Utility.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,23 @@ namespace Framework.DBAccess.Dapper
     public interface IOracleDbQuery : IDbQuery
     {
 
+        /// <summary>
+        /// 分页获取数据
+        /// </summary>
+        /// <param name="sqlCommand"></param>
+        /// <param name="pageInfo"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        PageResult PaginationQuery(string sqlCommand, PageInfo pageInfo, OracleDbParameters Parameters);
+
+
+        /// <summary>
+        /// 分页获取数据
+        /// </summary>
+        /// <param name="sqlCommand"></param>
+        /// <param name="pageInfo"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        PageResult PaginationQuery<T>(string sqlCommand, PageInfo pageInfo, OracleDbParameters Parameters);
     }
 }

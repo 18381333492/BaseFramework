@@ -12,16 +12,16 @@ using TraceLogs;
 
 namespace Framework.DBAccess.Dapper
 {
-    public partial class SqlServerDbQueryManager : DbQueryManager, ISqlServerDbQuery
+    public class SqlServerDbQueryManager : SqlServerDbBase, ISqlServerDbQuery
     {
-      
+
         /// <summary>
-        /// 根据主键ID查找实体
+        /// 根据主键查找实体
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="ID"></param>
         /// <returns></returns>
-        public  T Find<T>(object ID) where T : new()
+        public T Find<T>(object ID) where T : new()
         {
             IDbConnection conn = null;
             try
@@ -49,7 +49,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="sqlCommand">sql命令</param>
         /// <param name="parameter">参数</param>
         /// <returns></returns>
-        public virtual bool? Any(string sqlCommand, object parameter = null)
+        public bool? Any(string sqlCommand, object parameter = null)
         {
             IDbConnection conn = null;
             try
@@ -77,7 +77,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="sqlCommand">sql命令</param>
         /// <param name="parameter">参数</param>
         /// <returns>查询结果</returns>
-        public virtual T SingleQuery<T>(string sqlCommand, object parameter) where T : new()
+        public T SingleQuery<T>(string sqlCommand, object parameter=null) where T : new()
         {
             IDbConnection conn = null;
             try
@@ -105,7 +105,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="sqlCommand">sql命令</param>
         /// <param name="parameter">参数</param>
         /// <returns>查询结果</returns>
-        public virtual IList<T> QueryList<T>(string sqlCommand, object parameter) where T : new()
+        public IList<T> QueryList<T>(string sqlCommand, object parameter=null) where T : new()
         {
             IDbConnection conn = null;
             try
@@ -133,14 +133,14 @@ namespace Framework.DBAccess.Dapper
         /// <param name="pageInfo"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public virtual PageResult PaginationQuery(string sqlCommand, PageInfo pageInfo, object parameter = null)
+        public PageResult PaginationQuery(string sqlCommand, PageInfo pageInfo, SqlServerDbParameters Parameters)
         {
             IDbConnection conn = null;
             try
             {
                 conn = GetSqlConnection();
                 if (conn == null) throw new ApplicationException("未获取到连接对象。");
-                return DoPaginationQuery(conn, sqlCommand, pageInfo, parameter);
+                return DoPaginationQuery(conn, sqlCommand, pageInfo, Parameters.GetParameters());
             }
             catch (Exception ex)
             {

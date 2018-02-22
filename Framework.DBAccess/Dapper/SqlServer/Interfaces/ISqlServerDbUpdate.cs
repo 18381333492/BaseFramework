@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Framework.DBAccess.Dapper.DbBase.Interface
+namespace Framework.DBAccess.Dapper
 {
     /// <summary>
     /// SqlServerDB的更新接口
     /// </summary>
-    public interface ISqlServerUpdate : IDbUpdate
+    public interface ISqlServerDbUpdate : IDbUpdate
     {
+
     }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Framework.Entity;
 using Framework.DBAccess.EF;
+using Framework.DBAccess.Dapper;
 
 namespace Framework.Services
 {
@@ -28,18 +29,18 @@ namespace Framework.Services
 			                     end) sParentName
 			                    from ES_WeChatMenu a where bIsDeleted=0");
             //创建动态参数
-            dynamic parameters = new System.Dynamic.ExpandoObject();
+            SqlServerDbParameters Parameters = new SqlServerDbParameters();
             if (!string.IsNullOrEmpty(pageInfo.keyword))
             {
                 sSql.Append(" and sMenuName like @keyword");
-                parameters.keyword = string.Format("%{0}%", pageInfo.keyword);
+                Parameters.Add("keyword", string.Format("%{0}%", pageInfo.keyword));
             }
             if (!string.IsNullOrEmpty(sWeChatId))
             {//公众号的过滤
                 sSql.Append(" and sWeChatId=@sWeChatId");
-                parameters.sWeChatId = sWeChatId;
+                Parameters.Add("sWeChatId", sWeChatId);
             }
-            var res = query.PaginationQuery(sSql.ToString(), pageInfo, parameters);
+            var res = query.PaginationQuery(sSql.ToString(), pageInfo, Parameters);
             return JsonHelper.ToJsonString(res);
         }
 

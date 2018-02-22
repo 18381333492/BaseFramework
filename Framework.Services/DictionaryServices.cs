@@ -8,6 +8,7 @@ using Framework.Utility.Models;
 using Framework.Entity;
 using Framework.Utility.Tools;
 using Framework.DBAccess.EF;
+using Framework.DBAccess.Dapper;
 
 namespace Framework.Services
 {
@@ -23,13 +24,13 @@ namespace Framework.Services
             StringBuilder sSql = new StringBuilder();
             sSql.Append("select * from ES_Dictionary where bIsDeleted=0");
             //创建动态参数
-            dynamic parameters = new System.Dynamic.ExpandoObject();
+            SqlServerDbParameters Parameters = new SqlServerDbParameters();
             if (!string.IsNullOrEmpty(pageInfo.keyword))
             {
                 sSql.Append(" and sText like @sText");
-                parameters.sText = string.Format("%{0}%", pageInfo.keyword);
+                Parameters.Add("sText", string.Format("%{0}%", pageInfo.keyword));
             }
-            var res = query.PaginationQuery(sSql.ToString(), pageInfo, parameters);
+            var res = query.PaginationQuery(sSql.ToString(), pageInfo, Parameters);
             return JsonHelper.ToJsonString(res);
         }
 

@@ -12,12 +12,20 @@ namespace Framework.DBAccess.Dapper
     public interface IDbUpdate
     {
         /// <summary>
-        /// 执行事务
+        /// 执行Sql语句
         /// </summary>
-        /// <param name="sqlCommand"></param>
-        /// <param name="parameter"></param>
+        /// <param name="Sql"></param>
+        /// <param name="Parameters"></param>
         /// <returns></returns>
-        int ExcuteTransaction(string sqlCommand, object parameter);
+        int ExcuteSql(string Sql, object Parameters = null);
+
+        /// <summary>
+        /// 执行Sql语句
+        /// </summary>
+        /// <param name="Sql"></param>
+        /// <param name="Parameters"></param>
+        /// <returns></returns>
+        int ExcuteSql(string Sql, DbParameters Parameters = null);
 
         /// <summary>
         /// 执行存储过程返回查询结果集
@@ -26,6 +34,6 @@ namespace Framework.DBAccess.Dapper
         /// <param name="sProcedureName"></param>
         /// <param name="Parameters"></param>
         /// <returns></returns>
-        int ExcuteProcedure(string sProcedureName, SqlServerDbParameters Parameters);
+        int ExcuteProcedure(string sProcedureName, DbParameters Parameters);
     }
 }

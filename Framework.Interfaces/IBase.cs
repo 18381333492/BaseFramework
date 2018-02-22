@@ -14,7 +14,7 @@ namespace Framework.Interfaces
         /// <summary>
         /// Dapper的查询
         /// </summary>
-        protected static IReading query
+        protected static ISqlServerDbQuery query
         {
             get;
             set;
@@ -23,7 +23,7 @@ namespace Framework.Interfaces
         /// <summary>
         /// Dapper的操作
         /// </summary>
-        protected static IWriting excute
+        protected static ISqlServerDbUpdate excute
         {
             get;
             set;
@@ -36,9 +36,9 @@ namespace Framework.Interfaces
         /// </summary>
         static IBase()
         {
-            query = DIEntity.Instance.GetImpl<IReading>();
+            query = DIEntity.Instance.GetImpl<ISqlServerDbQuery>();
 
-            excute = DIEntity.Instance.GetImpl<IWriting>();
+           // excute = DIEntity.Instance.GetImpl<ISqlServerUpdate>();
         }
     }
 }

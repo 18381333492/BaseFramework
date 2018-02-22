@@ -11,11 +11,11 @@ namespace Framework.DBAccess.Dapper
     /// <summary>
     /// 数据库DB的参数
     /// </summary>
-    public class DBParameters
+    public class DbParameters
     {
         private DynamicParameters Parameters;
 
-        public DBParameters()
+        public DbParameters()
         {
             Parameters = new DynamicParameters();
         }

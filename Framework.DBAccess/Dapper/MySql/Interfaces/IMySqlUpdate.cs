@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Framework.DBAccess.Dapper.DbBase.Interface
+namespace Framework.DBAccess.Dapper
 {
     /// <summary>
     /// MySqlDB的更新接口

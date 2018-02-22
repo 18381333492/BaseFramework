@@ -8,6 +8,7 @@ using Framework.Entity;
 using Framework.Utility.Models;
 using Framework.Utility.Tools;
 using Framework.DBAccess.EF;
+using Framework.DBAccess.Dapper;
 
 namespace Framework.Services
 {
@@ -27,18 +28,18 @@ namespace Framework.Services
             StringBuilder sSql = new StringBuilder();
             sSql.Append("select * from ES_WeChatKeyWord where 1=1");
             //创建动态参数
-            dynamic parameters = new System.Dynamic.ExpandoObject();
+            SqlServerDbParameters Parameters = new SqlServerDbParameters();
             if (!string.IsNullOrEmpty(sWeChatId))
             {
                 sSql.Append(" and sWeChatId=@sWeChatId");
-                parameters.sWeChatId = sWeChatId;
+                Parameters.Add("sWeChatId", sWeChatId);
             }
             if (!string.IsNullOrEmpty(pageInfo.keyword))
             {
                 sSql.Append(" and sKeyWordName like @keyword");
-                parameters.keyword = string.Format("%{0}%", pageInfo.keyword);
+                Parameters.Add("keyword", string.Format("%{0}%", pageInfo.keyword));
             }
-            var res = query.PaginationQuery(sSql.ToString(), pageInfo, parameters);
+            var res = query.PaginationQuery(sSql.ToString(), pageInfo, Parameters);
             return JsonHelper.ToJsonString(res);
         }
 

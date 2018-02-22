@@ -13,7 +13,7 @@ namespace Framework.DBAccess.Dapper
     /// <summary>
     /// 数据库的链接
     /// </summary>
-    public class DbBases
+    public class DbBase
     {
         /// <summary>
         /// 日志记录
@@ -33,7 +33,7 @@ namespace Framework.DBAccess.Dapper
         {
             return null;
         }
-
+  
         /// <summary>
         /// 关闭数据库连接
         /// </summary>

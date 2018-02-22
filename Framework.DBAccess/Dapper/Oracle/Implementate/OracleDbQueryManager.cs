@@ -12,18 +12,35 @@ using TraceLogs;
 
 namespace Framework.DBAccess.Dapper
 {
-    public class DbQueryManager : DbQueryManagement, IDbQuery
+    public class OracleDbQueryManager : OracleDbBase, IOracleDbQuery
     {
-      
+
         /// <summary>
-        /// 根据主键ID查找实体
+        /// 根据主键查找实体
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="ID"></param>
         /// <returns></returns>
-        public virtual T Find<T>(object ID) where T : new()
+        public T Find<T>(object ID) where T : new()
         {
-            return default(T);
+            IDbConnection conn = null;
+            try
+            {
+                conn = GetSqlConnection();
+                if (conn == null) throw new ApplicationException("未获取到连接对象。");
+                string sqlCommand = string.Format("SELECT * FROM {0} WHERE ID=:ID", typeof(T).Name);
+                return DoSingleQuery<T>(conn, sqlCommand, new { ID = ID });
+            }
+            catch (Exception ex)
+            {
+                logger.Info(ex.Message);
+                logger.Fatal(ex);
+                return default(T);
+            }
+            finally
+            {
+                CloseConnect(conn);
+            }
         }
 
         /// <summary>
@@ -32,14 +49,14 @@ namespace Framework.DBAccess.Dapper
         /// <param name="sqlCommand">sql命令</param>
         /// <param name="parameter">参数</param>
         /// <returns></returns>
-        public virtual bool? Any(string sqlCommand, object parameter = null)
+        public bool? Any(string sqlCommand, object parameter = null)
         {
             IDbConnection conn = null;
             try
             {
                 conn = GetSqlConnection();
                 if (conn == null) throw new ApplicationException("未获取到连接对象。");
-                return DoAny(conn, sqlCommand, parameter);
+                return DoAny(conn, GetSql(sqlCommand), parameter);
             }
             catch (Exception ex)
             {
@@ -60,14 +77,14 @@ namespace Framework.DBAccess.Dapper
         /// <param name="sqlCommand">sql命令</param>
         /// <param name="parameter">参数</param>
         /// <returns>查询结果</returns>
-        public virtual T SingleQuery<T>(string sqlCommand, object parameter) where T : new()
+        public T SingleQuery<T>(string sqlCommand, object parameter=null) where T : new()
         {
             IDbConnection conn = null;
             try
             {
                 conn = GetSqlConnection();
                 if (conn == null) throw new ApplicationException("未获取到连接对象。");
-                return DoSingleQuery<T>(conn, sqlCommand, parameter);
+                return DoSingleQuery<T>(conn, GetSql(sqlCommand), parameter);
             }
             catch (Exception ex)
             {
@@ -88,14 +105,14 @@ namespace Framework.DBAccess.Dapper
         /// <param name="sqlCommand">sql命令</param>
         /// <param name="parameter">参数</param>
         /// <returns>查询结果</returns>
-        public virtual IList<T> QueryList<T>(string sqlCommand, object parameter) where T : new()
+        public IList<T> QueryList<T>(string sqlCommand, object parameter=null) where T : new()
         {
             IDbConnection conn = null;
             try
             {
                 conn = GetSqlConnection();
                 if (conn == null) throw new ApplicationException("未获取到连接对象。");
-                return DoQueryList<T>(conn, sqlCommand, parameter);
+                return DoQueryList<T>(conn, GetSql(sqlCommand), parameter);
             }
             catch (Exception ex)
             {
@@ -116,14 +133,14 @@ namespace Framework.DBAccess.Dapper
         /// <param name="pageInfo"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public virtual PageResult PaginationQuery(string sqlCommand, PageInfo pageInfo, object parameter = null)
+        public PageResult PaginationQuery(string sqlCommand, PageInfo pageInfo, OracleDbParameters Parameters)
         {
             IDbConnection conn = null;
             try
             {
                 conn = GetSqlConnection();
                 if (conn == null) throw new ApplicationException("未获取到连接对象。");
-                return DoPaginationQuery(conn, sqlCommand, pageInfo, parameter);
+                return DoPaginationQuery(conn, GetSql(sqlCommand), pageInfo, Parameters.GetParameters());
             }
             catch (Exception ex)
             {
@@ -138,26 +155,26 @@ namespace Framework.DBAccess.Dapper
         }
 
         /// <summary>
-        /// 执行存储过程返回结果集
+        /// 分页获取数据
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="sProcedureName"></param>
-        /// <param name="Parameters"></param>
+        /// <param name="sqlCommand"></param>
+        /// <param name="pageInfo"></param>
+        /// <param name="parameter"></param>
         /// <returns></returns>
-        public IList<T> QueryProcedure<T>(string sProcedureName, SqlServerDbParameters Parameters)
+        public PageResult PaginationQuery<T>(string sqlCommand, PageInfo pageInfo, OracleDbParameters Parameters)
         {
             IDbConnection conn = null;
             try
             {
                 conn = GetSqlConnection();
                 if (conn == null) throw new ApplicationException("未获取到连接对象。");
-                return DoQueryProcedure<T>(conn, sProcedureName, Parameters.GetParameters());
+                return DoPaginationQuery<T>(conn, GetSql(sqlCommand), pageInfo, Parameters.GetParameters());
             }
             catch (Exception ex)
             {
                 logger.Info(ex.Message);
                 logger.Fatal(ex);
-                return default(IList<T>);
+                return default(PageResult);
             }
             finally
             {

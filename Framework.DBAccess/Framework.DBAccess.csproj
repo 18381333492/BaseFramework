@@ -77,12 +77,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dapper\Base\Implementate\DbBase.cs" />
-    <Compile Include="Dapper\Base\Interface\IDbUpdate.cs" />
-    <Compile Include="Dapper\Base\Parameters\DBParameters.cs" />
-    <Compile Include="Dapper\SqlServer\Implementate\SqlServerDbQueryManagement.cs" />
-    <Compile Include="Dapper\SqlServer\Implementate\SqlServerDbQueryManager.cs" />
+    <Compile Include="Dapper\DB\Implementate\DbBase.cs" />
+    <Compile Include="Dapper\DB\Interface\IDbUpdate.cs" />
+    <Compile Include="Dapper\DB\Parameters\DbParameters.cs" />
+    <Compile Include="Dapper\Oracle\Implementate\OracleDbBase.cs" />
+    <Compile Include="Dapper\Oracle\Implementate\OracleDbQueryManager.cs" />
     <Compile Include="Dapper\SqlServer\Implementate\SqlServerDbBase.cs" />
+    <Compile Include="Dapper\SqlServer\Implementate\SqlServerDbQueryManager.cs" />
     <Compile Include="Dapper\MySql\Interfaces\IMySqlDbQuery.cs" />
     <Compile Include="Dapper\MySql\Interfaces\IMySqlUpdate.cs" />
     <Compile Include="Dapper\Oracle\Interfaces\IOracleDbUpdate.cs" />
@@ -90,13 +91,11 @@
     <Compile Include="Dapper\MySql\Parameters\MySqlDbParameters.cs" />
     <Compile Include="Dapper\Oracle\Parameters\OracleDbParameters.cs" />
     <Compile Include="Dapper\SqlServer\Parameters\SqlServerDbParameters.cs" />
-    <Compile Include="Dapper\Base\Interface\IDbQuery.cs" />
-    <Compile Include="Dapper\Base\Implementate\DbQueryManagement.cs" />
-    <Compile Include="Dapper\Base\Implementate\DbQueryManager.cs" />
-    <Compile Include="Dapper\SqlServer\Interfaces\ISqlServerUpdate.cs" />
+    <Compile Include="Dapper\DB\Interface\IDbQuery.cs" />
+    <Compile Include="Dapper\DB\Implementate\DbQueryManager.cs" />
+    <Compile Include="Dapper\SqlServer\Interfaces\ISqlServerDbUpdate.cs" />
     <Compile Include="Dapper\SqlServer\Interfaces\ISqlServerDbQuery.cs" />
-    <Compile Include="Dapper\Base\Implementate\DbUpdateManagement.cs" />
-    <Compile Include="Dapper\Base\Implementate\DbUpdateManager.cs" />
+    <Compile Include="Dapper\DB\Implementate\DbUpdateManager.cs" />
     <Compile Include="EF\ContextManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -118,7 +117,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dapper\MySql\Implementate\" />
-    <Folder Include="Dapper\Oracle\Implementate\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
