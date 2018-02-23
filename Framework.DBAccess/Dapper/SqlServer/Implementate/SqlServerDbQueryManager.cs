@@ -12,7 +12,7 @@ using TraceLogs;
 
 namespace Framework.DBAccess.Dapper
 {
-    public class SqlServerDbQueryManager : SqlServerDbBase, ISqlServerDbQuery
+    public class SqlServerDbQueryManager : SqlServerDbQuery, ISqlServerDbQuery
     {
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="pageInfo"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public PageResult PaginationQuery(string sqlCommand, PageInfo pageInfo, SqlServerDbParameters Parameters)
+        public PageResult PaginationQuery(string sqlCommand, PageInfo pageInfo, DbParameters Parameters)
         {
             IDbConnection conn = null;
             try

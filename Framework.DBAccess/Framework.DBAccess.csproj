@@ -82,7 +82,9 @@
     <Compile Include="Dapper\DB\Parameters\DbParameters.cs" />
     <Compile Include="Dapper\Oracle\Implementate\OracleDbBase.cs" />
     <Compile Include="Dapper\Oracle\Implementate\OracleDbQueryManager.cs" />
-    <Compile Include="Dapper\SqlServer\Implementate\SqlServerDbBase.cs" />
+    <Compile Include="Dapper\SqlServer\Implementate\SqlServerDbUpdate.cs" />
+    <Compile Include="Dapper\SqlServer\Implementate\SqlServerDbQuery.cs" />
+    <Compile Include="Dapper\SqlServer\Implementate\SqlServerDbUpdateManager.cs" />
     <Compile Include="Dapper\SqlServer\Implementate\SqlServerDbQueryManager.cs" />
     <Compile Include="Dapper\MySql\Interfaces\IMySqlDbQuery.cs" />
     <Compile Include="Dapper\MySql\Interfaces\IMySqlUpdate.cs" />

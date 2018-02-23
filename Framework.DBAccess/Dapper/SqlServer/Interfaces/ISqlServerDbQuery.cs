@@ -12,14 +12,6 @@ namespace Framework.DBAccess.Dapper
     /// </summary>
     public interface ISqlServerDbQuery:IDbQuery
     {
-        /// <summary>
-        /// 分页获取数据
-        /// </summary>
-        /// <param name="sqlCommand"></param>
-        /// <param name="pageInfo"></param>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
-        PageResult PaginationQuery(string sqlCommand, PageInfo pageInfo, SqlServerDbParameters Parameters);
 
         /// <summary>
         /// 执行存储过程返回查询结果集

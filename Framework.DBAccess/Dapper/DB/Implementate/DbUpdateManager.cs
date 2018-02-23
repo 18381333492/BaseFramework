@@ -11,37 +11,32 @@ using TraceLogs;
 
 namespace Framework.DBAccess.Dapper
 {
-    public class DbUpdateManager : DbBase
+    public class DbUpdateManager:DbBase
     {
 
         /// <summary>
         /// 执行储存过程
         /// </summary>
-        /// <param name="sProcedureName"></param>
-        /// <param name="Parameters"></param>
-        public int ExcuteProcedure(string sProcedureName, DbParameters Parameters)
+        /// <param name="conn">数据库连接字符串对象</param>
+        /// <param name="sqlCommand">sql语句</param>
+        /// <param name="Parameters">参数</param>
+        protected int DoExcuteSql(IDbConnection conn, string sqlCommand, object Parameters)
         {
-            IDbConnection conn = null;
-            try
-            {
-                conn = GetSqlConnection();
-                if (conn == null) throw new ApplicationException("未获取到连接对象.");
-                return DoExcuteProcedure(conn, sProcedureName, Parameters.GetParameters());
-            }
-            catch (Exception ex)
-            {
-                logger.Info(ex.Message);
-                logger.Fatal(ex);
-                return -1;
-            }
-            finally
-            {
-                CloseConnect(conn);
-            }
+            int res = conn.Execute(sqlCommand, Parameters, null, null, CommandType.Text);
+            return res;
         }
 
-
-        #region DbUpdate的Dapper实现
+        /// <summary>
+        /// 执行储存过程
+        /// </summary>
+        /// <param name="conn">数据库连接字符串对象</param>
+        /// <param name="sqlCommand">sql语句</param>
+        /// <param name="Parameters">参数</param>
+        protected int DoExcuteSql(IDbConnection conn, string sqlCommand, DynamicParameters Parameters)
+        {
+            int res = conn.Execute(sqlCommand, Parameters, null, null, CommandType.Text);
+            return res;
+        }
 
         /// <summary>
         /// 执行储存过程
@@ -54,7 +49,5 @@ namespace Framework.DBAccess.Dapper
             int res = conn.Execute(sProcedureName, Parameters, null, null, CommandType.StoredProcedure);
             return res;
         }
-
-        #endregion
     }
 }

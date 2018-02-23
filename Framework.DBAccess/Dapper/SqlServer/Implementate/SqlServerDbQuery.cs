@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Framework.DBAccess.Dapper
 {
 
-    public class SqlServerDbBase: DbQueryManager
+    public class SqlServerDbQuery : DbQueryManager
     {
         /// <summary>
         /// 获取SqlServer的数据库链接

@@ -20,16 +20,6 @@ namespace Framework.DBAccess.Dapper
         /// <param name="pageInfo"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        PageResult PaginationQuery(string sqlCommand, PageInfo pageInfo, OracleDbParameters Parameters);
-
-
-        /// <summary>
-        /// 分页获取数据
-        /// </summary>
-        /// <param name="sqlCommand"></param>
-        /// <param name="pageInfo"></param>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
         PageResult PaginationQuery<T>(string sqlCommand, PageInfo pageInfo, OracleDbParameters Parameters);
     }
 }

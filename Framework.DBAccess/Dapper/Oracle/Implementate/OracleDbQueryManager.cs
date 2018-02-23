@@ -133,7 +133,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="pageInfo"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public PageResult PaginationQuery(string sqlCommand, PageInfo pageInfo, OracleDbParameters Parameters)
+        public PageResult PaginationQuery(string sqlCommand, PageInfo pageInfo, DbParameters Parameters)
         {
             IDbConnection conn = null;
             try

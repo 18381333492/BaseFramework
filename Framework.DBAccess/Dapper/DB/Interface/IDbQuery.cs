@@ -48,5 +48,14 @@ namespace Framework.DBAccess.Dapper
         /// <returns>查询结果</returns>
         IList<T> QueryList<T>(string sqlCommand, object parameter=null) where T : new();
 
+        /// <summary>
+        /// 分页获取数据
+        /// </summary>
+        /// <param name="sqlCommand"></param>
+        /// <param name="pageInfo"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        PageResult PaginationQuery(string sqlCommand, PageInfo pageInfo, DbParameters Parameters);
+
     }
 }
