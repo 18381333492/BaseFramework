@@ -12,7 +12,10 @@ using TraceLogs;
 
 namespace Framework.DBAccess.Dapper
 {
-    public class OracleDbQueryManager : OracleDbBase, IOracleDbQuery
+    /// <summary>
+    /// Oracle数据库的查询操作
+    /// </summary>
+    public class OracleDbQueryManager : OracleDbQuery, IOracleDbQuery
     {
 
         /// <summary>
@@ -161,7 +164,7 @@ namespace Framework.DBAccess.Dapper
         /// <param name="pageInfo"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public PageResult PaginationQuery<T>(string sqlCommand, PageInfo pageInfo, OracleDbParameters Parameters)
+        public PageResult PaginationQuery<T>(string sqlCommand, PageInfo pageInfo, DbParameters Parameters)
         {
             IDbConnection conn = null;
             try

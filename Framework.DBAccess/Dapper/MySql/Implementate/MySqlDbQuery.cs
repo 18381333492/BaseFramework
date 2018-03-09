@@ -3,16 +3,16 @@ using Framework.Utility.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OracleClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Framework.Utility.Tools;
+using MySql.Data.MySqlClient;
 
 namespace Framework.DBAccess.Dapper
 {
 
-    public class OracleDbBase : DbQueryManager
+    public class MySqlDbQuery : DbQueryManager
     {
         /// <summary>
         /// 获取Oracle的数据库链接
@@ -22,7 +22,7 @@ namespace Framework.DBAccess.Dapper
         {
             try
             {
-                OracleConnection conn = new OracleConnection(sConnectionString);
+                MySqlConnection conn = new MySqlConnection(sConnectionString);
                 conn.Open();
                 return conn;
             }
@@ -32,18 +32,6 @@ namespace Framework.DBAccess.Dapper
                 logger.Fatal(ex);
                 return null;
             }
-        }
-
-        /// <summary>
-        /// 获取SQl(oracle的别名的处理)
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        protected string GetSql(string sqlCommand)
-        {
-            sqlCommand = sqlCommand.Replace("[", "\"");
-            sqlCommand = sqlCommand.Replace("]", "\"");
-            return sqlCommand;
         }
 
         /// <summary>

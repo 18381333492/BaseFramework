@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Framework.Utility.Tools;
 
 namespace Framework.DBAccess.Dapper
 {
@@ -67,6 +68,46 @@ namespace Framework.DBAccess.Dapper
             {
                 result.rows = new List<object>();
             }
+            return result;
+        }
+
+        /// <summary>
+        /// 分页获取数据列表
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="conn"></param>
+        /// <param name="sqlCommand"></param>
+        /// <param name="pageInfo"></param>
+        /// <param name="Parameters"></param>
+        /// <returns></returns>
+        protected PageResult DoPaginationQuery<T>(IDbConnection conn, string sqlCommand, PageInfo pageInfo, DynamicParameters Parameters)
+        {
+            string sSql = string.Format(@"DECLARE @rows int 
+                                                SELECT @rows=COUNT(*) FROM({0}) as entry 
+                                                SELECT  TOP {1} *,@rows MaxRows FROM
+                                                (SELECT  ROW_NUMBER() OVER(ORDER BY {2} {3}) AS Number,*
+                                                FROM ({0}) AS query) AS entry 
+                                                WHERE  Number>{1}*({4}-1) ", sqlCommand,
+                                             pageInfo.rows,
+                                             pageInfo.sort,
+                                             pageInfo.order.ToString(),
+                                             pageInfo.page);
+            var result = new PageResult();
+            result.page = pageInfo.page;//当前页码数
+            //获取查询结果   
+            var ret = conn.Query(sSql, Parameters, null, true, null, CommandType.Text).ToList();
+            if (ret.Count > 0)
+            {
+                //随意抽一条做最大条数记录
+                result.total = Convert.ToInt32(ret[0].MaxRows);
+                List<T> list = JsonHelper.Deserialize<List<T>>(JsonHelper.ToJsonString(ret));
+                result.rows = list;
+            }
+            else
+            {
+                result.rows = new List<object>();
+            }
+
             return result;
         }
 

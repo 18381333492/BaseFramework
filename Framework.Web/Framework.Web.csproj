@@ -509,6 +509,16 @@
     <Content Include="Content\login\images\light.png" />
     <Content Include="Content\login\images\unlink.png" />
     <Content Include="Global.asax" />
+    <Content Include="PhoneRechargeHtml\css\page\home.css" />
+    <Content Include="PhoneRechargeHtml\home.html" />
+    <Content Include="PhoneRechargeHtml\css\jquery-weui.min.css" />
+    <Content Include="PhoneRechargeHtml\js\common.js" />
+    <Content Include="PhoneRechargeHtml\js\page\home.js" />
+    <Content Include="PhoneRechargeHtml\js\jquery-weui.min.js" />
+    <Content Include="PhoneRechargeHtml\js\jquery.min.js" />
+    <Content Include="PhoneRechargeHtml\css\weui.min.css" />
+    <Content Include="PhoneRechargeHtml\js\template-web.js" />
+    <Content Include="PhoneRechargeHtml\server.html" />
     <Content Include="Scripts\icheck.js" />
     <Content Include="App_Data\Configs\Unity.config">
       <SubType>Designer</SubType>
@@ -727,6 +737,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="PhoneRechargeHtml\images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

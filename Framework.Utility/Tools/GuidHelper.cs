@@ -17,5 +17,14 @@ namespace Framework.Utility.Tools
         {
             return Guid.NewGuid();
         }
+
+        /// <summary>
+        /// 获取字符串的GUID
+        /// </summary>
+        /// <returns></returns>
+        public static string NewGuidString()
+        {
+            return Guid.NewGuid().ToString("N");
+        }
     }
 }

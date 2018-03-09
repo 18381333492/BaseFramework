@@ -11,5 +11,6 @@ namespace Framework.DBAccess.Dapper
     /// </summary>
     public interface IMySqlUpdate : IDbUpdate
     {
+
     }
 }

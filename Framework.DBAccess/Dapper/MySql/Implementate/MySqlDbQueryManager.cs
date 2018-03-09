@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +11,10 @@ using TraceLogs;
 
 namespace Framework.DBAccess.Dapper
 {
-    public class SqlServerDbQueryManager : SqlServerDbQuery, ISqlServerDbQuery
+    /// <summary>
+    /// Oracle数据库的查询操作
+    /// </summary>
+    public class MySqlDbQueryManager : MySqlDbQuery, IMySqlDbQuery
     {
 
         /// <summary>
@@ -175,34 +177,6 @@ namespace Framework.DBAccess.Dapper
                 logger.Info(ex.Message);
                 logger.Fatal(ex);
                 return default(PageResult);
-            }
-            finally
-            {
-                CloseConnect(conn);
-            }
-        }
-
-        /// <summary>
-        /// 执行存储过程返回结果集
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="sProcedureName"></param>
-        /// <param name="Parameters"></param>
-        /// <returns></returns>
-        public IList<T> QueryProcedure<T>(string sProcedureName, SqlServerDbParameters Parameters)
-        {
-            IDbConnection conn = null;
-            try
-            {
-                conn = GetSqlConnection();
-                if (conn == null) throw new ApplicationException("未获取到连接对象。");
-                return DoQueryProcedure<T>(conn, sProcedureName, Parameters.GetParameters());
-            }
-            catch (Exception ex)
-            {
-                logger.Info(ex.Message);
-                logger.Fatal(ex);
-                return default(IList<T>);
             }
             finally
             {
