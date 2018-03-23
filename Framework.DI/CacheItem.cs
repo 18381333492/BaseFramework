@@ -22,7 +22,6 @@ namespace Framework.DI
         {
             get;
             set;
-        }
-        
+        }     
     }
 }
